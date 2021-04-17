@@ -158,8 +158,11 @@ MonoBehaviour:
   HP: 100
   AttackPoints: 20
   Range: 5
-  Exhausted: 0
+  Velocity: 5
   Team: 0
+  Exhausted: 0
+  Walking: 0
+  Path: []
 --- !u!61 &24067804
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -335,7 +338,7 @@ MonoBehaviour:
   m_RefResolutionX: 400
   m_RefResolutionY: 200
   m_UpscaleRT: 1
-  m_PixelSnapping: 1
+  m_PixelSnapping: 0
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
