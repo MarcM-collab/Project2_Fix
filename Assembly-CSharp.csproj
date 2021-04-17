@@ -79,6 +79,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\CharactersBehaviour\Walking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Selecting.cs" />
+    <Compile Include="Assets\Scripts\Cards\HandManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

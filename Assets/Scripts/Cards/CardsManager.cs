@@ -1,16 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CardsManager : MonoBehaviour
 {
     public List<Card> Cards; //Baraja elegida por el player (8 cartas)
 
-    public List<Card> Hand; //la mano actual del jugador
-
     List<Card> twoCardsRandom = new List<Card>();
     public Animation AnimatorCard;
 
+    public Image[] buttons;
+
+    public HandManager Hand;
+
+    private void Start()
+    {
+        buttons[0].gameObject.SetActive(false);
+        buttons[1].gameObject.SetActive(false);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.C)) //de testeo
@@ -32,27 +40,32 @@ public class CardsManager : MonoBehaviour
         twoCardsRandom.Add(Cards[random1]);
         twoCardsRandom.Add(Cards[random2]);
 
-        print(twoCardsRandom.Count);
+        
         return twoCardsRandom;
     }
 
     private void ShowRandomCards(List<Card> _twoCardsRandom) //muestra las dos cartas random
     {
-        Vector3 nextPos = new Vector3(0, 0.5f, 0);
-
         for (int i = 0; i < _twoCardsRandom.Count; i++)
         {
-            Instantiate(_twoCardsRandom[i], nextPos, Quaternion.identity);
-            nextPos.x += 0.5f;
+            buttons[i].sprite = _twoCardsRandom[i].GetComponent<Image>().sprite;
+            buttons[i].gameObject.SetActive(true);
+
         }
     }
 
 
-    private void DiscardCard()
+    public void ConfirmAddCard(int number)
     {
+        Hand.AddCard(twoCardsRandom[number]);
 
-        //si la q escoges es == a la de la lista 
-        //guardas else destroy(laotra)
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            buttons[i].gameObject.SetActive(false);
+        }
+        
+        twoCardsRandom.Clear();
 
+        //animaciones 
     }
 }
