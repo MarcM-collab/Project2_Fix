@@ -7,12 +7,18 @@ public enum Team
     TeamA,
     TeamB,
 }
+public enum Class
+{
+    Melee,
+    Ranged,
+}
 public class Entity : MonoBehaviour
 {
     public delegate void ChangeHealthDelegate(float fractionHealth);
     public ChangeHealthDelegate OnChangeHealth;
 
     [Header("Stats")]
+    public Class Class;
     public float HP;
     public int AttackPoints;
     private float MaxHP;

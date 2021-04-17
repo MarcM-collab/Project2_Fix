@@ -6,13 +6,13 @@ using UnityEngine.Tilemaps;
 public class PlayerBehavior : MonoBehaviour
 {
     [SerializeField]
-    public Tile _pointingTile;
+    private Tile _pointingTile;
     [SerializeField]
-    public Tile _rangeTile;
+    private Tile _rangeTile;
     [SerializeField]
-    public Tile _targetTile;
+    private Tile _targetTile;
     [SerializeField]
-    public Tile _nullTile;
+    private Tile _nullTile;
 
 
     [SerializeField]
@@ -23,6 +23,13 @@ public class PlayerBehavior : MonoBehaviour
     public Tilemap _collisionTilemap;
     [SerializeField]
     public Tilemap _uITilemap;
+
+    [SerializeField]
+    private Texture2D _cursorHand;
+    [SerializeField]
+    private Texture2D _cursorSword;
+    [SerializeField]
+    private Texture2D _cursorArrow;
 
     private static Vector3Int _currentGridPos;
     private static Vector3Int _lastGridPos;
@@ -100,30 +107,85 @@ public class PlayerBehavior : MonoBehaviour
 
     private void ShowRangeEnter()
     {
-        var range = EntityManager.ExecutorEntity.Range;
-        int counter = 0;
-        for (int j = -range; j <= range; j++)
+        if (EntityManager.ExecutorEntity.Class == Class.Melee)
         {
-            if (j <= 0) counter++;
-            else counter--;
+            var range = EntityManager.ExecutorEntity.Range + 1;
+            int counter = 0;
+            Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
 
-            for (int i = -range; i <= range; i++)
+            for (int j = -range; j <= range; j++)
             {
-                if (Mathf.Abs(i) < counter)
+                if (j <= 0) counter++;
+                else counter--;
+
+                for (int i = -range; i <= range; i++)
                 {
                     Vector3Int vector = new Vector3Int(i, j, 0);
                     var pos = _selectedGridPos + vector;
+                    Vector3 vToW = pos + v;
 
-                    if (pos == _selectedGridPos)
-                        _uITilemap.SetTile(pos, _targetTile);
-                    else if (CanMove(pos))
-                        _uITilemap.SetTile(pos, _rangeTile);
-                    else if (_floorTilemap.HasTile(pos))
-                        _uITilemap.SetTile(pos, _nullTile);
+                    if (Mathf.Abs(i) < counter - 1)
+                    {
+                        if (pos == _selectedGridPos || InTile(vToW) == 1)
+                            _uITilemap.SetTile(pos, _targetTile);
+                        else if (CanMove(pos) && InTile(vToW) == 0)
+                            _uITilemap.SetTile(pos, _rangeTile);
+                        else if (_floorTilemap.HasTile(pos))
+                            _uITilemap.SetTile(pos, _nullTile);
+                    }
+                    else
+                    {
+                        if (InTile(vToW) == 1)
+                            _uITilemap.SetTile(pos, _targetTile);
+                    }
+                }
+            }
+        }
+        else if (EntityManager.ExecutorEntity.Class == Class.Ranged)
+        {
+            var range = EntityManager.ExecutorEntity.Range;
+            int counter = 0;
+            for (int j = -range; j <= range; j++)
+            {
+                if (j <= 0) counter++;
+                else counter--;
+
+                for (int i = -range; i <= range; i++)
+                {
+                    if (Mathf.Abs(i) < counter)
+                    {
+                        Vector3Int vector = new Vector3Int(i, j, 0);
+                        var pos = _selectedGridPos + vector;
+
+                        if (pos == _selectedGridPos)
+                            _uITilemap.SetTile(pos, _targetTile);
+                        else if (CanMove(pos))
+                            _uITilemap.SetTile(pos, _rangeTile);
+                        else if (_floorTilemap.HasTile(pos))
+                            _uITilemap.SetTile(pos, _nullTile);
+                    }
                 }
             }
         }
     }
+    private static int InTile(Vector3 vector)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(vector, Vector2.zero);
+        var hitCollider = hit.collider;
+        if (hitCollider != null)
+        {
+            var gameObject = hitCollider.gameObject;
+            if (!(gameObject.GetComponent("Entity") as Entity is null))
+            {
+                if (EntityManager.ExecutorEntity.Team != gameObject.GetComponent<Entity>().Team)
+                    return 1; //enemy
+                else
+                    return 2; //ally
+            }
+        }
+        return 0; //nothing
+    }
+
     private bool CanMove(Vector3Int pos)
     {
         if (!_floorTilemap.HasTile(pos) || _collisionTilemap.HasTile(pos))
@@ -133,6 +195,12 @@ public class PlayerBehavior : MonoBehaviour
 
     private void ChoosingTileUpdate(Animator animator)
     {
+        MousePointing();
+        MouseClick(animator);
+        SetCursor();
+    }
+    private void MousePointing()
+    {
         if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos))
         {
             if (!(_lastGridPos == _selectedGridPos))
@@ -140,6 +208,9 @@ public class PlayerBehavior : MonoBehaviour
             _uITilemap.SetTile(_currentGridPos, _targetTile);
             _lastGridPos = _currentGridPos;
         }
+    }
+    private void MouseClick(Animator animator)
+    {
         if (InputManager.LeftMouseClick)
         {
             if (!_uITilemap.HasTile(_currentGridPos))
@@ -149,8 +220,34 @@ public class PlayerBehavior : MonoBehaviour
                 _tileChosenPos = _currentGridPos;
                 animator.SetTrigger("TileChosen");
             }
-                
         }
+    }
+
+    private void SetCursor()
+    {
+        if (IsEnemy())
+        {
+            Cursor.SetCursor(_cursorSword, Vector2.zero, CursorMode.Auto);
+        }
+        else
+        {
+            Cursor.SetCursor(_cursorHand, Vector2.zero, CursorMode.Auto);
+        }
+    }
+    private static bool IsEnemy()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(_mousePos), Vector2.zero);
+        var hitCollider = hit.collider;
+        if (hitCollider != null)
+        {
+            var gameObject = hitCollider.gameObject;
+            if (!(gameObject.GetComponent("Entity") as Entity is null))
+            {
+                if (EntityManager.ExecutorEntity.Team != gameObject.GetComponent<Entity>().Team)
+                    return true;
+            }
+        }
+        return false;
     }
     private void MovingToTileEnter()
     {
