@@ -371,6 +371,15 @@ public class PlayerBehavior : MonoBehaviour
 
     private void HideUIEnter()
     {
+        for (int x = _uITilemap.cellBounds.min.x; x < _floorTilemap.cellBounds.max.x; x++)
+        {
+            for (int y = _uITilemap.cellBounds.min.y; y < _floorTilemap.cellBounds.max.y; y++)
+            {
+                Vector3Int vector = new Vector3Int(x, y, 0);
+
+                _uITilemap.SetTile(vector, null);
+            }
+        }
     }
 
     private void AttackingEnter()
