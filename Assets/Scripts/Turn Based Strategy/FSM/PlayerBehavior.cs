@@ -60,7 +60,6 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Update()
     {
-        _selectedEntity = null;
         _mousePos = Input.mousePosition;
         _currentGridPos = _floorTilemap.WorldToCell(_camera.ScreenToWorldPoint(_mousePos));
     }
@@ -81,7 +80,7 @@ public class PlayerBehavior : MonoBehaviour
             {
                 if (EntityManager.IsEntityInList(EntityManager.GetActiveAllies(_selectedEntity), _selectedEntity))
                 {
-                    
+                    Debug.Log(_selectedEntity.name);
                     EntityManager.SetExecutor(_selectedEntity);
                     _selectedGridPos = _currentGridPos;
                     _isExecutorSelected = true;
@@ -107,11 +106,11 @@ public class PlayerBehavior : MonoBehaviour
 
     private void ShowRangeEnter()
     {
-        if (EntityManager.ExecutorEntity.Class == Class.Melee)
+        Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
+        if (_selectedEntity.Class == Class.Melee)
         {
-            var range = EntityManager.ExecutorEntity.Range + 1;
+            var range = _selectedEntity.Range + 1;
             int counter = 0;
-            Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
 
             for (int j = -range; j <= range; j++)
             {
@@ -141,9 +140,9 @@ public class PlayerBehavior : MonoBehaviour
                 }
             }
         }
-        else if (EntityManager.ExecutorEntity.Class == Class.Ranged)
+        else if (_selectedEntity.Class == Class.Ranged)
         {
-            var range = EntityManager.ExecutorEntity.Range;
+            var range = _selectedEntity.Range;
             int counter = 0;
             for (int j = -range; j <= range; j++)
             {
@@ -166,6 +165,18 @@ public class PlayerBehavior : MonoBehaviour
                     }
                 }
             }
+            for (int x = _floorTilemap.cellBounds.min.x; x < _floorTilemap.cellBounds.max.x; x++)
+            {
+                for (int y = _floorTilemap.cellBounds.min.y; y < _floorTilemap.cellBounds.max.y; y++)
+                {
+                    Vector3Int vector = new Vector3Int(x, y, 0);
+                    var pos = _selectedGridPos + vector;
+                    Vector3 vToW = pos + v;
+
+                    if (InTile(vToW) == 1)
+                        _uITilemap.SetTile(pos, _targetTile);
+                }
+            }
         }
     }
     private static int InTile(Vector3 vector)
@@ -177,7 +188,7 @@ public class PlayerBehavior : MonoBehaviour
             var gameObject = hitCollider.gameObject;
             if (!(gameObject.GetComponent("Entity") as Entity is null))
             {
-                if (EntityManager.ExecutorEntity.Team != gameObject.GetComponent<Entity>().Team)
+                if (_selectedEntity.Team != gameObject.GetComponent<Entity>().Team)
                     return 1; //enemy
                 else
                     return 2; //ally
@@ -201,13 +212,34 @@ public class PlayerBehavior : MonoBehaviour
     }
     private void MousePointing()
     {
-        if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos))
+        if (_selectedEntity.Class == Class.Ranged)
         {
-            if (!(_lastGridPos == _selectedGridPos))
+            //range grid to outside
+            if ((!_uITilemap.HasTile(_currentGridPos) || _targetTile == _uITilemap.GetTile(_currentGridPos)) && _uITilemap.HasTile(_lastGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
+            {
                 _uITilemap.SetTile(_lastGridPos, _rangeTile);
-            _uITilemap.SetTile(_currentGridPos, _targetTile);
-            _lastGridPos = _currentGridPos;
+            }
+            //outside to range grid
+            else if (_uITilemap.HasTile(_currentGridPos) && (!_uITilemap.HasTile(_lastGridPos) || _targetTile == _uITilemap.GetTile(_lastGridPos)) && _targetTile != _uITilemap.GetTile(_currentGridPos))
+            {
+                _uITilemap.SetTile(_currentGridPos, _pointingTile);
+            }
+            else if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
+            {
+                _uITilemap.SetTile(_lastGridPos, _rangeTile);
+                _uITilemap.SetTile(_currentGridPos, _pointingTile);
+            }
         }
+        else
+        {
+            if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
+            {
+                _uITilemap.SetTile(_lastGridPos, _rangeTile);
+                _uITilemap.SetTile(_currentGridPos, _pointingTile);
+            }
+        }
+        _lastGridPos = _currentGridPos;
+
     }
     private void MouseClick(Animator animator)
     {
@@ -227,7 +259,10 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (IsEnemy())
         {
-            Cursor.SetCursor(_cursorSword, Vector2.zero, CursorMode.Auto);
+            if (_selectedEntity.Class == Class.Melee)
+                Cursor.SetCursor(_cursorSword, Vector2.zero, CursorMode.Auto);
+            else
+                Cursor.SetCursor(_cursorArrow, Vector2.zero, CursorMode.Auto);
         }
         else
         {

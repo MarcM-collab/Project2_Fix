@@ -4985,10 +4985,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d30a958c7f71b246b5af1c8c66ddc90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Class: 0
+  Class: 1
   HP: 100
   AttackPoints: 20
-  Range: 5
+  Range: 2
   Velocity: 5
   Team: 0
   Exhausted: 0
