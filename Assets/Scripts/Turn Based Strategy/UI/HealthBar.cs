@@ -24,7 +24,6 @@ public class HealthBar : MonoBehaviour
     private void OnDisable()
     {
         _entity.OnChangeHealth -= SetValue;
-
     }
 
     public void SetValue(float f)

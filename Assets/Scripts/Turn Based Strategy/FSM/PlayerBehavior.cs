@@ -13,6 +13,8 @@ public class PlayerBehavior : MonoBehaviour
     private Tile _targetTile;
     [SerializeField]
     private Tile _nullTile;
+    [SerializeField]
+    private Tile _allyTile;
 
 
     [SerializeField]
@@ -33,11 +35,14 @@ public class PlayerBehavior : MonoBehaviour
 
     private static Vector3Int _currentGridPos;
     private static Vector3Int _lastGridPos;
+    private static int _couterPointing;
 
     private static Entity _selectedEntity;
     private static Vector3Int _selectedGridPos;
     private static Vector3 _mousePos;
     private static Vector3Int _tileChosenPos;
+
+    private bool _isLastTargetTile;
 
     private static bool _isExecutorSelected;
     private void OnEnable()
@@ -94,6 +99,15 @@ public class PlayerBehavior : MonoBehaviour
                     EntityManager.SetExecutor(_selectedEntity);
                     _selectedGridPos = _currentGridPos;
                     _isExecutorSelected = true;
+                    if (_selectedEntity.Class == Class.Ranged)
+                    {
+                        //Check if an enemy is in range
+                        animator.SetBool("Ranged", true);
+                    }
+                    else
+                    {
+                        animator.SetBool("Ranged", false);
+                    }
                     animator.SetBool("Selected", true);
                 }
             }
@@ -132,10 +146,12 @@ public class PlayerBehavior : MonoBehaviour
 
                 if (Mathf.Abs(i) < counter - 1)
                 {
-                    if (pos == _selectedGridPos || InTile(vToW) == 1)
+                    if (InTile(vToW) == 1)
                         _uITilemap.SetTile(pos, _targetTile);
                     else if (CanMove(pos) && InTile(vToW) == 0)
                         _uITilemap.SetTile(pos, _rangeTile);
+                    else if (pos == _selectedGridPos || InTile(vToW) == 2)
+                        _uITilemap.SetTile(pos, _allyTile);
                     else if (_floorTilemap.HasTile(pos))
                         _uITilemap.SetTile(pos, _nullTile);
                 }
@@ -164,9 +180,10 @@ public class PlayerBehavior : MonoBehaviour
                 {
                     Vector3Int vector = new Vector3Int(i, j, 0);
                     var pos = _selectedGridPos + vector;
+                    Vector3 vToW = pos + v;
 
-                    if (pos == _selectedGridPos)
-                        _uITilemap.SetTile(pos, _targetTile);
+                    if (pos == _selectedGridPos || InTile(vToW) == 2)
+                        _uITilemap.SetTile(pos, _allyTile);
                     else if (CanMove(pos))
                         _uITilemap.SetTile(pos, _rangeTile);
                     else if (_floorTilemap.HasTile(pos))
@@ -179,11 +196,11 @@ public class PlayerBehavior : MonoBehaviour
             for (int y = _floorTilemap.cellBounds.min.y; y < _floorTilemap.cellBounds.max.y; y++)
             {
                 Vector3Int vector = new Vector3Int(x, y, 0);
-                var pos = _selectedGridPos + vector;
-                Vector3 vToW = pos + v;
-
+                //var pos = _selectedGridPos + vector;
+                //Vector3 vToW = pos + v;
+                Vector3 vToW = vector + v;
                 if (InTile(vToW) == 1)
-                    _uITilemap.SetTile(pos, _targetTile);
+                    _uITilemap.SetTile(vector, _targetTile);
             }
         }
     }
@@ -211,24 +228,9 @@ public class PlayerBehavior : MonoBehaviour
             return false;
         return true;
     }
-    private void Melee_ChoosingTileUpdate(Animator animator)
+    private void Ranged_ChoosingTileUpdate(Animator animator)
     {
-        //range grid to outside
-        if ((!_uITilemap.HasTile(_currentGridPos) || _targetTile == _uITilemap.GetTile(_currentGridPos)) && _uITilemap.HasTile(_lastGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
-        {
-            _uITilemap.SetTile(_lastGridPos, _rangeTile);
-        }
-        //outside to range grid
-        else if (_uITilemap.HasTile(_currentGridPos) && (!_uITilemap.HasTile(_lastGridPos) || _targetTile == _uITilemap.GetTile(_lastGridPos)) && _targetTile != _uITilemap.GetTile(_currentGridPos))
-        {
-            _uITilemap.SetTile(_currentGridPos, _pointingTile);
-        }
-        else if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
-        {
-            _uITilemap.SetTile(_lastGridPos, _rangeTile);
-            _uITilemap.SetTile(_currentGridPos, _pointingTile);
-        }
-        _lastGridPos = _currentGridPos;
+        TileSetter();
 
         if (InputManager.LeftMouseClick)
         {
@@ -245,14 +247,25 @@ public class PlayerBehavior : MonoBehaviour
         else
             Cursor.SetCursor(_cursorHand, Vector2.zero, CursorMode.Auto);
     }
-    private void Ranged_ChoosingTileUpdate(Animator animator)
+    private void Melee_ChoosingTileUpdate(Animator animator)
     {
-        if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
+        if (_isLastTargetTile && _currentGridPos != _lastGridPos)
         {
-            _uITilemap.SetTile(_lastGridPos, _rangeTile);
-            _uITilemap.SetTile(_currentGridPos, _pointingTile);
+            _couterPointing++;
+            if (_couterPointing == 1)
+            {
+                _couterPointing = 0;
+                DeletePointingTile();
+                _isLastTargetTile = false;
+            }
         }
-        _lastGridPos = _currentGridPos;
+
+        TileSetter();
+
+        if (_targetTile == _uITilemap.GetTile(_lastGridPos))
+        {
+            _isLastTargetTile = true;
+        }
 
         if (InputManager.LeftMouseClick)
         {
@@ -265,9 +278,49 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
         if (IsEnemy())
+        {
             Cursor.SetCursor(_cursorSword, Vector2.zero, CursorMode.Auto);
+        }
         else
             Cursor.SetCursor(_cursorHand, Vector2.zero, CursorMode.Auto);
+    }
+    private void TileSetter()
+    {
+        //range grid to outside
+        if (ToPoint())
+        {
+            _uITilemap.SetTile(_lastGridPos, _rangeTile);
+        }
+        //outside to range grid
+        else if (ToRange())
+        {
+            _uITilemap.SetTile(_currentGridPos, _pointingTile);
+        }
+        else if (ToCross())
+        {
+            _uITilemap.SetTile(_lastGridPos, _rangeTile);
+            _uITilemap.SetTile(_currentGridPos, _pointingTile);
+        }
+        _lastGridPos = _currentGridPos;
+    }
+    private bool ToPoint()
+    {
+        return (!_uITilemap.HasTile(_currentGridPos) || _allyTile == _uITilemap.GetTile(_currentGridPos) || _nullTile == _uITilemap.GetTile(_currentGridPos))
+            && _uITilemap.HasTile(_lastGridPos)
+            && _targetTile != _uITilemap.GetTile(_lastGridPos) && _allyTile != _uITilemap.GetTile(_lastGridPos) && _nullTile != _uITilemap.GetTile(_lastGridPos);
+    }
+    private bool ToRange()
+    {
+        return _uITilemap.HasTile(_currentGridPos)
+            && (!_uITilemap.HasTile(_lastGridPos) || _targetTile == _uITilemap.GetTile(_lastGridPos) || _allyTile == _uITilemap.GetTile(_lastGridPos) || _nullTile == _uITilemap.GetTile(_lastGridPos))
+            && _targetTile != _uITilemap.GetTile(_currentGridPos) && _allyTile != _uITilemap.GetTile(_currentGridPos) && _nullTile != _uITilemap.GetTile(_currentGridPos);
+    }
+    private bool ToCross()
+    {
+        return _uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos)
+            && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos)
+            && _allyTile != _uITilemap.GetTile(_currentGridPos) && _allyTile != _uITilemap.GetTile(_lastGridPos)
+            && _nullTile != _uITilemap.GetTile(_currentGridPos) && _nullTile != _uITilemap.GetTile(_lastGridPos);
     }
     private static bool IsEnemy()
     {
@@ -283,6 +336,19 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
         return false;
+    }
+    private void DeletePointingTile()
+    {
+        for (int x = _floorTilemap.cellBounds.min.x; x < _floorTilemap.cellBounds.max.x; x++)
+        {
+            for (int y = _floorTilemap.cellBounds.min.y; y < _floorTilemap.cellBounds.max.y; y++)
+            {
+                Vector3Int vector = new Vector3Int(x, y, 0);
+
+                if (_pointingTile == _uITilemap.GetTile(vector))
+                    _uITilemap.SetTile(vector, _rangeTile);
+            }
+        }
     }
     private void MovingToTileEnter()
     {
@@ -301,16 +367,13 @@ public class PlayerBehavior : MonoBehaviour
     }
     private void HideRangeEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     private void HideUIEnter()
     {
-        throw new System.NotImplementedException();
     }
 
     private void AttackingEnter()
     {
-        throw new System.NotImplementedException();
     }
 }
