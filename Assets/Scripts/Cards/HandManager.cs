@@ -13,15 +13,5 @@ public class HandManager : MonoBehaviour
         Transform cardInstance = Instantiate(newCard, HandCanvas.position, Quaternion.identity).transform;
         cardInstance.SetParent(HandCanvas);
         cardInstance.localScale = new Vector3(scale,scale,scale);
-
-
     }
-
-    private void Update()
-    {
-        
-    }
-
-    
-
 }

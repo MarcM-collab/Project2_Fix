@@ -75,11 +75,12 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\HealthSystem.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\ShowRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Command Pattern\AttackCommand.cs" />
+    <Compile Include="Assets\Scripts\Cards\HandManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\CharactersBehaviour\Walking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Selecting.cs" />
-    <Compile Include="Assets\Scripts\Cards\HandManager.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardUsage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
