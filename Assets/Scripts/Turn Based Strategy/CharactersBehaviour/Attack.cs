@@ -14,6 +14,5 @@ public class Attack : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        CommandCreator.Attack();
     }
 }
