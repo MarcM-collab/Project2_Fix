@@ -43,19 +43,29 @@ public class PlayerBehavior : MonoBehaviour
     private void OnEnable()
     {
         Selecting.OnSelectingUpdate += SelectingUpdate;
-        ShowRange.OnShowRangeEnter += ShowRangeEnter;
-        ChoosingTile.OnChoosingTileUpdate += ChoosingTileUpdate;
+        Melee_ShowRange.OnMelee_ShowRangeEnter += Melee_ShowRangeEnter;
+        Ranged_ShowRange.OnRanged_ShowRangeEnter += Ranged_ShowRangeEnter;
+        Melee_ChoosingTile.OnMelee_ChoosingTileUpdate += Melee_ChoosingTileUpdate;
+        Ranged_ChoosingTile.OnRanged_ChoosingTileUpdate += Ranged_ChoosingTileUpdate;
+        HideRange.OnHideRangeEnter += HideRangeEnter;
         MovingToTile.OnMovingToTileEnter += MovingToTileEnter;
         MovingToTile.OnMovingToTileUpdate += MovingToTileUpdate;
+        HideUI.OnHideUIEnter += HideUIEnter;
+        Attacking.OnAttackingEnter += AttackingEnter;
     }
 
     private void OnDisable()
     {
         Selecting.OnSelectingUpdate -= SelectingUpdate;
-        ShowRange.OnShowRangeEnter -= ShowRangeEnter;
-        ChoosingTile.OnChoosingTileUpdate -= ChoosingTileUpdate;
+        Melee_ShowRange.OnMelee_ShowRangeEnter -= Melee_ShowRangeEnter;
+        Ranged_ShowRange.OnRanged_ShowRangeEnter -= Ranged_ShowRangeEnter;
+        Melee_ChoosingTile.OnMelee_ChoosingTileUpdate -= Melee_ChoosingTileUpdate;
+        Ranged_ChoosingTile.OnRanged_ChoosingTileUpdate -= Ranged_ChoosingTileUpdate;
+        HideRange.OnHideRangeEnter -= HideRangeEnter;
         MovingToTile.OnMovingToTileEnter -= MovingToTileEnter;
         MovingToTile.OnMovingToTileUpdate -= MovingToTileUpdate;
+        Attacking.OnAttackingEnter -= AttackingEnter;
+        HideUI.OnHideUIEnter -= HideUIEnter;
     }
 
     private void Update()
@@ -103,79 +113,77 @@ public class PlayerBehavior : MonoBehaviour
         }
         return null;
     }
-
-    private void ShowRangeEnter()
+    private void Melee_ShowRangeEnter()
     {
         Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
-        if (_selectedEntity.Class == Class.Melee)
+        var range = _selectedEntity.Range + 1;
+        int counter = 0;
+
+        for (int j = -range; j <= range; j++)
         {
-            var range = _selectedEntity.Range + 1;
-            int counter = 0;
+            if (j <= 0) counter++;
+            else counter--;
 
-            for (int j = -range; j <= range; j++)
+            for (int i = -range; i <= range; i++)
             {
-                if (j <= 0) counter++;
-                else counter--;
+                Vector3Int vector = new Vector3Int(i, j, 0);
+                var pos = _selectedGridPos + vector;
+                Vector3 vToW = pos + v;
 
-                for (int i = -range; i <= range; i++)
+                if (Mathf.Abs(i) < counter - 1)
                 {
-                    Vector3Int vector = new Vector3Int(i, j, 0);
-                    var pos = _selectedGridPos + vector;
-                    Vector3 vToW = pos + v;
-
-                    if (Mathf.Abs(i) < counter - 1)
-                    {
-                        if (pos == _selectedGridPos || InTile(vToW) == 1)
-                            _uITilemap.SetTile(pos, _targetTile);
-                        else if (CanMove(pos) && InTile(vToW) == 0)
-                            _uITilemap.SetTile(pos, _rangeTile);
-                        else if (_floorTilemap.HasTile(pos))
-                            _uITilemap.SetTile(pos, _nullTile);
-                    }
-                    else
-                    {
-                        if (InTile(vToW) == 1)
-                            _uITilemap.SetTile(pos, _targetTile);
-                    }
+                    if (pos == _selectedGridPos || InTile(vToW) == 1)
+                        _uITilemap.SetTile(pos, _targetTile);
+                    else if (CanMove(pos) && InTile(vToW) == 0)
+                        _uITilemap.SetTile(pos, _rangeTile);
+                    else if (_floorTilemap.HasTile(pos))
+                        _uITilemap.SetTile(pos, _nullTile);
                 }
-            }
-        }
-        else if (_selectedEntity.Class == Class.Ranged)
-        {
-            var range = _selectedEntity.Range;
-            int counter = 0;
-            for (int j = -range; j <= range; j++)
-            {
-                if (j <= 0) counter++;
-                else counter--;
-
-                for (int i = -range; i <= range; i++)
+                else
                 {
-                    if (Mathf.Abs(i) < counter)
-                    {
-                        Vector3Int vector = new Vector3Int(i, j, 0);
-                        var pos = _selectedGridPos + vector;
-
-                        if (pos == _selectedGridPos)
-                            _uITilemap.SetTile(pos, _targetTile);
-                        else if (CanMove(pos))
-                            _uITilemap.SetTile(pos, _rangeTile);
-                        else if (_floorTilemap.HasTile(pos))
-                            _uITilemap.SetTile(pos, _nullTile);
-                    }
-                }
-            }
-            for (int x = _floorTilemap.cellBounds.min.x; x < _floorTilemap.cellBounds.max.x; x++)
-            {
-                for (int y = _floorTilemap.cellBounds.min.y; y < _floorTilemap.cellBounds.max.y; y++)
-                {
-                    Vector3Int vector = new Vector3Int(x, y, 0);
-                    var pos = _selectedGridPos + vector;
-                    Vector3 vToW = pos + v;
-
                     if (InTile(vToW) == 1)
                         _uITilemap.SetTile(pos, _targetTile);
                 }
+            }
+        }
+    }
+    private void Ranged_ShowRangeEnter()
+    {
+        Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
+        var range = _selectedEntity.Range;
+        int counter = 0;
+
+        for (int j = -range; j <= range; j++)
+        {
+            if (j <= 0) counter++;
+            else counter--;
+
+            for (int i = -range; i <= range; i++)
+            {
+                if (Mathf.Abs(i) < counter)
+                {
+                    Vector3Int vector = new Vector3Int(i, j, 0);
+                    var pos = _selectedGridPos + vector;
+
+                    if (pos == _selectedGridPos)
+                        _uITilemap.SetTile(pos, _targetTile);
+                    else if (CanMove(pos))
+                        _uITilemap.SetTile(pos, _rangeTile);
+                    else if (_floorTilemap.HasTile(pos))
+                        _uITilemap.SetTile(pos, _nullTile);
+                }
+            }
+        }
+        for (int x = _floorTilemap.cellBounds.min.x; x < _floorTilemap.cellBounds.max.x; x++)
+        {
+            for (int y = _floorTilemap.cellBounds.min.y; y < _floorTilemap.cellBounds.max.y; y++)
+            {
+                Vector3Int vector = new Vector3Int(x, y, 0);
+                var pos = _selectedGridPos + vector;
+                Vector3 vToW = pos + v;
+
+                if (InTile(vToW) == 1)
+                    _uITilemap.SetTile(pos, _targetTile);
             }
         }
     }
@@ -203,46 +211,25 @@ public class PlayerBehavior : MonoBehaviour
             return false;
         return true;
     }
-
-    private void ChoosingTileUpdate(Animator animator)
+    private void Melee_ChoosingTileUpdate(Animator animator)
     {
-        MousePointing();
-        MouseClick(animator);
-        SetCursor();
-    }
-    private void MousePointing()
-    {
-        if (_selectedEntity.Class == Class.Ranged)
+        //range grid to outside
+        if ((!_uITilemap.HasTile(_currentGridPos) || _targetTile == _uITilemap.GetTile(_currentGridPos)) && _uITilemap.HasTile(_lastGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
         {
-            //range grid to outside
-            if ((!_uITilemap.HasTile(_currentGridPos) || _targetTile == _uITilemap.GetTile(_currentGridPos)) && _uITilemap.HasTile(_lastGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
-            {
-                _uITilemap.SetTile(_lastGridPos, _rangeTile);
-            }
-            //outside to range grid
-            else if (_uITilemap.HasTile(_currentGridPos) && (!_uITilemap.HasTile(_lastGridPos) || _targetTile == _uITilemap.GetTile(_lastGridPos)) && _targetTile != _uITilemap.GetTile(_currentGridPos))
-            {
-                _uITilemap.SetTile(_currentGridPos, _pointingTile);
-            }
-            else if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
-            {
-                _uITilemap.SetTile(_lastGridPos, _rangeTile);
-                _uITilemap.SetTile(_currentGridPos, _pointingTile);
-            }
+            _uITilemap.SetTile(_lastGridPos, _rangeTile);
         }
-        else
+        //outside to range grid
+        else if (_uITilemap.HasTile(_currentGridPos) && (!_uITilemap.HasTile(_lastGridPos) || _targetTile == _uITilemap.GetTile(_lastGridPos)) && _targetTile != _uITilemap.GetTile(_currentGridPos))
         {
-            if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
-            {
-                _uITilemap.SetTile(_lastGridPos, _rangeTile);
-                _uITilemap.SetTile(_currentGridPos, _pointingTile);
-            }
+            _uITilemap.SetTile(_currentGridPos, _pointingTile);
+        }
+        else if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
+        {
+            _uITilemap.SetTile(_lastGridPos, _rangeTile);
+            _uITilemap.SetTile(_currentGridPos, _pointingTile);
         }
         _lastGridPos = _currentGridPos;
 
-    }
-    private void MouseClick(Animator animator)
-    {
         if (InputManager.LeftMouseClick)
         {
             if (!_uITilemap.HasTile(_currentGridPos))
@@ -253,21 +240,34 @@ public class PlayerBehavior : MonoBehaviour
                 animator.SetTrigger("TileChosen");
             }
         }
-    }
-
-    private void SetCursor()
-    {
         if (IsEnemy())
-        {
-            if (_selectedEntity.Class == Class.Melee)
-                Cursor.SetCursor(_cursorSword, Vector2.zero, CursorMode.Auto);
-            else
-                Cursor.SetCursor(_cursorArrow, Vector2.zero, CursorMode.Auto);
-        }
+            Cursor.SetCursor(_cursorArrow, Vector2.zero, CursorMode.Auto);
         else
-        {
             Cursor.SetCursor(_cursorHand, Vector2.zero, CursorMode.Auto);
+    }
+    private void Ranged_ChoosingTileUpdate(Animator animator)
+    {
+        if (_uITilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos && _rangeTile == _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_currentGridPos) && _targetTile != _uITilemap.GetTile(_lastGridPos))
+        {
+            _uITilemap.SetTile(_lastGridPos, _rangeTile);
+            _uITilemap.SetTile(_currentGridPos, _pointingTile);
         }
+        _lastGridPos = _currentGridPos;
+
+        if (InputManager.LeftMouseClick)
+        {
+            if (!_uITilemap.HasTile(_currentGridPos))
+                animator.SetBool("Selected", false);
+            else
+            {
+                _tileChosenPos = _currentGridPos;
+                animator.SetTrigger("TileChosen");
+            }
+        }
+        if (IsEnemy())
+            Cursor.SetCursor(_cursorSword, Vector2.zero, CursorMode.Auto);
+        else
+            Cursor.SetCursor(_cursorHand, Vector2.zero, CursorMode.Auto);
     }
     private static bool IsEnemy()
     {
@@ -298,5 +298,19 @@ public class PlayerBehavior : MonoBehaviour
     private void MovingToTileUpdate(Animator animator)
     {
         animator.SetBool("MovedToTile", !EntityManager.ExecutorEntity.Walking);
+    }
+    private void HideRangeEnter()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void HideUIEnter()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    private void AttackingEnter()
+    {
+        throw new System.NotImplementedException();
     }
 }
