@@ -6,10 +6,11 @@ public class Attack : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        HealthSystem.TakeDamage(EntityManager.ExecutorEntity.AttackPoints);
+        EntityManager.TargetEntity.ChangeHealth();
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        //Nothing
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
