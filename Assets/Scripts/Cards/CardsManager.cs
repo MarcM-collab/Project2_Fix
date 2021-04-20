@@ -7,26 +7,27 @@ public class CardsManager : MonoBehaviour
 {
     public List<Card> Cards; //Baraja elegida por el player (8 cartas)
 
-    List<Card> twoCardsRandom = new List<Card>();
-    public Animation AnimatorCard;
+    List<Card> twoCardsRandom = new List<Card>(); //lista para las dos cartas aleatorias.
 
     public Image[] buttons;
 
     public HandManager Hand;
+    public Whiskas Whiskas;
 
     private void Start()
     {
         buttons[0].gameObject.SetActive(false);
         buttons[1].gameObject.SetActive(false);
     }
-    private void Update()
+    public void PassTurn()
     {
-        if (Input.GetKeyDown(KeyCode.C)) //de testeo
+        Whiskas.rounds++;
+        if (Whiskas.rounds % 2 == 0)
         {
-            ShowRandomCards(ChooseRandom());
+            Whiskas.RestartWhiskas();
         }
+            ShowRandomCards(ChooseRandom());
     }
-
     private List<Card> ChooseRandom() //salen dos cartas randm y las guarda en una lista.
     {
         int random1 = Random.Range(0, Cards.Count);
@@ -36,11 +37,9 @@ public class CardsManager : MonoBehaviour
         {
             random2 = Random.Range(0, Cards.Count);
         }
-
         twoCardsRandom.Add(Cards[random1]);
         twoCardsRandom.Add(Cards[random2]);
 
-        
         return twoCardsRandom;
     }
 
@@ -50,12 +49,10 @@ public class CardsManager : MonoBehaviour
         {
             buttons[i].sprite = _twoCardsRandom[i].GetComponent<Image>().sprite;
             buttons[i].gameObject.SetActive(true);
-
         }
     }
 
-
-    public void ConfirmAddCard(int number)
+    public void ConfirmAddCard(int number) //se pasa información de la carta escogida y se desactivan después.
     {
         Hand.AddCard(twoCardsRandom[number]);
 
@@ -63,9 +60,6 @@ public class CardsManager : MonoBehaviour
         {
             buttons[i].gameObject.SetActive(false);
         }
-        
         twoCardsRandom.Clear();
-
-        //animaciones 
     }
 }
