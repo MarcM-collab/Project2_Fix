@@ -74,4 +74,11 @@ public static class EntityManager
         }
         return false;
     }
+    public static void RemoveExhaust()
+    {
+        foreach (Entity entity in Entities)
+        {
+            entity.Exhausted = false;
+        }
+    }
 }

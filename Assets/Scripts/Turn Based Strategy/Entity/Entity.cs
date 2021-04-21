@@ -34,6 +34,7 @@ public class Entity : MonoBehaviour
 
     public bool Exhausted;
     public bool Walking;
+    public bool Turn;
     public List<Vector3> Path;
 
 
@@ -49,6 +50,7 @@ public class Entity : MonoBehaviour
     {
         _animator.SetBool("Exhausted", Exhausted);
         _animator.SetBool("Walking", Walking);
+        _animator.SetBool("Turn", Turn);
     }
     public void ChangeHealth()
     {
