@@ -6,6 +6,9 @@ public class Selecting : StateMachineBehaviour
 {
     public delegate void SelectingUpdateDelegate(Animator animator);
     public static SelectingUpdateDelegate OnSelectingUpdate;
+    public delegate void SelectingExitDelegate();
+    public static SelectingExitDelegate OnSelectingExit;
+
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
     //}
@@ -14,7 +17,8 @@ public class Selecting : StateMachineBehaviour
         OnSelectingUpdate?.Invoke(animator);
     }
 
-    //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //}
+    override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        OnSelectingExit?.Invoke();
+    }
 }
