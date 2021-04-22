@@ -9,6 +9,6 @@ public class ScriptButton : MonoBehaviour
     public static ButtonCard _buttonCard;
     public void ClicButton()
     {
-        _buttonCard?.Invoke(GetComponent<Card>().sprite, gameObject); //el primero es la sprite de la carta (la morphologia) y el segundo es el boton que contiene esta script.
+        _buttonCard?.Invoke(GetComponent<Unit>().sprite, gameObject); //el primero es la sprite de la carta (la morphologia) y el segundo es el boton que contiene esta script.
     }    
 }

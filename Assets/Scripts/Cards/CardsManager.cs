@@ -12,6 +12,8 @@ public class CardsManager : MonoBehaviour
     public Image[] buttons;
 
     public HandManager Hand;
+    [SerializeField]
+    private int maxCardInHand = 6;
     public Whiskas Whiskas;
 
     private void Start()
@@ -26,9 +28,10 @@ public class CardsManager : MonoBehaviour
         {
             Whiskas.RestartWhiskas();
         }
-            ShowRandomCards(ChooseRandom());
+         if(Hand.hand.Count < maxCardInHand)//límite de cartas en mano.
+            ShowRandomCards(ChooseRandom());    
     }
-    private List<Card> ChooseRandom() //salen dos cartas randm y las guarda en una lista.
+    private List<Card> ChooseRandom() //salen dos cartas random y las guarda en una lista.
     {
         int random1 = Random.Range(0, Cards.Count);
         int random2 = Random.Range(0, Cards.Count);

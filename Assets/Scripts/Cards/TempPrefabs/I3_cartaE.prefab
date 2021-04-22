@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 9081028154589159372}
   - component: {fileID: 7119300537748808636}
   - component: {fileID: -1129596141666172625}
-  - component: {fileID: 2861873116186378643}
   - component: {fileID: 5230669792553999711}
+  - component: {fileID: 5480704345394235149}
   m_Layer: 5
   m_Name: I3_cartaE
   m_TagString: Untagged
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -3569372624928224863, guid: 86774c99bb69a164d99b28df61434c16, type: 3}
+  m_Sprite: {fileID: 21300000, guid: d6d63092326f4dc44b5fa88576c8e471, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -134,23 +134,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2861873116186378643
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6534664826198039582}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b38a98cb7339eec4496b23b261a2fe55, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Power: 0
-  Health: 0
-  Distance: 0
-  Whiskas: 3
-  sprite: {fileID: 2317560089037973057, guid: f8fa41586f1101b43afe2b1d73967865, type: 3}
 --- !u!114 &5230669792553999711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,3 +146,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cde27b4390ad7f4d9496cab5f7da083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5480704345394235149
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6534664826198039582}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b4761a51813125469f6201f65153f59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Whiskas: 3
+  Power: 0
+  Health: 0
+  Distance: 0
+  sprite: {fileID: 2317560089037973057, guid: f8fa41586f1101b43afe2b1d73967865, type: 3}

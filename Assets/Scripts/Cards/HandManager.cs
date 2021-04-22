@@ -23,7 +23,6 @@ public class HandManager : MonoBehaviour
     {
         for (int i = 0; i < hand.Count; i++) //en el if hay que buscar una solución menos compleja.
         {
-            //Debug.Log(hand[i].name.Substring(hand[i].name.Length - 1 - hand.Count / 10) + "<-hand cardtoremove->" + cardToRemove.name.Substring(cardToRemove.name.Length - 1 - hand.Count / 10));
             if(hand[i].name.Substring(hand[i].name.Length - 1 - hand.Count / 10) == cardToRemove.name.Substring(cardToRemove.name.Length - 1-hand.Count/10)) //el .length con más de 10 cartas en la mano no funciona.
             {
                 hand.Remove(hand[i]);

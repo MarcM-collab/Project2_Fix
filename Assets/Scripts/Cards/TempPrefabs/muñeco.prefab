@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2787377687966453765}
   - component: {fileID: 6906097955988299541}
+  - component: {fileID: 1147246581764778060}
   m_Layer: 0
   m_Name: "mu\xF1eco"
   m_TagString: Untagged
@@ -25,8 +26,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2317560089037973057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.13, y: -2.95, z: -30.668653}
-  m_LocalScale: {x: 0.75137925, y: 0.48690224, z: 1}
+  m_LocalPosition: {x: -3.4931, y: -0.4932, z: -30.668653}
+  m_LocalScale: {x: 0.34640518, y: 0.23863415, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: -1039971011
   m_SortingLayer: 5
   m_SortingOrder: 10
-  m_Sprite: {fileID: 21300000, guid: f210a097591d87c46beb2fd7b9eebb2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 47b0eb63393ad2749963d322ade302ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -82,3 +83,29 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!61 &1147246581764778060
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2317560089037973057}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.87, y: 4.21}
+    newSize: {x: 1.435, y: 2.105}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 2.87, y: 4.21}
+  m_EdgeRadius: 0
