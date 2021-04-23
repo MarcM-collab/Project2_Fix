@@ -15,6 +15,7 @@ public class IACard : MonoBehaviour
     public List<CardType> IADeck;//deck hecho por nosotros
     public List<Card> IAHand; //de 0 a 6 cartas q tendrá en la mano
 
+
     public Whiskas _whiskas;
 
     private int _whiskasCombinationAccumulate = 0;
@@ -25,10 +26,30 @@ public class IACard : MonoBehaviour
     public List<List<int>> _combinations = new List<List<int>>(); //remover publicas
     public List<int> _valueCardStats = new List<int>(); //remover publicas
 
+    //control de la visualización de las cartas de la  IA
+    public Transform IAHandCanvas;
+    public float scale = 1f;
+    public GameObject prefabBackCard;
+    private float maxCardsInHand = 6;
+    public List<GameObject> cardsInHand = new List<GameObject>();
+    private Transform cardInstance;
+    //-----------------------------
+    private void Start()
+    {
+        for (int i = 0; i < IAHand.Count; i++)
+        {
+            print("añadiendo carta:   " + i);
+            AddCardHand();
+        }
+    }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C))
+        if (Input.GetKeyDown(KeyCode.C) && IAHand.Count < maxCardsInHand)
             RandomCardChosen();
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            RemoveCardHand();
+        }
         if (Input.GetKeyDown(KeyCode.B))
         {
             if (IAHasSpells())
@@ -41,6 +62,21 @@ public class IACard : MonoBehaviour
                 //elif. BestCombination();
             }
         }
+        
+    }
+
+    private void RemoveCardHand()
+    {
+        Destroy(cardsInHand[cardsInHand.Count-1]);
+        cardsInHand.RemoveAt(cardsInHand.Count - 1);
+    }
+    private void AddCardHand()
+    {
+        cardInstance = Instantiate(prefabBackCard, IAHandCanvas.position, Quaternion.identity).transform;
+
+        cardInstance.SetParent(IAHandCanvas);
+        cardInstance.localScale = new Vector3(scale, scale, scale);//escalamos las cartas que se ven en la mano.
+        cardsInHand.Add(cardInstance.gameObject);
     }
     /*
     SE ELIGEN (DOS) CARTAS ALEATORIAS
@@ -55,7 +91,8 @@ public class IACard : MonoBehaviour
         {
             random2 = UnityEngine.Random.Range(0, IADeck.Count);
         }
-        IAHand.Add(ComproveHand(random1,random2));
+        IAHand.Add(ComproveHand(random1, random2));
+        AddCardHand();
     }
     /*
     LA FUNCIÓN REVISA SI LAS (DOS) CARTAS
@@ -76,7 +113,7 @@ public class IACard : MonoBehaviour
         //miramos en la mano cuales tiene.
         for (int i = 0; i < IAHand.Count; i++)
         {
-            if (IAHand[i].name == IADeck[random1].card.name ) //si el nombre es diferente =>  no la tiene| coge esta y no comprueba las otras.
+            if (IAHand[i].name == IADeck[random1].card.name) //si el nombre es diferente =>  no la tiene| coge esta y no comprueba las otras.
             {
                 print("PRIMERA repe " + IADeck[random1].card.name);
                 _firstCardRepe = true;
@@ -97,7 +134,7 @@ public class IACard : MonoBehaviour
                 return IADeck[random2].card;
             else
                 return IADeck[random1].card;
-        }                        
+        }
     }
     /*
     COMPRUEBA SI LA MANO DE LA IA TIENE
@@ -117,22 +154,22 @@ public class IACard : MonoBehaviour
         //vamos a revisar que cartas de hechizo hay y cual es la mayor prioridad.
         for (int i = 0; i < IAHand.Count; i++)
         {
-            if(IAHand[i] is Spells)
+            if (IAHand[i] is Spells)
             {
                 spellsList.Add(IAHand[i] as Spells);
                 print("algun hezho entró");
-                if(spellsList[sCounter].Priority > maxPriority)
+                if (spellsList[sCounter].Priority > maxPriority)
                 {
                     maxPriority = spellsList[sCounter].Priority;
                     spellPriorityPos = i;
                     sCounter++;
                 }
-            }          
+            }
         }
         print(spellsList.Count);
-        return spellsList.Count !=0;
+        return spellsList.Count != 0;
     }
-    
+
     /*
     ESTA FUNCIÓN REALIZA LAS COMBINACIONES
     POSIBLES POR LA IA MEDIANTE EL MANÁ(WHISKAS)
@@ -152,7 +189,7 @@ public class IACard : MonoBehaviour
         // This loops is like BFS of a tree
         // with 1 as root 0 as left child
         // and 1 as right child and so on
-        float e = Mathf.Pow(2, lenghtHand)-1;
+        float e = Mathf.Pow(2, lenghtHand) - 1;
         while (e-- > 0)
         {
             List<int> tempList = new List<int>();
@@ -161,34 +198,34 @@ public class IACard : MonoBehaviour
             string s1 = q.First.Value;
             q.RemoveFirst();
             int count = 0;
-           
-            for (int i = s1.Length-1; i >= 0; i--)
+
+            for (int i = s1.Length - 1; i >= 0; i--)
             {
-                if(s1[i] == '1')
+                if (s1[i] == '1')
                 {
                     _whiskasCombinationAccumulate += IAHand[count].Whiskas;
-                    if(IAHand[count] is Unit)
+                    if (IAHand[count] is Unit)
                     {
                         tempUnit.Add(IAHand[count] as Unit);
                         _cardStatsAccumulates += tempUnit[count].Health + tempUnit[count].Power + tempUnit[count].Whiskas + 1;
                     }
-                   
+
                     tempList.Add(count);//añadimos posición
                 }
-                
+
                 print(IAHand[count].name);
                 count++;
             }
-            print(s1+":posiciones |  mana total:     "+_whiskasCombinationAccumulate);
+            print(s1 + ":posiciones |  mana total:     " + _whiskasCombinationAccumulate);
 
             if (_whiskasCombinationAccumulate <= _currentWhiskas)
             {
                 _combinations.Add(tempList);//añadimos la combinación con su posición
                 _valueCardStats.Add(_cardStatsAccumulates); // su valor
             }
-            
+
             _whiskasCombinationAccumulate = 0;
-           
+
             // Store s1 before changing it
             string s2 = s1;
 
