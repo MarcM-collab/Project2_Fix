@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Ranged_ChoosingTile : StateMachineBehaviour
 {
+    public delegate void Ranged_ChoosingTileEnterDelegate();
+    public static Ranged_ChoosingTileEnterDelegate OnRanged_ChoosingTileEnter;
     public delegate void Ranged_ChoosingTileUpdateDelegate(Animator animator);
     public static Ranged_ChoosingTileUpdateDelegate OnRanged_ChoosingTileUpdate;
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //}
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        OnRanged_ChoosingTileEnter?.Invoke();
+    }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         OnRanged_ChoosingTileUpdate?.Invoke(animator);

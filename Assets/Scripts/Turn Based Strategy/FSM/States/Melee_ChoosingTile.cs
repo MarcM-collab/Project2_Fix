@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class Melee_ChoosingTile: StateMachineBehaviour
 {
+    public delegate void Melee_ChoosingTileEnterDelegate();
+    public static Melee_ChoosingTileEnterDelegate OnMelee_ChoosingTileEnter;
     public delegate void Melee_ChoosingTileUpdateDelegate(Animator animator);
     public static Melee_ChoosingTileUpdateDelegate OnMelee_ChoosingTileUpdate;
-    //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //}
+    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        OnMelee_ChoosingTileEnter?.Invoke();
+    }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         OnMelee_ChoosingTileUpdate?.Invoke(animator);

@@ -102,7 +102,7 @@ public class CombatPlayerBehavior : MonoBehaviour
     private void Melee_ShowRangeEnter()
     {
         Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
-        var range = _executorCharacter.Range + 1;
+        var range = _executorCharacter.Range + 2;
         int counter = 0;
 
         for (int j = -range; j <= range; j++)
@@ -116,7 +116,7 @@ public class CombatPlayerBehavior : MonoBehaviour
                 var pos = CombatCommonBehaviour.ExecutorGridPos + vector;
                 Vector3 vToW = pos + v;
 
-                if (Mathf.Abs(i) < counter - 1)
+                if (Mathf.Abs(i) < counter - 2)
                 {
                     if (InTile(vToW) == 1)
                         _uITilemap.SetTile(pos, _targetTile);
@@ -127,9 +127,9 @@ public class CombatPlayerBehavior : MonoBehaviour
                     else if (_floorTilemap.HasTile(pos))
                         _uITilemap.SetTile(pos, _nullTile);
                 }
-                else
+                else if (Mathf.Abs(i) < counter)
                 {
-                    if (InTile(vToW) == 1)
+                    if (InTile(vToW) == 1 && i != -range && i != range && j != -range && j != range)
                         _uITilemap.SetTile(pos, _targetTile);
                 }
             }

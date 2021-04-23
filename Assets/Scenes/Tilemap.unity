@@ -688,61 +688,6 @@ Canvas:
   m_SortingLayerID: -903278367
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!1 &96459317
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 96459318}
-  - component: {fileID: 96459319}
-  m_Layer: 0
-  m_Name: CommonBehaviour
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &96459318
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 96459317}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 383121944}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &96459319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 96459317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c3b423396388733468b6168b5fbce3e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PointingTile: {fileID: 11400000, guid: d3c429a15a0812a48a406e4a2e72b9d2, type: 2}
-  RangeTile: {fileID: 11400000, guid: 5b03f0d1e2b411f44a1d8eed3b69b7f0, type: 2}
-  TargetTile: {fileID: 11400000, guid: 473f875d78af5364d8d93d87eb65ca9c, type: 2}
-  NullTile: {fileID: 11400000, guid: af3ee501f7d075d49aba96db8cd11301, type: 2}
-  AllyTile: {fileID: 11400000, guid: 1311ea8946c6dd746922f1cc890841ca, type: 2}
-  Camera: {fileID: 261991981}
-  FloorTilemap: {fileID: 326411657}
-  CollisionTilemap: {fileID: 2045229290}
-  UITilemap: {fileID: 1484193609}
-  CursorHand: {fileID: 0}
-  CursorSword: {fileID: 2800000, guid: ae1c4b2a2c354db4aaf446fb56aca03a, type: 3}
-  CursorArrow: {fileID: 2800000, guid: 4a89c029861451b458116e32cea0dfe4, type: 3}
 --- !u!1 &96896033
 GameObject:
   m_ObjectHideFlags: 0
@@ -786,6 +731,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e270365493ac7544d900e14f9b775331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _cCB: {fileID: 0}
 --- !u!1 &97597725
 GameObject:
   m_ObjectHideFlags: 0
@@ -5111,6 +5057,7 @@ GameObject:
   m_Component:
   - component: {fileID: 383121944}
   - component: {fileID: 383121943}
+  - component: {fileID: 383121945}
   m_Layer: 0
   m_Name: FSM
   m_TagString: Untagged
@@ -5150,10 +5097,33 @@ Transform:
   m_Children:
   - {fileID: 1019928037}
   - {fileID: 96896034}
-  - {fileID: 96459318}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &383121945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 383121942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3b423396388733468b6168b5fbce3e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PointingTile: {fileID: 11400000, guid: d3c429a15a0812a48a406e4a2e72b9d2, type: 2}
+  RangeTile: {fileID: 11400000, guid: 5b03f0d1e2b411f44a1d8eed3b69b7f0, type: 2}
+  TargetTile: {fileID: 11400000, guid: 473f875d78af5364d8d93d87eb65ca9c, type: 2}
+  NullTile: {fileID: 11400000, guid: af3ee501f7d075d49aba96db8cd11301, type: 2}
+  AllyTile: {fileID: 11400000, guid: 1311ea8946c6dd746922f1cc890841ca, type: 2}
+  Camera: {fileID: 261991981}
+  FloorTilemap: {fileID: 326411657}
+  CollisionTilemap: {fileID: 2045229290}
+  UITilemap: {fileID: 1484193609}
+  CursorHand: {fileID: 0}
+  CursorSword: {fileID: 2800000, guid: ae1c4b2a2c354db4aaf446fb56aca03a, type: 3}
+  CursorArrow: {fileID: 2800000, guid: 4a89c029861451b458116e32cea0dfe4, type: 3}
 --- !u!1 &462553715
 GameObject:
   m_ObjectHideFlags: 0
@@ -7868,7 +7838,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c59678dffe48f42b73c6985e6a2d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _cCB: {fileID: 96459319}
+  _cCB: {fileID: 383121945}
 --- !u!1 &1041193922
 GameObject:
   m_ObjectHideFlags: 0
