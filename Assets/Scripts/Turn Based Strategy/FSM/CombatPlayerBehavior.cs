@@ -75,7 +75,7 @@ public class CombatPlayerBehavior : MonoBehaviour
             var tempCharacter = SelectCharacter();
             if (!(tempCharacter is null))
             {
-                if (CharacterManager.IsEntityInList(CharacterManager.GetActiveAllies(tempCharacter), tempCharacter))
+                if (CharacterManager.IsEntityInList(CharacterManager.GetActiveCharacters(Team.TeamPlayer), tempCharacter))
                 {
                     CharacterManager.SetExecutor(tempCharacter);
                     CombatCommonBehaviour.ExecutorGridPos = _currentGridPos;
@@ -118,18 +118,18 @@ public class CombatPlayerBehavior : MonoBehaviour
 
                 if (Mathf.Abs(i) < counter - 2)
                 {
-                    if (InTile(vToW) == 1)
+                    if (_cCB.InTile(vToW) == (int)CharType.Enemy)
                         _uITilemap.SetTile(pos, _targetTile);
-                    else if (CanMove(pos) && InTile(vToW) == 0)
+                    else if (CanMove(pos) && _cCB.InTile(vToW) == (int)CharType.Nothing)
                         _uITilemap.SetTile(pos, _rangeTile);
-                    else if (pos == CombatCommonBehaviour.ExecutorGridPos || InTile(vToW) == 2)
+                    else if (pos == CombatCommonBehaviour.ExecutorGridPos || _cCB.InTile(vToW) == (int)CharType.Ally)
                         _uITilemap.SetTile(pos, _allyTile);
                     else if (_floorTilemap.HasTile(pos))
                         _uITilemap.SetTile(pos, _nullTile);
                 }
                 else if (Mathf.Abs(i) < counter)
                 {
-                    if (InTile(vToW) == 1 && i != -range && i != range && j != -range && j != range)
+                    if (_cCB.InTile(vToW) == (int)CharType.Enemy && i != -range && i != range && j != -range && j != range)
                         _uITilemap.SetTile(pos, _targetTile);
                 }
             }
@@ -155,7 +155,7 @@ public class CombatPlayerBehavior : MonoBehaviour
                     var pos = CombatCommonBehaviour.ExecutorGridPos + vector;
                     Vector3 vToW = pos + v;
 
-                    if (pos == CombatCommonBehaviour.ExecutorGridPos || InTile(vToW) == 2)
+                    if (pos == CombatCommonBehaviour.ExecutorGridPos || _cCB.InTile(vToW) == 2)
                         _uITilemap.SetTile(pos, _allyTile);
                     else if (CanMove(pos))
                         _uITilemap.SetTile(pos, _rangeTile);
@@ -170,27 +170,10 @@ public class CombatPlayerBehavior : MonoBehaviour
             {
                 Vector3Int vector = new Vector3Int(x, y, 0);
                 Vector3 vToW = vector + v;
-                if (InTile(vToW) == 1)
+                if (_cCB.InTile(vToW) == 1)
                     _uITilemap.SetTile(vector, _targetTile);
             }
         }
-    }    //----------------------------------------HidePathEnter----------------------------------------
-    private static int InTile(Vector3 vector)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(vector, Vector2.zero);
-        var hitCollider = hit.collider;
-        if (hitCollider != null)
-        {
-            var gameObject = hitCollider.gameObject;
-            if (!(gameObject.GetComponent("Character") as Character is null))
-            {
-                if (_executorCharacter.Team != gameObject.GetComponent<Character>().Team)
-                    return 1; //enemy
-                else
-                    return 2; //ally
-            }
-        }
-        return 0; //nothing
     }
     private bool CanMove(Vector3Int pos)
     {
@@ -296,7 +279,7 @@ public class CombatPlayerBehavior : MonoBehaviour
                 var pos = CombatCommonBehaviour.TargetGridPos + vector;
                 Vector3 vToW = pos + v;
 
-                if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(InTile(vToW) == 2) && !_collisionTilemap.HasTile(pos))
+                if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(_cCB.InTile(vToW) == (int)CharType.Ally) && !_collisionTilemap.HasTile(pos))
                 {
                     _uITilemap.SetTile(pos, _targetTile);
                 }
@@ -369,7 +352,7 @@ public class CombatPlayerBehavior : MonoBehaviour
                 var pos = CombatCommonBehaviour.TargetGridPos + vector;
                 Vector3 vToW = pos + v;
 
-                if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(InTile(vToW) == 2) && !_collisionTilemap.HasTile(pos))
+                if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(_cCB.InTile(vToW) == (int)CharType.Ally) && !_collisionTilemap.HasTile(pos))
                 {
                     _uITilemap.SetTile(pos, _rangeTile);
                 }

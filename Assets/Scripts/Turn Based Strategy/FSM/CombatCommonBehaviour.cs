@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
+public enum CharType
+{
+    Nothing,
+    Enemy,
+    Ally
+}
+
 public class CombatCommonBehaviour : MonoBehaviour
 {
+
     public Tile PointingTile;
     public Tile RangeTile;
     public Tile TargetTile;
@@ -141,18 +149,34 @@ public class CombatCommonBehaviour : MonoBehaviour
     {
         if (deltaX < 0)
         {
-            Debug.Log(ExecutorCharacter.transform.rotation.eulerAngles.y);
             if (ExecutorCharacter.transform.rotation.eulerAngles.y == 180)
             {
                 ExecutorCharacter.Turn = true;
             }
         }
-        else
+        if (deltaX > 0)
         {
             if (ExecutorCharacter.transform.rotation.eulerAngles.y == 0)
             {
                 ExecutorCharacter.Turn = true;
             }
         }
+    }
+    public int InTile(Vector3 vector)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(vector, Vector2.zero);
+        var hitCollider = hit.collider;
+        if (hitCollider != null)
+        {
+            var gameObject = hitCollider.gameObject;
+            if (!(gameObject.GetComponent("Character") as Character is null))
+            {
+                if (ExecutorCharacter.Team != gameObject.GetComponent<Character>().Team)
+                    return (int)CharType.Enemy;
+                else
+                    return (int)CharType.Ally;
+            }
+        }
+        return (int)CharType.Nothing;
     }
 }

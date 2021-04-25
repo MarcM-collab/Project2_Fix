@@ -4,8 +4,8 @@ using UnityEngine;
 
 public enum Team
 {
-    TeamA,
-    TeamB,
+    TeamPlayer,
+    TeamAI,
 }
 public class Entity : MonoBehaviour
 {

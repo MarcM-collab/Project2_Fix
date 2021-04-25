@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Selecting : StateMachineBehaviour
 {
-    public delegate void SelectingEnterDelegate();
+    public delegate void SelectingEnterDelegate(Animator animator);
     public static SelectingEnterDelegate OnSelectingEnter;
     public delegate void SelectingUpdateDelegate(Animator animator);
     public static SelectingUpdateDelegate OnSelectingUpdate;
@@ -13,7 +13,7 @@ public class Selecting : StateMachineBehaviour
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        OnSelectingExit?.Invoke();
+        OnSelectingEnter?.Invoke(animator);
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

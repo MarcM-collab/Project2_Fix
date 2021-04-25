@@ -40,28 +40,16 @@ public static class CharacterManager
             }
         }
     }
-    public static Character[] GetEnemies(Character entity)
+    public static Character[] GetCharacters(Team team)
     {
-        return Characters.Where(x => x.Team != entity.Team).ToArray();
+        return Characters.Where(x => x.Team != team).ToArray();
     }
 
-    public static Character[] GetLivingEnemies(Character entity)
+    public static Character[] GetLivingCharacters(Team team)
     {
-        return Characters.Where(x => x.Team != entity.Team && x.IsAlive).ToArray();
+        return Characters.Where(x => x.Team != team && x.IsAlive).ToArray();
     }
-    public static Character[] GetAllies(Character entity)
-    {
-        return Characters.Where(x => x.Team == entity.Team).ToArray();
-    }
-    public static Character[] GetLivingAllies(Character entity)
-    {
-        return Characters.Where(x => x.Team == entity.Team && x.IsAlive).ToArray();
-    }
-    public static Character[] GetActiveAllies(Character entity)
-    {
-        return Characters.Where(x => x.Team == entity.Team && x.IsActive).ToArray();
-    }
-    public static Character[] GetActiveAllies(Team team)
+    public static Character[] GetActiveCharacters(Team team)
     {
         return Characters.Where(x => x.Team == team && x.IsActive).ToArray();
     }
