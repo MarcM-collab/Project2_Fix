@@ -6,7 +6,7 @@ public static class HealthSystem
 {
     public static void TakeDamage(float amount)
     {
-        var currentHealth = EntityManager.TargetEntity.HP;
+        var currentHealth = CharacterManager.TargetCharacter.HP;
 
         if (currentHealth - amount <= 0.0f)
         {
@@ -18,13 +18,13 @@ public static class HealthSystem
 
         OnHit((int)amount);
 
-        EntityManager.TargetEntity.ChangeHealth();
+        CharacterManager.TargetCharacter.ChangeHealth();
 
-        EntityManager.TargetEntity.HP = currentHealth;
+        CharacterManager.TargetCharacter.HP = currentHealth;
     }
     private static void OnDeath()
     {
-        var target = EntityManager.TargetEntity;
+        var target = CharacterManager.TargetCharacter;
     }
     private static float OnOverkill(float currentHealth)
     {
@@ -32,7 +32,7 @@ public static class HealthSystem
     }
     private static void OnHit(int damage)
     {
-        var target = EntityManager.TargetEntity;
-        var executor = EntityManager.ExecutorEntity;
+        var target = CharacterManager.TargetCharacter;
+        var executor = CharacterManager.ExecutorCharacter;
     }
 }

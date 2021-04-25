@@ -10,6 +10,11 @@ public class InputManager : MonoBehaviour
     private void Update()
     {
         LeftMouseClick = KeyPressed(KeyCode.Mouse0);
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CharacterManager.RemoveExhaust();
+        }
     }
     private bool KeyPressed(KeyCode key)
     {
