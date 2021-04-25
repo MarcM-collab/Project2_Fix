@@ -22,7 +22,7 @@ public class CombatPlayerBehavior : MonoBehaviour
     private Texture2D _cursorArrow => _cCB.CursorArrow;
 
     private static Character _executorCharacter => CombatCommonBehaviour.ExecutorCharacter;
-    private static Character _targetCharacter => CombatCommonBehaviour.TargetCharacter;
+    private static Entity _targetCharacter => CombatCommonBehaviour.TargetCharacter;
 
     public CombatCommonBehaviour _cCB;
 
@@ -75,9 +75,9 @@ public class CombatPlayerBehavior : MonoBehaviour
             var tempCharacter = SelectCharacter();
             if (!(tempCharacter is null))
             {
-                if (CharacterManager.IsEntityInList(CharacterManager.GetActiveCharacters(Team.TeamPlayer), tempCharacter))
+                if (EntityManager.IsEntityInList(EntityManager.GetActiveCharacters(Team.TeamPlayer), tempCharacter))
                 {
-                    CharacterManager.SetExecutor(tempCharacter);
+                    EntityManager.SetExecutor(tempCharacter);
                     CombatCommonBehaviour.ExecutorGridPos = _currentGridPos;
                     _isExecutorSelected = true;
                     if (tempCharacter.Class == Class.Ranged)
@@ -194,8 +194,8 @@ public class CombatPlayerBehavior : MonoBehaviour
             {
                 CombatCommonBehaviour.TileChosenPos = CombatCommonBehaviour.ExecutorGridPos;
                 CombatCommonBehaviour.TargetGridPos = _currentGridPos;
-                CharacterManager.SetTarget(SelectCharacter());
-                CharacterManager.SetTarget(_targetCharacter);
+                EntityManager.SetTarget(SelectCharacter());
+                EntityManager.SetTarget(_targetCharacter);
                 animator.SetBool("Attacking", true);
                 animator.SetTrigger("TileChosen");
             }
@@ -230,8 +230,8 @@ public class CombatPlayerBehavior : MonoBehaviour
             else if (_targetTile == _uITilemap.GetTile(_currentGridPos))
             {
                 CombatCommonBehaviour.TargetGridPos = _currentGridPos;
-                CharacterManager.SetTarget(SelectCharacter());
-                CharacterManager.SetTarget(_targetCharacter);
+                EntityManager.SetTarget(SelectCharacter());
+                EntityManager.SetTarget(_targetCharacter);
                 Cursor.SetCursor(_cursorHand, Vector2.zero, CursorMode.Auto);
                 animator.SetBool("PreparingAttack", true);
             }
@@ -364,7 +364,7 @@ public class CombatPlayerBehavior : MonoBehaviour
     {
         _cCB.HideTilemapElements(_uITilemap, Hide1);
     }
-    private bool Hide1(Vector3 vector)
+    private bool Hide1(Vector3Int vector)
     {
         return !(CombatCommonBehaviour.ExecutorGridPos == vector || CombatCommonBehaviour.TileChosenPos == vector || CombatCommonBehaviour.TargetGridPos == vector);
     }
@@ -410,9 +410,9 @@ public class CombatPlayerBehavior : MonoBehaviour
         if (hitCollider != null)
         {
             var gameObject = hitCollider.gameObject;
-            if (!(gameObject.GetComponent("Character") as Character is null))
+            if (!(gameObject.GetComponent("Character") as Entity is null))
             {
-                if (CharacterManager.ExecutorCharacter.Team != gameObject.GetComponent<Character>().Team)
+                if (EntityManager.ExecutorCharacter.Team != gameObject.GetComponent<Entity>().Team)
                     return true;
             }
         }

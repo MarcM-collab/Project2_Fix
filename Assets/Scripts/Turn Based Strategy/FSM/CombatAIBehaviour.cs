@@ -24,7 +24,7 @@ public class CombatAIBehaviour : MonoBehaviour
     private Tilemap _uITilemap => _cCB.UITilemap;
 
     private static Character _executorCharacter => CombatCommonBehaviour.ExecutorCharacter;
-    private static Character _targetCharacter => CombatCommonBehaviour.TargetCharacter;
+    private static Entity _targetCharacter => CombatCommonBehaviour.TargetCharacter;
 
     private void OnEnable()
     {
@@ -44,13 +44,13 @@ public class CombatAIBehaviour : MonoBehaviour
     //----------------------------------------Selecting----------------------------------------
     private void SelectingEnter(Animator animator)
     {
-        var characters = CharacterManager.GetActiveCharacters(Team.TeamAI);
+        var characters = EntityManager.GetActiveCharacters(Team.TeamAI);
         if (characters.Length == 0)
         {
-            CharacterManager.RemoveExhaust();
-            characters = CharacterManager.GetActiveCharacters(Team.TeamAI);
+            EntityManager.RemoveExhaust();
+            characters = EntityManager.GetActiveCharacters(Team.TeamAI);
         }
-        CharacterManager.SetExecutor(characters[0]);
+        EntityManager.SetExecutor(characters[0]);
 
         var _currentGridPos = _floorTilemap.WorldToCell(characters[0].transform.position);
 
@@ -103,7 +103,7 @@ public class CombatAIBehaviour : MonoBehaviour
                                 break;
                             }
                         }
-                        else if (_cCB.InTile(vToW) == (int)CharType.EnemyCharacter)
+                        if (_cCB.InTile(vToW) == (int)CharType.EnemyCharacter)
                         {
                             if (minPos.x + minPos.y > Mathf.Abs(i) + Mathf.Abs(j))
                             {
@@ -124,9 +124,9 @@ public class CombatAIBehaviour : MonoBehaviour
             var hitCollider = hit.collider;
             if (hitCollider != null)
             {
-                if (!(hitCollider.gameObject.GetComponent("Character") as Character is null))
+                if (!(hitCollider.gameObject.GetComponent("Entity") as Entity is null))
                 {
-                    CharacterManager.SetTarget(hitCollider.gameObject.GetComponent<Character>());
+                    EntityManager.SetTarget(hitCollider.gameObject.GetComponent<Entity>());
                     _uITilemap.SetTile(CombatCommonBehaviour.TargetGridPos, _targetTile);
                 }
                 if (!(hitCollider.gameObject.GetComponent("Hero") as Hero is null))
@@ -178,9 +178,9 @@ public class CombatAIBehaviour : MonoBehaviour
     //----------------------------------------Ranged_ChoosingTile----------------------------------------
     private void Ranged_ChoosingTileEnter(Animator animator)
     {
-        var characters = CharacterManager.GetActiveCharacters(Team.TeamPlayer);
+        var characters = EntityManager.GetActiveCharacters(Team.TeamPlayer);
 
-        CharacterManager.SetTarget(characters[0]);
+        EntityManager.SetTarget(characters[0]);
         CombatCommonBehaviour.TargetGridPos = _floorTilemap.WorldToCell(characters[0].transform.position);
         _uITilemap.SetTile(CombatCommonBehaviour.TargetGridPos, _targetTile);
 
@@ -230,7 +230,7 @@ public class CombatAIBehaviour : MonoBehaviour
                 var pos = CombatCommonBehaviour.ExecutorGridPos + vector;
                 Vector3 vToW = pos + v;
 
-                if (_cCB.InTile(vToW) == (int)CharType.EnemyCharacter && _cCB.InTile(vToW) == (int)CharType.EnemyHero)
+                if (_cCB.InTile(vToW) == (int)CharType.EnemyCharacter || _cCB.InTile(vToW) == (int)CharType.EnemyHero)
                 {
                     return true;
                 }

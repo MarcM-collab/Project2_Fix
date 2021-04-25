@@ -30,8 +30,8 @@ public class CombatCommonBehaviour : MonoBehaviour
     public Texture2D CursorSword;
     public Texture2D CursorArrow;
 
-    public static Character ExecutorCharacter => CharacterManager.ExecutorCharacter;
-    public static Character TargetCharacter => CharacterManager.TargetCharacter;
+    public static Character ExecutorCharacter => EntityManager.ExecutorCharacter;
+    public static Entity TargetCharacter => EntityManager.TargetCharacter;
     public static Vector3Int ExecutorGridPos { get; set;}
     public static Vector3Int TileChosenPos { get; set; }
     public static Vector3Int TargetGridPos { get; set; }
@@ -87,9 +87,9 @@ public class CombatCommonBehaviour : MonoBehaviour
     {
         HideTilemapElements(UITilemap, Hide2);
     }
-    private bool Hide2(Vector3 vector)
+    private bool Hide2(Vector3Int vector)
     {
-        return !(TargetGridPos == vector);
+        return !(UITilemap.GetTile(vector) == TargetTile);
     }
     //----------------------------------------Attacking----------------------------------------
     private void AttackingEnter()
@@ -110,7 +110,7 @@ public class CombatCommonBehaviour : MonoBehaviour
     {
         HideTilemapElements(UITilemap, Hide3);
     }
-    private bool Hide3(Vector3 vector)
+    private bool Hide3(Vector3Int vector)
     {
         return true;
     }
@@ -139,7 +139,7 @@ public class CombatCommonBehaviour : MonoBehaviour
     {
     }
     //----------------------------------------GENERAL FUNCTIONS----------------------------------------
-    public void HideTilemapElements(Tilemap tilemap, System.Func<Vector3, bool> function)
+    public void HideTilemapElements(Tilemap tilemap, System.Func<Vector3Int, bool> function)
     {
         for (int x = tilemap.cellBounds.min.x; x < tilemap.cellBounds.max.x; x++)
         {
@@ -176,9 +176,9 @@ public class CombatCommonBehaviour : MonoBehaviour
         if (hitCollider != null)
         {
             var gameObject = hitCollider.gameObject;
-            if (!(gameObject.GetComponent("Character") as Character is null))
+            if (!(gameObject.GetComponent("Character") as Entity is null))
             {
-                if (ExecutorCharacter.Team != gameObject.GetComponent<Character>().Team)
+                if (ExecutorCharacter.Team != gameObject.GetComponent<Entity>().Team)
                     return (int)CharType.EnemyCharacter;
                 else
                     return (int)CharType.AllyCharacter;

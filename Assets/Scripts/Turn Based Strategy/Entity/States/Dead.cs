@@ -15,7 +15,7 @@ public class Dead : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponent<Character>().IsDeadAnim = true;
+        animator.GetComponent<Entity>().IsDeadAnim = true;
         animator.gameObject.SetActive(false);
     }
 }
