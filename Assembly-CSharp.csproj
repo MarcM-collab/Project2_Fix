@@ -56,23 +56,38 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\ChoosingTile.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\CharactersBehaviour\Hit.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\MovingToTile.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\CharactersBehaviour\Exhausted.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Entity.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ChoosingTile.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\HidePath.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Heroe.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Hit.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\HideRange.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Turn.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\MovingToTile.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Exhausted.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Character.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ShowAttackRange.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Ranged_ShowRange.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_HideAttackRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\UI.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Chunk.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\CharactersBehaviour\Dead.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\PlayerBehavior.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\CharactersBehaviour\Attack.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\EntityManager.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Dead.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\HideUI.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatPlayerBehavior.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Attacking.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Attack.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ChoosingAttackTile.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\CharacterManager.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\ExhaustingAndReset.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Ranged_ChoosingTile.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Entity.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\HealthSystem.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\ShowRange.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ShowRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Input\InputManager.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\CharactersBehaviour\Walking.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Walking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Selecting.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Selecting.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatAIBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatCommonBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
@@ -669,6 +684,9 @@
     <Reference Include="Unity.TextMeshPro">
       <HintPath>Library\ScriptAssemblies\Unity.TextMeshPro.dll</HintPath>
     </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>Library\ScriptAssemblies\UnityEditor.UI.dll</HintPath>
     </Reference>
@@ -677,9 +695,6 @@
     </Reference>
     <Reference Include="UnityEngine.UI">
       <HintPath>Library\ScriptAssemblies\UnityEngine.UI.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.2D.Sprite.Editor">
-      <HintPath>Library\ScriptAssemblies\Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
