@@ -6,8 +6,10 @@ using UnityEngine.Tilemaps;
 public enum CharType
 {
     Nothing,
-    Enemy,
-    Ally
+    EnemyCharacter,
+    AllyCharacter,
+    EnemyHero,
+    AllyHero
 }
 
 public class CombatCommonBehaviour : MonoBehaviour
@@ -45,6 +47,7 @@ public class CombatCommonBehaviour : MonoBehaviour
         HideUI.OnHideUIEnter += HideUIEnter;
         ExhaustingAndReset.OnExhaustingAndResetEnter += ExhaustingAndResetEnter;
         ExhaustingAndReset.OnExhaustingAndResetUpdate += ExhaustingAndResetUpdate;
+        ExhaustingAndReset.OnExhaustingAndResetExit += ExhaustingAndResetExit;
     }
     private void OnDisable()
     {
@@ -57,6 +60,7 @@ public class CombatCommonBehaviour : MonoBehaviour
         HideUI.OnHideUIEnter -= HideUIEnter;
         ExhaustingAndReset.OnExhaustingAndResetEnter -= ExhaustingAndResetEnter;
         ExhaustingAndReset.OnExhaustingAndResetUpdate -= ExhaustingAndResetUpdate;
+        ExhaustingAndReset.OnExhaustingAndResetExit -= ExhaustingAndResetExit;
     }
     //----------------------------------------MovingToTileEnter----------------------------------------
     private void MovingToTileEnter()
@@ -113,7 +117,6 @@ public class CombatCommonBehaviour : MonoBehaviour
     //----------------------------------------ExhaustingAndReset----------------------------------------
     private void ExhaustingAndResetEnter(Animator animator)
     {
-        ExecutorCharacter.Exhausted = true;
         animator.SetBool("Selected", false);
         animator.SetBool("TileChosen", false);
         animator.SetBool("MovedToTile", false);
@@ -121,15 +124,19 @@ public class CombatCommonBehaviour : MonoBehaviour
         animator.SetBool("Attacking", false);
         animator.SetBool("PreparingAttack", false);
 
+        ExecutorCharacter.Exhausted = true;
+
         Cursor.SetCursor(CursorHand, Vector2.zero, CursorMode.Auto);
     }
     private void ExhaustingAndResetUpdate(Animator animator)
     {
-        if (ExecutorCharacter.IsExhaustedAnim)
+        if (ExecutorCharacter.IsExhaustedAnim && (TargetCharacter.IsDeadAnim || TargetCharacter.IsAlive))
         {
-
             animator.SetTrigger("Exhausted");
         }
+    }
+    private void ExhaustingAndResetExit(Animator animator)
+    {
     }
     //----------------------------------------GENERAL FUNCTIONS----------------------------------------
     public void HideTilemapElements(Tilemap tilemap, System.Func<Vector3, bool> function)
@@ -172,9 +179,16 @@ public class CombatCommonBehaviour : MonoBehaviour
             if (!(gameObject.GetComponent("Character") as Character is null))
             {
                 if (ExecutorCharacter.Team != gameObject.GetComponent<Character>().Team)
-                    return (int)CharType.Enemy;
+                    return (int)CharType.EnemyCharacter;
                 else
-                    return (int)CharType.Ally;
+                    return (int)CharType.AllyCharacter;
+            }
+            else if (!(gameObject.GetComponent("Hero") as Hero is null))
+            {
+                if (ExecutorCharacter.Team != gameObject.GetComponent<Hero>().Team)
+                    return (int)CharType.EnemyHero;
+                else
+                    return (int)CharType.AllyHero;
             }
         }
         return (int)CharType.Nothing;

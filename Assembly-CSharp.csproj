@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ChoosingTile.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\HidePath.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Heroe.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Hero.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Hit.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\HideRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Turn.cs" />
@@ -69,6 +69,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Ranged_ShowRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_HideAttackRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\UI.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatAIBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Chunk.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Dead.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\HideUI.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Attacking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Attack.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ChoosingAttackTile.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatCommonBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\ExhaustingAndReset.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Ranged_ChoosingTile.cs" />
@@ -86,8 +88,6 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Walking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Selecting.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatAIBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatCommonBehaviour.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

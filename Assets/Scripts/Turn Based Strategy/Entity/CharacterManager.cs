@@ -13,7 +13,7 @@ public static class CharacterManager
     public static Character ExecutorCharacter => Characters[_currentExecutorIndex];
 
     [RuntimeInitializeOnLoadMethod]
-    private static void InitEntities()
+    private static void InitCharacters()
     {
         Characters = Object.FindObjectsOfType<Character>().ToList();
     }
@@ -64,9 +64,9 @@ public static class CharacterManager
     }
     public static void RemoveExhaust()
     {
-        foreach (Character entity in Characters)
+        foreach (Character character in Characters)
         {
-            entity.Exhausted = false;
+            character.Exhausted = false;
         }
     }
 }

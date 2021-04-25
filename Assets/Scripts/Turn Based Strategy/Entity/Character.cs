@@ -22,6 +22,7 @@ public class Character : Entity
     public bool Attack;
 
     public bool IsExhaustedAnim;
+    public bool IsDeadAnim;
 
     public List<Vector3> Path;
 

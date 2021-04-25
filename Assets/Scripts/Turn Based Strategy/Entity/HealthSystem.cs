@@ -25,6 +25,7 @@ public static class HealthSystem
     private static void OnDeath()
     {
         var target = CharacterManager.TargetCharacter;
+        target.Dead = true;
     }
     private static float OnOverkill(float currentHealth)
     {
