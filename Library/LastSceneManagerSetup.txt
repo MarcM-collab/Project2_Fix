@@ -1,9 +1,5 @@
 sceneSetups:
-<<<<<<< HEAD
-- path: Assets/Scenes/Marc.unity
-=======
-- path: Assets/Scenes/Ainoa.unity
->>>>>>> origin/Ainoa
+- path: Assets/Scenes/Marc2.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
