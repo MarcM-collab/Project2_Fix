@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 using System;
 
 public class IACard : MonoBehaviour
@@ -22,7 +23,7 @@ public class IACard : MonoBehaviour
     private int _cardStatsAccumulates = 0;
     private int _currentWhiskas => _whiskas.currentWhiskas;
 
-    LinkedList<string> q = new LinkedList<string>();
+    public LinkedList<string> qLinkedList = new LinkedList<string>();
     public List<List<int>> _combinations = new List<List<int>>(); //remover publicas
     public List<int> _valueCardStats = new List<int>(); //remover publicas
 
@@ -34,11 +35,14 @@ public class IACard : MonoBehaviour
     public List<GameObject> cardsInHand = new List<GameObject>();
     private Transform cardInstance;
     //-----------------------------
+
+    public Tilemap FloorTileMap;
+    public Tilemap CollisionTileMap;
+    private List<GameObject> mapList = new List<GameObject>();
     private void Start()
     {
         for (int i = 0; i < IAHand.Count; i++)
         {
-            print("añadiendo carta:   " + i);
             AddCardHand();
         }
     }
@@ -52,22 +56,19 @@ public class IACard : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.B))
         {
-            if (IAHasSpells())
-            {
-                //función que realiza el hechizo.
-            }
-            else
-            {
-                //busca combinaciones de ls posibles cartas con los mana CombinationCard();
-                //elif. BestCombination();
-            }
+            CombinationCard(UnitList());
+            BestCombination();
+            
         }
-        
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            SpawnCard(0);
+        }
     }
 
     private void RemoveCardHand()
     {
-        Destroy(cardsInHand[cardsInHand.Count-1]);
+        Destroy(cardsInHand[cardsInHand.Count - 1]);
         cardsInHand.RemoveAt(cardsInHand.Count - 1);
     }
     private void AddCardHand()
@@ -115,12 +116,12 @@ public class IACard : MonoBehaviour
         {
             if (IAHand[i].name == IADeck[random1].card.name) //si el nombre es diferente =>  no la tiene| coge esta y no comprueba las otras.
             {
-                print("PRIMERA repe " + IADeck[random1].card.name);
+                // print("PRIMERA repe " + IADeck[random1].card.name);
                 _firstCardRepe = true;
             }
             else if (IAHand[i].name == IADeck[random2].card.name) //si el nombre es diferente =>  no la tiene
             {
-                print("SEGUNDA repe " + IADeck[random2].card.name);
+                // print("SEGUNDA repe " + IADeck[random2].card.name);
                 _secondCardRepe = true;
             }
         }
@@ -157,7 +158,7 @@ public class IACard : MonoBehaviour
             if (IAHand[i] is Spells)
             {
                 spellsList.Add(IAHand[i] as Spells);
-                print("algun hezho entró");
+                
                 if (spellsList[sCounter].Priority > maxPriority)
                 {
                     maxPriority = spellsList[sCounter].Priority;
@@ -175,16 +176,16 @@ public class IACard : MonoBehaviour
     POSIBLES POR LA IA MEDIANTE EL MANÁ(WHISKAS)
     DISPONIBLE.
     */
-    private LinkedList<string> CombinationCard()
+    private void CombinationCard(List<Card> list)
     {
         _combinations = new List<List<int>>();
         _valueCardStats = new List<int>();
-        q = new LinkedList<string>();
+        qLinkedList = new LinkedList<string>();
 
         // Create an empty queue of strings
-        int lenghtHand = IAHand.Count;
+        int lenghtHand = list.Count;
         // Enqueue the first binary number
-        q.AddLast("1");
+        qLinkedList.AddLast("1");
 
         // This loops is like BFS of a tree
         // with 1 as root 0 as left child
@@ -195,31 +196,30 @@ public class IACard : MonoBehaviour
             List<int> tempList = new List<int>();
             List<Unit> tempUnit = new List<Unit>();
             // print the front of queue
-            string s1 = q.First.Value;
-            q.RemoveFirst();
+            string s1 = qLinkedList.First.Value;
+            qLinkedList.RemoveFirst();
             int count = 0;
-
+            _cardStatsAccumulates = 0;//e
             for (int i = s1.Length - 1; i >= 0; i--)
             {
                 if (s1[i] == '1')
                 {
-                    _whiskasCombinationAccumulate += IAHand[count].Whiskas;
-                    if (IAHand[count] is Unit)
-                    {
-                        tempUnit.Add(IAHand[count] as Unit);
-                        _cardStatsAccumulates += tempUnit[count].Health + tempUnit[count].Power + tempUnit[count].Whiskas + 1;
-                    }
+                    _whiskasCombinationAccumulate += list[count].Whiskas;
+                    tempUnit.Add(list[count] as Unit);
+                    
+                    _cardStatsAccumulates += tempUnit[tempUnit.Count - 1].Health + tempUnit[tempUnit.Count - 1].Power + tempUnit[tempUnit.Count - 1].Whiskas + 1;
 
                     tempList.Add(count);//añadimos posición
                 }
 
-                print(IAHand[count].name);
+                print(list[count].name);
                 count++;
             }
             print(s1 + ":posiciones |  mana total:     " + _whiskasCombinationAccumulate);
 
             if (_whiskasCombinationAccumulate <= _currentWhiskas)
             {
+                print("añadiendome");
                 _combinations.Add(tempList);//añadimos la combinación con su posición
                 _valueCardStats.Add(_cardStatsAccumulates); // su valor
             }
@@ -230,13 +230,27 @@ public class IACard : MonoBehaviour
             string s2 = s1;
 
             // Append "0" to s1 and enqueue it
-            q.AddLast(s1 + "0");
+            qLinkedList.AddLast(s1 + "0");
 
             // Append "1" to s2 and enqueue it.
             // Note that s2 contains the previous front
-            q.AddLast(s2 + "1");
+            qLinkedList.AddLast(s2 + "1");
         }
-        return q;
+
+    }
+
+    private List<Card> UnitList()
+    {
+        List<Card> e = new List<Card>();
+        for (int i = 0; i < IAHand.Count; i++)
+        {
+            if (IAHand[i] is Unit)
+            {
+                e.Add(IAHand[i]);
+            }
+        }
+        return e;
+
     }
     /*
     ESTA FUNCIÓN REALIZA LA COMBINACIÓN
@@ -264,5 +278,24 @@ public class IACard : MonoBehaviour
             }
         }
         return maxPos;
+    }
+
+    private void SpawnCard(int e)
+    {
+        List<Vector3> posSpawnTile = new List<Vector3>();
+
+        Vector2 tilePos = new Vector2(UnityEngine.Random.Range(4, 6), UnityEngine.Random.Range(-3, 3));
+
+        print("cy: " + FloorTileMap.cellSize.y + "cx: " + FloorTileMap.cellSize.x);
+
+
+
+        GameObject theTile = Instantiate(IAHand[0].GetComponent<Unit>().sprite, tilePos, Quaternion.identity);
+        theTile.transform.localPosition = new Vector3(tilePos.x + (FloorTileMap.cellSize.x / 2), tilePos.y + (FloorTileMap.cellSize.y / 2), 0);
+        mapList.Add(theTile);
+
+
+        print("hay en el mapa:  " + mapList.Count);
+
     }
 }

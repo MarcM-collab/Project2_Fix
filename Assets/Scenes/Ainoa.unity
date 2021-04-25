@@ -785,6 +785,9 @@ MonoBehaviour:
   IAHandCanvas: {fileID: 684598491}
   scale: 1
   prefabBackCard: {fileID: 4430847607658159572, guid: 4836886707ac71f4885ab724cfb02c10, type: 3}
+  cardsInHand: []
+  FloorTileMap: {fileID: 1295345407}
+  CollisionTileMap: {fileID: 1412785685}
 --- !u!4 &1398236810
 Transform:
   m_ObjectHideFlags: 0
