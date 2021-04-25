@@ -24,7 +24,7 @@ public class Whiskas : MonoBehaviour
         currentWhiskas = maxWhiskas;
         print(currentWhiskas);
         WhiskasText.text = maxWhiskas.ToString();
-        _slider.value = currentWhiskas / maxWhiskas; //por cambiar
+        _slider.value = (float)currentWhiskas / maxWhiskas; //por cambiar
         
     }
     public void RemoveWhiskas(int remove)
@@ -32,7 +32,7 @@ public class Whiskas : MonoBehaviour
        
         currentWhiskas -= remove;
         WhiskasText.text = currentWhiskas.ToString();
-        _slider.value = currentWhiskas / maxWhiskas;
+        _slider.value = (float)currentWhiskas / maxWhiskas;
         
     }
 }

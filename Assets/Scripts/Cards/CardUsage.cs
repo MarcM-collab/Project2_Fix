@@ -14,7 +14,6 @@ public class CardUsage : MonoBehaviour
 
     public HandManager HandManager;
     public Whiskas Whiskas;
-    private bool enoughWhiskas = false;
 
     [SerializeField]
     public Tilemap _floorTilemap;
@@ -29,17 +28,17 @@ public class CardUsage : MonoBehaviour
     private void Update()
     {
         bool thereIsntAtile = !_collisionTilemap.HasTile(_floorTilemap.WorldToCell(_camera.ScreenToWorldPoint(Input.mousePosition)));
-
-        if (enoughWhiskas)//si hay whiskas suficiente
+        
+        if (isDragging && InputManager.LeftMouseClick && thereIsntAtile && !IsEntity()) //si la carta está seleccionada y se pulsa en la escena, entra en la función.
         {
-            if (isDragging && InputManager.LeftMouseClick && thereIsntAtile && !IsEntity()) //si la carta está seleccionada y se pulsa en la escena, entra en la función.
+            if (_card is Unit)
             {
                 spawn();
-                Whiskas.RemoveWhiskas(_card.Whiskas);
             }
+            Whiskas.RemoveWhiskas(_card.Whiskas);
         }
     }
-    private static bool IsEntity()
+    private bool IsEntity()
     {
         RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
         var hitCollider = hit.collider;
@@ -65,17 +64,19 @@ public class CardUsage : MonoBehaviour
     {
         //el primer gameobject es el "sprite" (objeto) que spwnea el carta (su estado morfologico),
         //el otro gameobject es la carta (referenciada para que pueda ser destruida al usarla)
-
+        
         _gameObjectCard = gameObjectCard;
         _card = _gameObjectCard.GetComponent<Card>();
 
-        _gameObject = gameObjectToSpawn;
-        isDragging = true;//pa saber si esta clicando(mas adelante posiblemente arrastre)
-        EnoughWhiskas(_card);
+        if (EnoughWhiskas(_card))
+        {
+            _gameObject = gameObjectToSpawn;
+            isDragging = true;//para saber si esta clicando(mas adelante posiblemente arrastre)
+        }
     }
     private bool EnoughWhiskas(Card _card)//comprueba si hay whiskas (maná) suficiente para lanzar la carta
     {
-        return enoughWhiskas = _card.Whiskas <= Whiskas.currentWhiskas;
+        return _card.Whiskas <= Whiskas.currentWhiskas;
     }
     private void spawn()
     {

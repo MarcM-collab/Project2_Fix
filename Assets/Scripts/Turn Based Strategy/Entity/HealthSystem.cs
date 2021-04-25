@@ -4,9 +4,12 @@ using UnityEngine;
 
 public static class HealthSystem
 {
-    public static void TakeDamage(float amount)
+    public static void TakeDamage(float amount, Character target = null)
     {
-        var currentHealth = CharacterManager.TargetCharacter.HP;
+        if (!target)
+            target = CharacterManager.TargetCharacter;
+
+        var currentHealth = target.HP;
 
         if (currentHealth - amount <= 0.0f)
         {
@@ -16,11 +19,17 @@ public static class HealthSystem
         }
         currentHealth -= amount;
 
+        if (target.MaxHP > currentHealth)
+            target.HP = target.MaxHP;
+        else
+            target.HP = currentHealth;
+
         OnHit((int)amount);
 
-        CharacterManager.TargetCharacter.ChangeHealth();
+        target.ChangeHealth();
 
-        CharacterManager.TargetCharacter.HP = currentHealth;
+
+
     }
     private static void OnDeath()
     {
