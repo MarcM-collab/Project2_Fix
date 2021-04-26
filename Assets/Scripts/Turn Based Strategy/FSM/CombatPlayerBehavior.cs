@@ -278,7 +278,7 @@ public class CombatPlayerBehavior : CombatBehaviour
                     var pos = _targetGridPos + vector;
                     Vector3 vToW = pos + v;
 
-                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(InTile(vToW) == (int)CharType.AllyCharacter) && !_collisionTilemap.HasTile(pos))
+                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && (pos == _executorGridPos || !(InTile(vToW) == (int)CharType.AllyCharacter)) && !_collisionTilemap.HasTile(pos))
                     {
                         _uITilemap.SetTile(pos, _targetTile);
                     }
@@ -296,7 +296,7 @@ public class CombatPlayerBehavior : CombatBehaviour
                     var pos = _enemyHeroAttackableTiles[x] + vector;
                     Vector3 vToW = pos + v;
 
-                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(InTile(vToW) == (int)CharType.AllyCharacter) && !_collisionTilemap.HasTile(pos))
+                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && (pos == _executorGridPos || !(InTile(vToW) == (int)CharType.AllyCharacter)) && !_collisionTilemap.HasTile(pos))
                     {
                         _uITilemap.SetTile(pos, _targetTile);
                     }
@@ -349,7 +349,6 @@ public class CombatPlayerBehavior : CombatBehaviour
             && _allyTile != _uITilemap.GetTile(_currentGridPos) && _allyTile != _uITilemap.GetTile(_lastGridPos)
             && _nullTile != _uITilemap.GetTile(_currentGridPos) && _nullTile != _uITilemap.GetTile(_lastGridPos) && !IsEnemy() && !_enemyHeroTiles.Contains(_currentGridPos)) //_range and pointing
             {
-                Debug.Log("target to pointing");
                 _uITilemap.SetTile(_lastGridPos, _targetTile);
                 _uITilemap.SetTile(_currentGridPos, _pointingTile);
                 _lastGridPos = _currentGridPos;
