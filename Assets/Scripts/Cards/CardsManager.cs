@@ -14,7 +14,7 @@ public class CardsManager : MonoBehaviour
     public HandManager Hand;
     [SerializeField]
     private int maxCardInHand = 6;
-    public Whiskas Whiskas;
+    public Whiskas whiskas;
 
     private void Start()
     {
@@ -23,10 +23,10 @@ public class CardsManager : MonoBehaviour
     }
     public void PassTurn()
     {
-        Whiskas.rounds++;
-        if (Whiskas.rounds % 2 == 0)
+        whiskas.rounds++;
+        if (whiskas.rounds % 2 == 0)
         {
-            Whiskas.RestartWhiskas();
+            whiskas.RestartWhiskas();
         }
          if(Hand.hand.Count < maxCardInHand)//límite de cartas en mano.
             ShowRandomCards(ChooseRandom());    
