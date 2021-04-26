@@ -5,6 +5,11 @@ using UnityEngine.Tilemaps;
 
 public class CombatPlayerBehavior : MonoBehaviour
 {
+    public Hero _heroe;
+    public List<Vector3Int> _heroTiles = new List<Vector3Int> { new Vector3Int(-7, 0, 0), new Vector3Int(-8, 0, 0), new Vector3Int(-7, -1, 0), new Vector3Int(-8, -1, 0) };
+    private List<Vector3Int> _heroAttackableTiles = new List<Vector3Int> { new Vector3Int(-7, 0, 0), new Vector3Int(-7, -1, 0) };
+    private List<Vector3Int> _heroFrontTiles = new List<Vector3Int> { new Vector3Int(-6, 0, 0), new Vector3Int(-6, -1, 0) };
+
     private Tile _pointingTile => _cCB.PointingTile;
     private Tile _rangeTile => _cCB.RangeTile;
     private Tile _targetTile => _cCB.TargetTile;
@@ -366,7 +371,7 @@ public class CombatPlayerBehavior : MonoBehaviour
     }
     private bool Hide1(Vector3Int vector)
     {
-        return !(CombatCommonBehaviour.ExecutorGridPos == vector || CombatCommonBehaviour.TileChosenPos == vector || CombatCommonBehaviour.TargetGridPos == vector);
+        return _uITilemap.GetTile(vector) == _rangeTile;
     }
 
     //----------------------------------------GENERAL FUNCTIONS----------------------------------------

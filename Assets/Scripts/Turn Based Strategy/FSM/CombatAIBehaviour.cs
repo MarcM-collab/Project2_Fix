@@ -9,9 +9,9 @@ public class CombatAIBehaviour : MonoBehaviour
 
     public CombatCommonBehaviour _cCB;
     public Hero _heroe;
-    private List<Vector3Int> _heroTiles = new List<Vector3Int> { new Vector3Int(-7, 0, 0), new Vector3Int(-8, 0, 0), new Vector3Int(-7, -1, 0), new Vector3Int(-8, -1, 0) };
-    private List<Vector3Int> _heroAttackableTiles = new List<Vector3Int> { new Vector3Int(-7, 0, 0), new Vector3Int(-7, -1, 0) };
-    private List<Vector3Int> _heroFrontTiles = new List<Vector3Int> { new Vector3Int(-6, 0, 0), new Vector3Int(-6, -1, 0)};
+    public List<Vector3Int> _heroTiles = new List<Vector3Int> { new Vector3Int(7, 0, 0), new Vector3Int(8, 0, 0), new Vector3Int(7, 1, 0), new Vector3Int(8, 1, 0) };
+    private List<Vector3Int> _heroAttackableTiles = new List<Vector3Int> { new Vector3Int(7, 0, 0), new Vector3Int(7, 1, 0) };
+    private List<Vector3Int> _heroFrontTiles = new List<Vector3Int> { new Vector3Int(6, 0, 0), new Vector3Int(6, 1, 0)};
 
     private Tile _pointingTile => _cCB.PointingTile;
     private Tile _rangeTile => _cCB.RangeTile;
@@ -131,10 +131,7 @@ public class CombatAIBehaviour : MonoBehaviour
                 }
                 if (!(hitCollider.gameObject.GetComponent("Hero") as Hero is null))
                 {
-                    for (int i = 0; i < _heroTiles.Count; i++)
-                    {
-                        _uITilemap.SetTile(_heroTiles[i], _targetTile);
-                    }
+                    _cCB.ShowHeroTiles(_heroTiles);
                 }
                 animator.SetBool("PreparingAttack", true);
             }

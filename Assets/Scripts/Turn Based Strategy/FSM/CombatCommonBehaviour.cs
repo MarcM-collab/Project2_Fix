@@ -14,7 +14,6 @@ public enum CharType
 
 public class CombatCommonBehaviour : MonoBehaviour
 {
-
     public Tile PointingTile;
     public Tile RangeTile;
     public Tile TargetTile;
@@ -192,5 +191,13 @@ public class CombatCommonBehaviour : MonoBehaviour
             }
         }
         return (int)CharType.Nothing;
+    }
+
+    public void ShowHeroTiles(List<Vector3Int> heroTiles)
+    {
+        for (int i = 0; i < heroTiles.Count; i++)
+        {
+            UITilemap.SetTile(heroTiles[i], TargetTile);
+        }
     }
 }

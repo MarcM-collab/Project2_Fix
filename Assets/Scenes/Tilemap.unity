@@ -601,7 +601,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &96896034
 Transform:
   m_ObjectHideFlags: 0
@@ -630,6 +630,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _cCB: {fileID: 383121945}
   _heroe: {fileID: 917057946}
+  _heroTiles:
+  - {x: -7, y: 0, z: 0}
+  - {x: -8, y: 0, z: 0}
+  - {x: -7, y: -1, z: 0}
+  - {x: -8, y: -1, z: 0}
 --- !u!1 &97597725
 GameObject:
   m_ObjectHideFlags: 0
@@ -4658,7 +4663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1019928037
 Transform:
   m_ObjectHideFlags: 0
@@ -4685,6 +4690,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7c59678dffe48f42b73c6985e6a2d65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _heroe: {fileID: 0}
+  _heroTiles:
+  - {x: -7, y: 0, z: 0}
+  - {x: -8, y: 0, z: 0}
+  - {x: -7, y: -1, z: 0}
+  - {x: -8, y: -1, z: 0}
   _cCB: {fileID: 383121945}
 --- !u!1 &1041193922
 GameObject:
