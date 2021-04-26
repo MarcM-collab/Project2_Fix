@@ -5,6 +5,7 @@ using UnityEngine;
 
 public static class EntityManager
 {
+    public static Team TeamPlaying = Team.TeamPlayer;
     private static List<Entity> Entities;
     private static int _currentTargetIndex = 1;
     private static int _currentExecutorIndex = 0;
@@ -42,12 +43,12 @@ public static class EntityManager
     }
     public static Character[] GetCharacters(Team team)
     {
-        return CharactersInList(Entities.Where(x => x.Team != team).ToArray());
+        return CharactersInList(Entities.Where(x => x.Team == team).ToArray());
     }
 
     public static Character[] GetLivingCharacters(Team team)
     {
-        return CharactersInList(Entities.Where(x => x.Team != team && x.IsAlive).ToArray());
+        return CharactersInList(Entities.Where(x => x.Team == team && x.IsAlive).ToArray());
     }
     public static Character[] GetActiveCharacters(Team team)
     {
@@ -80,5 +81,10 @@ public static class EntityManager
             }
         }
         return characters.ToArray();
+    }
+    public static void SwapTeams()
+    {
+        TeamPlaying = TeamPlaying == Team.TeamPlayer ? Team.TeamAI : Team.TeamPlayer;
+        RemoveExhaust();
     }
 }

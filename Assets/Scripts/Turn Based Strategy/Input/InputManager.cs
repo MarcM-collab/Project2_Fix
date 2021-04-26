@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            EntityManager.RemoveExhaust();
+            EntityManager.SwapTeams();
         }
     }
     private bool KeyPressed(KeyCode key)

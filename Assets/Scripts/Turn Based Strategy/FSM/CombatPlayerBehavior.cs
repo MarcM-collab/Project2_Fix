@@ -3,37 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-public class CombatPlayerBehavior : MonoBehaviour
+public class CombatPlayerBehavior : CombatBehaviour
 {
-    public Hero _heroe;
-    public List<Vector3Int> _heroTiles = new List<Vector3Int> { new Vector3Int(-7, 0, 0), new Vector3Int(-8, 0, 0), new Vector3Int(-7, -1, 0), new Vector3Int(-8, -1, 0) };
-    private List<Vector3Int> _heroAttackableTiles = new List<Vector3Int> { new Vector3Int(-7, 0, 0), new Vector3Int(-7, -1, 0) };
-    private List<Vector3Int> _heroFrontTiles = new List<Vector3Int> { new Vector3Int(-6, 0, 0), new Vector3Int(-6, -1, 0) };
-
-    private Tile _pointingTile => _cCB.PointingTile;
-    private Tile _rangeTile => _cCB.RangeTile;
-    private Tile _targetTile => _cCB.TargetTile;
-    private Tile _nullTile => _cCB.NullTile;
-    private Tile _allyTile => _cCB.AllyTile;
-
-
-    private Camera _camera => _cCB.Camera;
-    private Tilemap _floorTilemap => _cCB.FloorTilemap;
-    private Tilemap _collisionTilemap => _cCB.CollisionTilemap;
-    private Tilemap _uITilemap => _cCB.UITilemap;
-
-    private Texture2D _cursorHand => _cCB.CursorHand;
-    private Texture2D _cursorSword => _cCB.CursorSword;
-    private Texture2D _cursorArrow => _cCB.CursorArrow;
-
-    private static Character _executorCharacter => CombatCommonBehaviour.ExecutorCharacter;
-    private static Entity _targetCharacter => CombatCommonBehaviour.TargetCharacter;
-
-    public CombatCommonBehaviour _cCB;
+    public GameObject EnemyHeroeGO;
 
     private static Vector3Int _currentGridPos;
     private static Vector3Int _lastGridPos;
     private static Vector3 _mousePos;
+    private static bool IsAttacking;
 
     private static bool _isExecutorSelected;
     private void OnEnable()
@@ -59,6 +36,12 @@ public class CombatPlayerBehavior : MonoBehaviour
         Ranged_ChoosingTile.OnRanged_ChoosingTileUpdate -= Ranged_ChoosingTileUpdate;
         HideRange.OnHideRangeEnter -= HideRangeEnter;
     }
+    private void Start()
+    {
+        _enemyHero = EnemyHeroeGO.GetComponent<Hero>();
+        _enemyHeroTiles = new List<Vector3Int> { new Vector3Int(6, 0, 0), new Vector3Int(7, 0, 0), new Vector3Int(6, -1, 0), new Vector3Int(7, -1, 0) };
+        _enemyHeroAttackableTiles = new List<Vector3Int> { new Vector3Int(6, 0, 0), new Vector3Int(6, -1, 0) };
+    }
     private void Update()
     {
         _mousePos = Input.mousePosition;
@@ -83,7 +66,7 @@ public class CombatPlayerBehavior : MonoBehaviour
                 if (EntityManager.IsEntityInList(EntityManager.GetActiveCharacters(Team.TeamPlayer), tempCharacter))
                 {
                     EntityManager.SetExecutor(tempCharacter);
-                    CombatCommonBehaviour.ExecutorGridPos = _currentGridPos;
+                    _executorGridPos = _currentGridPos;
                     _isExecutorSelected = true;
                     if (tempCharacter.Class == Class.Ranged)
                     {
@@ -106,6 +89,8 @@ public class CombatPlayerBehavior : MonoBehaviour
     //----------------------------------------Melee_ShowRange----------------------------------------
     private void Melee_ShowRangeEnter()
     {
+        bool enemyHeroOnRange = false;
+
         Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
         var range = _executorCharacter.Range + 2;
         int counter = 0;
@@ -118,26 +103,32 @@ public class CombatPlayerBehavior : MonoBehaviour
             for (int i = -range; i <= range; i++)
             {
                 Vector3Int vector = new Vector3Int(i, j, 0);
-                var pos = CombatCommonBehaviour.ExecutorGridPos + vector;
+                var pos = _executorGridPos + vector;
                 Vector3 vToW = pos + v;
 
                 if (Mathf.Abs(i) < counter - 2)
                 {
-                    if (_cCB.InTile(vToW) == (int)CharType.EnemyCharacter)
+                    if (InTile(vToW) == (int)CharType.EnemyCharacter)
                         _uITilemap.SetTile(pos, _targetTile);
-                    else if (CanMove(pos) && _cCB.InTile(vToW) == (int)CharType.Nothing)
+                    else if (CanMove(pos) && InTile(vToW) == (int)CharType.Nothing)
                         _uITilemap.SetTile(pos, _rangeTile);
-                    else if (pos == CombatCommonBehaviour.ExecutorGridPos || _cCB.InTile(vToW) == (int)CharType.AllyCharacter)
+                    else if (pos == _executorGridPos || InTile(vToW) == (int)CharType.AllyCharacter)
                         _uITilemap.SetTile(pos, _allyTile);
                     else if (_floorTilemap.HasTile(pos))
                         _uITilemap.SetTile(pos, _nullTile);
+                    else if (InTile(vToW) == (int)CharType.EnemyHero)
+                        enemyHeroOnRange = true;
                 }
                 else if (Mathf.Abs(i) < counter)
                 {
-                    if (_cCB.InTile(vToW) == (int)CharType.EnemyCharacter && i != -range && i != range && j != -range && j != range)
+                    if (InTile(vToW) == (int)CharType.EnemyCharacter && i != -range && i != range && j != -range && j != range)
                         _uITilemap.SetTile(pos, _targetTile);
                 }
             }
+        }
+        if (enemyHeroOnRange)
+        {
+            ShowHeroTiles();
         }
     }
     //----------------------------------------Ranged_ShowRange----------------------------------------
@@ -157,10 +148,10 @@ public class CombatPlayerBehavior : MonoBehaviour
                 if (Mathf.Abs(i) < counter)
                 {
                     Vector3Int vector = new Vector3Int(i, j, 0);
-                    var pos = CombatCommonBehaviour.ExecutorGridPos + vector;
+                    var pos = _executorGridPos + vector;
                     Vector3 vToW = pos + v;
 
-                    if (pos == CombatCommonBehaviour.ExecutorGridPos || _cCB.InTile(vToW) == 2)
+                    if (pos == _executorGridPos || InTile(vToW) == 2)
                         _uITilemap.SetTile(pos, _allyTile);
                     else if (CanMove(pos))
                         _uITilemap.SetTile(pos, _rangeTile);
@@ -175,7 +166,7 @@ public class CombatPlayerBehavior : MonoBehaviour
             {
                 Vector3Int vector = new Vector3Int(x, y, 0);
                 Vector3 vToW = vector + v;
-                if (_cCB.InTile(vToW) == 1)
+                if (InTile(vToW) == 1)
                     _uITilemap.SetTile(vector, _targetTile);
             }
         }
@@ -193,21 +184,22 @@ public class CombatPlayerBehavior : MonoBehaviour
 
         if (InputManager.LeftMouseClick)
         {
-            if (!_uITilemap.HasTile(_currentGridPos) || CombatCommonBehaviour.ExecutorGridPos == _currentGridPos)
+            if (!_uITilemap.HasTile(_currentGridPos) || _executorGridPos == _currentGridPos)
                 animator.SetBool("Selected", false);
             else if (_targetTile == _uITilemap.GetTile(_currentGridPos))
             {
-                CombatCommonBehaviour.TileChosenPos = CombatCommonBehaviour.ExecutorGridPos;
-                CombatCommonBehaviour.TargetGridPos = _currentGridPos;
+                _tileChosenPos = _executorGridPos;
+                _targetGridPos = _currentGridPos;
                 EntityManager.SetTarget(SelectCharacter());
-                EntityManager.SetTarget(_targetCharacter);
+                EntityManager.SetTarget(_targetEntity);
                 animator.SetBool("Attacking", true);
+                IsAttacking = true;
                 animator.SetTrigger("TileChosen");
             }
             else if (_pointingTile == _uITilemap.GetTile(_currentGridPos))
             {
-                CombatCommonBehaviour.TileChosenPos = _currentGridPos;
-                _uITilemap.SetTile(CombatCommonBehaviour.TileChosenPos, _allyTile);
+                _tileChosenPos = _currentGridPos;
+                _uITilemap.SetTile(_tileChosenPos, _allyTile);
                 animator.SetTrigger("TileChosen");
             }
         }
@@ -230,19 +222,19 @@ public class CombatPlayerBehavior : MonoBehaviour
 
         if (InputManager.LeftMouseClick)
         {
-            if (!_uITilemap.HasTile(_currentGridPos) || CombatCommonBehaviour.ExecutorGridPos == _currentGridPos)
+            if (!_uITilemap.HasTile(_currentGridPos) || _executorGridPos == _currentGridPos)
                 animator.SetBool("Selected", false);
-            else if (_targetTile == _uITilemap.GetTile(_currentGridPos))
+
+            else if (_uITilemap.GetTile(_currentGridPos) == _targetTile)
             {
-                CombatCommonBehaviour.TargetGridPos = _currentGridPos;
-                EntityManager.SetTarget(SelectCharacter());
-                EntityManager.SetTarget(_targetCharacter);
+                _targetGridPos = _currentGridPos;
+                EntityManager.SetTarget(SelectEntity());
                 Cursor.SetCursor(_cursorHand, Vector2.zero, CursorMode.Auto);
                 animator.SetBool("PreparingAttack", true);
             }
             else if (_pointingTile == _uITilemap.GetTile(_currentGridPos))
             {
-                CombatCommonBehaviour.TileChosenPos = _currentGridPos;
+                _tileChosenPos = _currentGridPos;
                 _uITilemap.SetTile(_currentGridPos, _allyTile);
                 animator.SetTrigger("TileChosen");
             }
@@ -276,21 +268,41 @@ public class CombatPlayerBehavior : MonoBehaviour
     private void Melee_ShowAttackRangeEnter()
     {
         Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
-        for (int j = -1; j <= 1; j++)
+        if (!(_targetEntity.GetComponent("Character") as Entity is null))
         {
-            for (int i = -1; i <= 1; i++)
+            for (int j = -1; j <= 1; j++)
             {
-                Vector3Int vector = new Vector3Int(i, j, 0);
-                var pos = CombatCommonBehaviour.TargetGridPos + vector;
-                Vector3 vToW = pos + v;
-
-                if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(_cCB.InTile(vToW) == (int)CharType.AllyCharacter) && !_collisionTilemap.HasTile(pos))
+                for (int i = -1; i <= 1; i++)
                 {
-                    _uITilemap.SetTile(pos, _targetTile);
+                    Vector3Int vector = new Vector3Int(i, j, 0);
+                    var pos = _targetGridPos + vector;
+                    Vector3 vToW = pos + v;
+
+                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(InTile(vToW) == (int)CharType.AllyCharacter) && !_collisionTilemap.HasTile(pos))
+                    {
+                        _uITilemap.SetTile(pos, _targetTile);
+                    }
                 }
             }
         }
-        //Then remove range
+        else
+        {
+            for (int x = 0; x < _enemyHeroAttackableTiles.Count; x++)
+            for (int j = -1; j <= 1; j++)
+            {
+                for (int i = -1; i <= 1; i++)
+                {
+                    Vector3Int vector = new Vector3Int(i, j, 0);
+                    var pos = _enemyHeroAttackableTiles[x] + vector;
+                    Vector3 vToW = pos + v;
+
+                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(InTile(vToW) == (int)CharType.AllyCharacter) && !_collisionTilemap.HasTile(pos))
+                    {
+                        _uITilemap.SetTile(pos, _targetTile);
+                    }
+                }
+            }
+        }
     }
     //----------------------------------------Melee_ChoosingAttackTile----------------------------------------
     private void Melee_ChoosingAttackTileUpadate(Animator animator)
@@ -299,46 +311,45 @@ public class CombatPlayerBehavior : MonoBehaviour
 
         if (InputManager.LeftMouseClick)
         {
-            if (!_targetTile == _uITilemap.GetTile(_currentGridPos) || IsEnemy())
+            if (_pointingTile != _uITilemap.GetTile(_currentGridPos) || IsEnemy())
             {
-                //CharacterManager.SetTarget(null);
                 animator.SetBool("PreparingAttack", false);
             }
 
             else
             {
-                CombatCommonBehaviour.TileChosenPos = _currentGridPos;
+                _tileChosenPos = _currentGridPos;
                 _uITilemap.SetTile(_currentGridPos, _allyTile);
                 animator.SetTrigger("TileChosen");
                 animator.SetBool("Attacking", true);
+                IsAttacking = true;
             }
         }
     }
     private void TileAttackingSetter()
     {
-        //range grid to outside
         if (_currentGridPos != _lastGridPos)
         {
-            if ((!_uITilemap.HasTile(_currentGridPos) || _allyTile == _uITilemap.GetTile(_currentGridPos) || _nullTile == _uITilemap.GetTile(_currentGridPos) || _rangeTile == _uITilemap.GetTile(_currentGridPos) || CombatCommonBehaviour.TargetGridPos == _currentGridPos)
+            if ((!_uITilemap.HasTile(_currentGridPos) || _allyTile == _uITilemap.GetTile(_currentGridPos) || _nullTile == _uITilemap.GetTile(_currentGridPos) || _rangeTile == _uITilemap.GetTile(_currentGridPos) || _targetGridPos == _currentGridPos || IsEnemy() || _enemyHeroTiles.Contains(_currentGridPos))
             && _uITilemap.HasTile(_lastGridPos)
             && _rangeTile != _uITilemap.GetTile(_lastGridPos) && _allyTile != _uITilemap.GetTile(_lastGridPos) && _nullTile != _uITilemap.GetTile(_lastGridPos)) //only _pointing
             {
                 _uITilemap.SetTile(_lastGridPos, _targetTile);
                 _lastGridPos = _currentGridPos;
             }
-            //outside to range grid
             else if (_uITilemap.HasTile(_currentGridPos)
-            && (!_uITilemap.HasTile(_lastGridPos) || _rangeTile == _uITilemap.GetTile(_lastGridPos) || _allyTile == _uITilemap.GetTile(_lastGridPos) || _nullTile == _uITilemap.GetTile(_lastGridPos) || CombatCommonBehaviour.TargetGridPos == _lastGridPos)
-            && _rangeTile != _uITilemap.GetTile(_currentGridPos) && _allyTile != _uITilemap.GetTile(_currentGridPos) && _nullTile != _uITilemap.GetTile(_currentGridPos) && !IsEnemy()) //only _range
+            && (!_uITilemap.HasTile(_lastGridPos) || _rangeTile == _uITilemap.GetTile(_lastGridPos) || _allyTile == _uITilemap.GetTile(_lastGridPos) || _nullTile == _uITilemap.GetTile(_lastGridPos) || _targetGridPos == _lastGridPos || _enemyHeroTiles.Contains(_lastGridPos))
+            && _rangeTile != _uITilemap.GetTile(_currentGridPos) && _allyTile != _uITilemap.GetTile(_currentGridPos) && _nullTile != _uITilemap.GetTile(_currentGridPos) && !IsEnemy() && !_enemyHeroTiles.Contains(_currentGridPos)) //only _range
             {
                 _uITilemap.SetTile(_currentGridPos, _pointingTile);
                 _lastGridPos = _currentGridPos;
             }
-            else if (_uITilemap.HasTile(_currentGridPos) && _targetTile == _uITilemap.GetTile(_currentGridPos) && CombatCommonBehaviour.TargetGridPos != _lastGridPos && CombatCommonBehaviour.TargetGridPos != _currentGridPos
+            else if (_uITilemap.HasTile(_currentGridPos) && _targetTile == _uITilemap.GetTile(_currentGridPos) && _targetGridPos != _lastGridPos && _targetGridPos != _currentGridPos && !_enemyHeroTiles.Contains(_lastGridPos) && !_enemyHeroTiles.Contains(_currentGridPos)
             && _rangeTile != _uITilemap.GetTile(_currentGridPos) && _rangeTile != _uITilemap.GetTile(_lastGridPos)
             && _allyTile != _uITilemap.GetTile(_currentGridPos) && _allyTile != _uITilemap.GetTile(_lastGridPos)
-            && _nullTile != _uITilemap.GetTile(_currentGridPos) && _nullTile != _uITilemap.GetTile(_lastGridPos)) //_range and pointing
+            && _nullTile != _uITilemap.GetTile(_currentGridPos) && _nullTile != _uITilemap.GetTile(_lastGridPos) && !IsEnemy() && !_enemyHeroTiles.Contains(_currentGridPos)) //_range and pointing
             {
+                Debug.Log("target to pointing");
                 _uITilemap.SetTile(_lastGridPos, _targetTile);
                 _uITilemap.SetTile(_currentGridPos, _pointingTile);
                 _lastGridPos = _currentGridPos;
@@ -349,29 +360,38 @@ public class CombatPlayerBehavior : MonoBehaviour
     private void Melee_HideAttackRangeEnter()
     {
         Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
-        for (int j = -1; j <= 1; j++)
+        for (int x = _uITilemap.cellBounds.min.x; x < _uITilemap.cellBounds.max.x; x++)
         {
-            for (int i = -1; i <= 1; i++)
+            for (int y = _uITilemap.cellBounds.min.y; y < _uITilemap.cellBounds.max.y; y++)
             {
-                Vector3Int vector = new Vector3Int(i, j, 0);
-                var pos = CombatCommonBehaviour.TargetGridPos + vector;
+                Vector3Int vector = new Vector3Int(x, y, 0);
+                var pos = _targetGridPos + vector;
                 Vector3 vToW = pos + v;
 
-                if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && !(_cCB.InTile(vToW) == (int)CharType.AllyCharacter) && !_collisionTilemap.HasTile(pos))
-                {
+                if (_uITilemap.GetTile(pos) == _targetTile && InTile(vToW) == (int)CharType.Nothing)
                     _uITilemap.SetTile(pos, _rangeTile);
-                }
             }
         }
     }
     //----------------------------------------HideRange----------------------------------------
     private void HideRangeEnter()
     {
-        _cCB.HideTilemapElements(_uITilemap, Hide1);
+        HideTilemapElements(_uITilemap, Hide1);
+        IsAttacking = false;
     }
     private bool Hide1(Vector3Int vector)
     {
-        return _uITilemap.GetTile(vector) == _rangeTile;
+        var v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
+        var pos = vector + v;
+        if (IsAttacking)
+        {
+            return (((_uITilemap.GetTile(vector) != _targetTile || (InTile(pos) != (int)CharType.EnemyHero && InTile(pos) != (int)CharType.EnemyCharacter)))
+                && vector != _tileChosenPos && vector != _executorGridPos);
+        }
+        else
+        {
+            return (vector != _tileChosenPos && vector != _executorGridPos);
+        }
     }
 
     //----------------------------------------GENERAL FUNCTIONS----------------------------------------
@@ -385,6 +405,20 @@ public class CombatPlayerBehavior : MonoBehaviour
             if (!(gameObject.GetComponent("Character") as Character is null))
             {
                 return gameObject.GetComponent<Character>();
+            }
+        }
+        return null;
+    }
+    private static Entity SelectEntity()
+    {
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(_mousePos), Vector2.zero);
+        var hitCollider = hit.collider;
+        if (hitCollider != null)
+        {
+            var gameObject = hitCollider.gameObject;
+            if (!(gameObject.GetComponent("Entity") as Entity is null))
+            {
+                return gameObject.GetComponent<Entity>();
             }
         }
         return null;
