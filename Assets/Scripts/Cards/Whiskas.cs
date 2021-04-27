@@ -12,7 +12,7 @@ public class Whiskas : MonoBehaviour
     public int rounds = 1;
     public Text WhiskasText;
 
-    private void Start()
+    private void Awake()
     {
         _slider = GetComponent<Slider>();
         currentWhiskas = 2;
