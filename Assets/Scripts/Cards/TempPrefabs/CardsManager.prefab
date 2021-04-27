@@ -44,8 +44,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cards:
-  - {fileID: 8227659889472701556, guid: 1e3d7f9181bf0eb4a8f2fe7852960499, type: 3}
-  - {fileID: 815049046800516920, guid: 4df99a0c580041b4491c4361f0d7434f, type: 3}
-  - {fileID: 2801302742146192750, guid: 00662b4cdc0a766458c480c599120d55, type: 3}
-  Hand: []
-  AnimatorCard: {fileID: 0}
+  - {fileID: -1943764638452470376, guid: e9f55579a5b2f9e47b25c256f8500d87, type: 3}
+  - {fileID: 4526846348483723782, guid: 64af944539373e34683703445702201a, type: 3}
+  - {fileID: 5480704345394235149, guid: c946bbc647b903f43bf4c942ff452e11, type: 3}
+  - {fileID: 8933277958290082131, guid: 23679815dc404b440abaa330a94c2b0f, type: 3}
+  buttons:
+  - {fileID: 0}
+  - {fileID: 0}
+  Hand: {fileID: 0}
+  maxCardInHand: 6
+  whiskas: {fileID: 0}

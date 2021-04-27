@@ -9,7 +9,7 @@ public class Whiskas : MonoBehaviour
     public int maxWhiskas = 2;
 
     private Slider _slider;
-    public int rounds = 0;
+    public int rounds = 1;
     public Text WhiskasText;
 
     private void Start()
@@ -18,21 +18,17 @@ public class Whiskas : MonoBehaviour
         currentWhiskas = 2;
         WhiskasText.text = currentWhiskas.ToString();
     }
-    public void RestartWhiskas() //pasar turno (cada 2 turnos se hace el restart) 2 turnos: 1 player +  1 IA. => 1 Ronda.
+    public void RestartWhiskas(int maxWhiskasToAdd = 0) //pasar turno (cada 2 turnos se hace el restart) 2 turnos: 1 player +  1 IA. => 1 Ronda.
     {
-        maxWhiskas++;
+        maxWhiskas += maxWhiskasToAdd;
         currentWhiskas = maxWhiskas;
-        print(currentWhiskas);
         WhiskasText.text = maxWhiskas.ToString();
         _slider.value = (float)currentWhiskas / maxWhiskas; //por cambiar
-        
     }
     public void RemoveWhiskas(int remove)
     {
-       
         currentWhiskas -= remove;
         WhiskasText.text = currentWhiskas.ToString();
         _slider.value = (float)currentWhiskas / maxWhiskas;
-        
     }
 }

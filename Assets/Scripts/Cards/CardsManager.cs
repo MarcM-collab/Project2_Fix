@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,30 +16,44 @@ public class CardsManager : MonoBehaviour
     [SerializeField]
     private int maxCardInHand = 6;
     public Whiskas whiskas;
-
+    private bool currentTurn = false;
     private void Start()
     {
         buttons[0].gameObject.SetActive(false);
         buttons[1].gameObject.SetActive(false);
+        NextTurn();
+    }
+    private void Update()
+    {
+        if (whiskas.rounds % 2 != 0 && !currentTurn) //Player turn
+        {
+            currentTurn = true; //avoids extra iterations
+
+            if (Hand.hand.Count < maxCardInHand) //límite de cartas en mano. 
+                ShowRandomCards(ChooseRandom());
+        }
     }
     public void PassTurn()
     {
-        whiskas.rounds++;
-        if (whiskas.rounds % 2 == 0)
-        {
-            whiskas.RestartWhiskas();
-        }
-         if(Hand.hand.Count < maxCardInHand)//límite de cartas en mano.
-            ShowRandomCards(ChooseRandom());    
+        if (whiskas.rounds % 2 != 0)
+            NextTurn();
     }
+
+    private void NextTurn()
+    {
+        whiskas.rounds++;
+        whiskas.RestartWhiskas();
+        currentTurn = false;
+    }
+
     private List<Card> ChooseRandom() //salen dos cartas random y las guarda en una lista.
     {
-        int random1 = Random.Range(0, Cards.Count);
-        int random2 = Random.Range(0, Cards.Count);
+        int random1 = UnityEngine.Random.Range(0, Cards.Count);
+        int random2 = UnityEngine.Random.Range(0, Cards.Count);
 
         while (random1 == random2)
         {
-            random2 = Random.Range(0, Cards.Count);
+            random2 = UnityEngine.Random.Range(0, Cards.Count);
         }
         twoCardsRandom.Add(Cards[random1]);
         twoCardsRandom.Add(Cards[random2]);

@@ -82,7 +82,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatAIBehaviour.cs" />
     <Compile Include="Assets\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Chunk.cs" />
-    <Compile Include="Assets\Scripts\Cards\Spells\Spells.cs" />
+    <Compile Include="Assets\Scripts\Cards\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Dead.cs" />
     <Compile Include="Assets\_Scripts\Bad\PlayerApearence.cs" />
     <Compile Include="Assets\_Scripts\Move\EntityManager.cs" />

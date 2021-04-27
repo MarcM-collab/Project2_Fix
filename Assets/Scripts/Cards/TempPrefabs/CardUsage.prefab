@@ -44,5 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   scale: 1
+  HandManager: {fileID: 0}
+  Whiskas: {fileID: 0}
   _floorTilemap: {fileID: 0}
+  _collisionTilemap: {fileID: 0}
   _camera: {fileID: 0}

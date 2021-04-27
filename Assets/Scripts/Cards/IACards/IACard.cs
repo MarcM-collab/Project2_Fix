@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using System;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class IACard : MonoBehaviour
 {
@@ -14,70 +16,168 @@ public class IACard : MonoBehaviour
     }
 
     public List<CardType> IADeck;//deck hecho por nosotros
-    public List<Card> IAHand; //de 0 a 6 cartas q tendrá en la mano
+    private List<Card> IAHand = new List<Card>(); //de 0 a 6 cartas q tendrá en la mano
 
 
     public Whiskas _whiskas;
+
 
     private int _whiskasCombinationAccumulate = 0;
     private int _cardStatsAccumulates = 0;
     private int _currentWhiskas => _whiskas.currentWhiskas;
 
-    public LinkedList<string> qLinkedList = new LinkedList<string>();
-    public List<List<int>> _combinations = new List<List<int>>(); //remover publicas
-    public List<int> _valueCardStats = new List<int>(); //remover publicas
+    private LinkedList<string> qLinkedList = new LinkedList<string>();
+    private List<List<int>> _combinations = new List<List<int>>(); //remover publicas
+    private List<int> _valueCardStats = new List<int>(); //remover publicas
 
+    public int minimumScore = 7;
     //control de la visualización de las cartas de la  IA
     public Transform IAHandCanvas;
     public float scale = 1f;
-    public GameObject prefabBackCard;
     private float maxCardsInHand = 6;
-    public List<GameObject> cardsInHand = new List<GameObject>();
     private Transform cardInstance;
     //-----------------------------
 
     public Tilemap FloorTileMap;
     public Tilemap CollisionTileMap;
     private List<GameObject> mapList = new List<GameObject>();
-    private void Start()
-    {
-        for (int i = 0; i < IAHand.Count; i++)
-        {
-            AddCardHand();
-        }
-    }
+
+    [Header("Display settings")]
+    public Sprite cardSprites;
+    public Image[] selectableStartCards;
+    public float selectWait = 2;
+    [Range(0, 1)] public float selectWaitRandomicity = 0.25f;
+    private float currentWaitSelect = 0;
+    [Range(0, 2)]public float selectCardFrequency = 1;
+    private float currentSelectFrequency = 0;
+    public Color selectCardColor;
+    public float cardUsageWait = 2;
+    [Range(0, 1)] public float cardUsageRandomicity = 0.25f;
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.C) && IAHand.Count < maxCardsInHand)
+        if (_whiskas.rounds % 2 == 0)
+        {
+            if (currentWaitSelect == 0) //Init, avoids extra iterations
+                ShowInitialCards();
+
+            if (currentWaitSelect < selectWait)
+            {
+                currentWaitSelect += Time.deltaTime;
+
+                if (currentWaitSelect >= currentSelectFrequency + Random.Range(-selectWaitRandomicity, selectWaitRandomicity))
+                {
+                    SetSelectedInitialCard(Random.Range(0, selectableStartCards.Length));
+                    currentSelectFrequency += selectCardFrequency;
+                }
+
+            }
+            else if (Mathf.FloorToInt(currentWaitSelect) == Mathf.FloorToInt(selectWait)) //avoids extra executions
+            {
+                currentWaitSelect++; 
+                HideInitialCards();
+                StartCoroutine(IATurn());
+            }
+        }
+
+    }
+
+    private void ShowInitialCards()
+    {
+        for (int i = 0; i < selectableStartCards.Length; i++)
+        {
+            selectableStartCards[i].gameObject.SetActive(true);
+            selectableStartCards[i].sprite = cardSprites;
+        }
+    }
+    private void HideInitialCards()
+    {
+        SetSelectedInitialCard(-1);
+        for (int i = 0; i < selectableStartCards.Length; i++)
+            selectableStartCards[i].gameObject.SetActive(false); //hide cards
+    }
+    private void SetSelectedInitialCard(int v)
+    {
+        for (int i = 0; i < selectableStartCards.Length; i++)
+        {
+            selectableStartCards[i].color = Color.white;
+        }
+
+        if (v != -1) //reset colors
+            selectableStartCards[v].color = selectCardColor;
+    }
+
+    private IEnumerator IATurn()
+    {
+        if (IAHand.Count < maxCardsInHand)
             RandomCardChosen();
-        if (Input.GetKeyDown(KeyCode.I))
+
+        Spell priorSpell = GetPriorSpell();
+        if (priorSpell) //Has any spell in hand
         {
-            RemoveCardHand();
+            SetSelectedHandCard(Random.Range(0, IAHand.Count));
+            yield return new WaitForSeconds(cardUsageWait);
+            priorSpell.IAUse();
+            RemoveCardHand(priorSpell);
         }
-        if (Input.GetKeyDown(KeyCode.B))
+
+
+        List<int> combinations = CombinationCard(UnitList());
+        if (combinations != null)
         {
-            CombinationCard(UnitList());
-            BestCombination();
-            
+            combinations.Sort(); //First order [3, 1, 2] --> [1,2,3], then iterate reversly --> [3,2,1] so removing will not be out of the range.
+            //List<int> indexToRemove = new List<int>(); //this list will avoid modifi ng the list index removing in the for where you spawn
+            for (int i = combinations.Count-1; i >= 0; i--)
+            {
+                SetSelectedHandCard(Random.Range(0, IAHand.Count));
+                yield return new WaitForSeconds(cardUsageWait + Random.Range(-cardUsageRandomicity, cardUsageRandomicity)); //Adds random to make it feel human.
+                SpawnCard(combinations[i]);
+                RemoveCardHand(IAHand[combinations[i]]);
+                //indexToRemove.Add(combinations[i]); //Add the index to remove it later, removing an element of the list will change the indexes causing an index out of range error when accessing to an element. List [1] --> List [0] when removing.
+            }
+            print("KEKW");
+            //indexToRemove.Sort(); //First order [3, 1, 2] --> [1,2,3], then iterate reversly --> [3,2,1] so removing will not be out of the range.
+            //for (int i = indexToRemove.Count-1; i >= 0; i--)
+            //{
+
+            //}
         }
-        if (Input.GetKeyDown(KeyCode.Y))
-        {
-            SpawnCard(0);
-        }
+        yield return new WaitForSeconds(selectWait);
+        Init();
     }
 
-    private void RemoveCardHand()
+    private void Init()
     {
-        Destroy(cardsInHand[cardsInHand.Count - 1]);
-        cardsInHand.RemoveAt(cardsInHand.Count - 1);
-    }
-    private void AddCardHand()
-    {
-        cardInstance = Instantiate(prefabBackCard, IAHandCanvas.position, Quaternion.identity).transform;
+        SetSelectedHandCard(-1);
+        _whiskas.rounds++;
+        _whiskas.RestartWhiskas(1);
 
+        currentWaitSelect = 0;
+        currentSelectFrequency = 0;
+    }
+    private void SetSelectedHandCard(int v)
+    {
+        Image[] cardsDiplays = IAHandCanvas.GetComponentsInChildren<Image>();
+        for (int i = 0; i < cardsDiplays.Length; i++)
+        {
+            cardsDiplays[i].GetComponent<Image>().color = Color.white;
+        }
+        if (v != -1)
+            cardsDiplays[v].GetComponent<Image>().color = selectCardColor;
+    }
+    private void RemoveCardHand(Card cardToRemove)
+    {
+        IAHand.Remove(cardToRemove);
+        _whiskas.currentWhiskas -= cardToRemove.Whiskas;
+        Destroy(cardToRemove.gameObject); //To make it visible that a card has been used.
+    }
+    private void AddCardHand(Card toSpawn)
+    {
+        cardInstance = Instantiate(toSpawn, IAHandCanvas.position, Quaternion.identity).transform;
+        IAHand.Add(cardInstance.GetComponent<Card>()); //Avoids modifing the prefab
+        cardInstance.GetComponent<Button>().enabled = false; //Avoids interaction with player
+        cardInstance.GetComponent<Image>().sprite = cardSprites;
         cardInstance.SetParent(IAHandCanvas);
         cardInstance.localScale = new Vector3(scale, scale, scale);//escalamos las cartas que se ven en la mano.
-        cardsInHand.Add(cardInstance.gameObject);
     }
     /*
     SE ELIGEN (DOS) CARTAS ALEATORIAS
@@ -85,15 +185,15 @@ public class IACard : MonoBehaviour
     */
     private void RandomCardChosen()
     {
-        int random1 = UnityEngine.Random.Range(0, IADeck.Count);
-        int random2 = UnityEngine.Random.Range(0, IADeck.Count);
+        int random1 = Random.Range(0, IADeck.Count);
+        int random2 = Random.Range(0, IADeck.Count);
 
         while (random1 == random2)
         {
-            random2 = UnityEngine.Random.Range(0, IADeck.Count);
+            random2 = Random.Range(0, IADeck.Count);
         }
-        IAHand.Add(ComproveHand(random1, random2));
-        AddCardHand();
+        
+        AddCardHand(ComproveHand(random1, random2));
     }
     /*
     LA FUNCIÓN REVISA SI LAS (DOS) CARTAS
@@ -109,32 +209,36 @@ public class IACard : MonoBehaviour
     */
     private Card ComproveHand(int random1, int random2)//comprueba que cartas tiene la IA en su mano.
     {
+        // if one and only one of the cards is repited...
         bool _firstCardRepe = false;
         bool _secondCardRepe = false;
+
         //miramos en la mano cuales tiene.
         for (int i = 0; i < IAHand.Count; i++)
         {
             if (IAHand[i].name == IADeck[random1].card.name) //si el nombre es diferente =>  no la tiene| coge esta y no comprueba las otras.
             {
-                // print("PRIMERA repe " + IADeck[random1].card.name);
                 _firstCardRepe = true;
             }
             else if (IAHand[i].name == IADeck[random2].card.name) //si el nombre es diferente =>  no la tiene
             {
-                // print("SEGUNDA repe " + IADeck[random2].card.name);
                 _secondCardRepe = true;
             }
         }
-        if (!_firstCardRepe)
+        if (!_firstCardRepe && _secondCardRepe)
+        {
             return IADeck[random1].card;
-        else if (!_secondCardRepe)
+        }
+        else if (!_secondCardRepe && _firstCardRepe)
+        {
             return IADeck[random2].card;
+        }
         else //sistema de prioridad.
         {
-            if (IADeck[random1].priority < IADeck[random2].priority)
-                return IADeck[random2].card;
-            else
+            if (IADeck[random1].priority >= IADeck[random2].priority) //They shouldn't be equal but if they are it will be chosen randomly (the one on the first spot which was randomly assigned)
                 return IADeck[random1].card;
+            else
+                return IADeck[random2].card;
         }
     }
     /*
@@ -145,52 +249,44 @@ public class IACard : MonoBehaviour
     LA POSICIÓN EN LA QUE SE ENCUENTRA EL 
     HECHIZO.
     */
-    private bool IAHasSpells()
+    private Spell GetPriorSpell()  //Will only use the one with more priority so it will not always be throwing spells
     {
-        int maxPriority = 0;//prioridad mas alta
-        int spellPriorityPos = 0; //pos 0 por default.
-        int sCounter = 0;
+        Spell priorSpell = null;
 
-        List<Spells> spellsList = new List<Spells>();
-        //vamos a revisar que cartas de hechizo hay y cual es la mayor prioridad.
         for (int i = 0; i < IAHand.Count; i++)
         {
-            if (IAHand[i] is Spells)
+            if (IAHand[i] is Spell)
             {
-                spellsList.Add(IAHand[i] as Spells);
-                
-                if (spellsList[sCounter].Priority > maxPriority)
+                Spell currentSpell = IAHand[i] as Spell;
+                if (!priorSpell || currentSpell.Priority > priorSpell.Priority)
                 {
-                    maxPriority = spellsList[sCounter].Priority;
-                    spellPriorityPos = i;
-                    sCounter++;
+                    priorSpell = currentSpell;
                 }
             }
         }
-        print(spellsList.Count);
-        return spellsList.Count != 0;
-    }
+        if (!priorSpell) //Any spell has been added
+            return null;
 
+        return priorSpell;
+    }
     /*
     ESTA FUNCIÓN REALIZA LAS COMBINACIONES
     POSIBLES POR LA IA MEDIANTE EL MANÁ(WHISKAS)
     DISPONIBLE.
     */
-    private void CombinationCard(List<Card> list)
+    private List<int> CombinationCard(List<Card> list)
     {
         _combinations = new List<List<int>>();
         _valueCardStats = new List<int>();
-        qLinkedList = new LinkedList<string>();
+        qLinkedList = new LinkedList<string>(); // Create an empty queue of strings
 
-        // Create an empty queue of strings
-        int lenghtHand = list.Count;
         // Enqueue the first binary number
         qLinkedList.AddLast("1");
 
         // This loops is like BFS of a tree
         // with 1 as root 0 as left child
         // and 1 as right child and so on
-        float e = Mathf.Pow(2, lenghtHand) - 1;
+        float e = Mathf.Pow(2, list.Count) - 1;
         while (e-- > 0)
         {
             List<int> tempList = new List<int>();
@@ -211,15 +307,11 @@ public class IACard : MonoBehaviour
 
                     tempList.Add(count);//añadimos posición
                 }
-
-                print(list[count].name);
                 count++;
             }
-            print(s1 + ":posiciones |  mana total:     " + _whiskasCombinationAccumulate);
 
             if (_whiskasCombinationAccumulate <= _currentWhiskas)
             {
-                print("añadiendome");
                 _combinations.Add(tempList);//añadimos la combinación con su posición
                 _valueCardStats.Add(_cardStatsAccumulates); // su valor
             }
@@ -236,8 +328,20 @@ public class IACard : MonoBehaviour
             // Note that s2 contains the previous front
             qLinkedList.AddLast(s2 + "1");
         }
+        int bestCombinationIndex = BestCombination();
+        print(bestCombinationIndex + ",,, Count: " + _valueCardStats.Count);
+
+        if (_combinations.Count == 0|| _valueCardStats[bestCombinationIndex] < minimumScore)
+            return null;
+
+        return _combinations[bestCombinationIndex];
 
     }
+
+
+
+
+
 
     private List<Card> UnitList()
     {
@@ -286,16 +390,8 @@ public class IACard : MonoBehaviour
 
         Vector2 tilePos = new Vector2(UnityEngine.Random.Range(4, 6), UnityEngine.Random.Range(-3, 3));
 
-        print("cy: " + FloorTileMap.cellSize.y + "cx: " + FloorTileMap.cellSize.x);
-
-
-
         GameObject theTile = Instantiate(IAHand[0].GetComponent<Unit>().sprite, tilePos, Quaternion.identity);
         theTile.transform.localPosition = new Vector3(tilePos.x + (FloorTileMap.cellSize.x / 2), tilePos.y + (FloorTileMap.cellSize.y / 2), 0);
         mapList.Add(theTile);
-
-
-        print("hay en el mapa:  " + mapList.Count);
-
     }
 }

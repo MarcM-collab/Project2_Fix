@@ -1,8 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DebilitySpell : Spells
+public class DebilitySpell : Spell
 {
     private bool executing = false;
     private bool used = false; //temporal
@@ -10,6 +11,29 @@ public class DebilitySpell : Spells
     {
         executing = true;
     }
+    public override void IAUse()
+    {
+        //Pick an allie char
+        Character[] chars = FindObjectsOfType<Character>();
+        ReduceAttack(GetHighestAttackUnit(chars));
+    }
+
+    private Character GetHighestAttackUnit(Character[] allCharactersInScene)
+    {
+        Character priorChar = null;
+        for (int i = 0; i < allCharactersInScene.Length; i++)
+        {
+            if (allCharactersInScene[i].Team == Team.TeamPlayer)
+            {
+                if (!priorChar || priorChar.AttackPoints < allCharactersInScene[i].AttackPoints)
+                {
+                    priorChar = allCharactersInScene[i];
+                }
+            }
+        }
+        return priorChar;
+    }
+
     private void Update()
     {
         if (executing)
@@ -25,12 +49,7 @@ public class DebilitySpell : Spells
                     {
                         used = true;
                         Character target = hit2D.collider.gameObject.GetComponent<Character>();
-                        target.AttackPoints /= 2;
-
-                        if (target.AttackPoints <= 0)
-                            target.AttackPoints = 1;
-
-                        print(target.AttackPoints);
+                        ReduceAttack(target);
                     }
                     else
                     {
@@ -40,5 +59,15 @@ public class DebilitySpell : Spells
 
             }
         }
+    }
+    private void ReduceAttack(Character target)
+    {
+        target.AttackPoints /= 2;
+
+        if (target.AttackPoints <= 0)
+            target.AttackPoints = 1;
+
+        int example = target.AttackPoints;
+        print("Attack of the unit reduced: " + example);
     }
 }
