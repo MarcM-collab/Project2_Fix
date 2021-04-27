@@ -52,3 +52,7 @@ Library/ArtifactDB
 Library/CurrentLayout-default.dwlt
 Library/SceneVisibilityState.asset
 Library/SourceAssetDB
+Library/ArtifactDB
+Library/CurrentLayout-default.dwlt
+Library/SourceAssetDB
+*.dwlt
