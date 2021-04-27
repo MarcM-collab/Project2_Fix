@@ -1,1 +1,5 @@
+<<<<<<< HEAD
 ﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audioPlay":false,"sceneViewState":{"m_AlwaysRefresh":false,"showFog":true,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true,"showVisualEffectGraphs":true,"m_FxEnabled":true},"in2DMode":true,"pivot":{"x":3.529728889465332,"y":0.5208233594894409,"z":-0.9734402894973755},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"size":9.152738571166993,"orthographic":true}
+=======
+﻿{"cameraMode":{"drawMode":0,"name":"Shaded","section":"Shading Mode"},"sceneLighting":true,"audioPlay":false,"sceneViewState":{"m_AlwaysRefresh":false,"showFog":true,"showSkybox":true,"showFlares":true,"showImageEffects":true,"showParticleSystems":true,"showVisualEffectGraphs":true,"m_FxEnabled":true},"in2DMode":true,"pivot":{"x":-0.1959547996520996,"y":1.1785598993301392,"z":-72.50379943847656},"rotation":{"x":0.0,"y":0.0,"z":0.0,"w":1.0},"size":8.154766082763672,"orthographic":true}
+>>>>>>> origin/Ricard
