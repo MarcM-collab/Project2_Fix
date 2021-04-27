@@ -22,6 +22,8 @@ public class Entity : MonoBehaviour
     public bool Hit;
     public bool Dead;
 
+    public bool IsDeadAnim;
+
     internal Animator _animator;
 
     public void ChangeHealth()

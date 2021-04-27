@@ -8,6 +8,8 @@ public class ExhaustingAndReset : StateMachineBehaviour
     public static ExhaustingAndResetEnterDelegate OnExhaustingAndResetEnter;
     public delegate void ExhaustingAndResetUpdateDelegate(Animator animator);
     public static ExhaustingAndResetUpdateDelegate OnExhaustingAndResetUpdate;
+    public delegate void ExhaustingAndResetExitDelegate(Animator animator);
+    public static ExhaustingAndResetExitDelegate OnExhaustingAndResetExit;
 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
@@ -20,5 +22,6 @@ public class ExhaustingAndReset : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        OnExhaustingAndResetExit?.Invoke(animator);
     }
 }
