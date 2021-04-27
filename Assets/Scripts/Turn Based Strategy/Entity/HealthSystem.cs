@@ -4,9 +4,12 @@ using UnityEngine;
 
 public static class HealthSystem
 {
-    public static void TakeDamage(float amount)
+    public static void TakeDamage(float amount, Entity target = null)
     {
-        var currentHealth = EntityManager.TargetCharacter.HP;
+        if (!target)
+            target = EntityManager.TargetCharacter;
+
+        var currentHealth = target.HP;
 
         if (currentHealth - amount <= 0.0f)
         {
@@ -18,9 +21,9 @@ public static class HealthSystem
 
         OnHit((int)amount);
 
-        EntityManager.TargetCharacter.ChangeHealth();
+        target.ChangeHealth();
 
-        EntityManager.TargetCharacter.HP = currentHealth;
+        target.HP = currentHealth;
     }
     private static void OnDeath()
     {

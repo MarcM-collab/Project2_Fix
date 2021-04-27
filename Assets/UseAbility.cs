@@ -15,7 +15,7 @@ public class UseAbility : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.D))
         {
-            HealthSystem.TakeDamage(2, CharacterManager.ExecutorCharacter);
+            HealthSystem.TakeDamage(2, EntityManager.ExecutorCharacter);
             print("Damaged!");
         }
     }

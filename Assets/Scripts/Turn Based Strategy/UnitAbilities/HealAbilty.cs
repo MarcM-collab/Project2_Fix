@@ -7,6 +7,6 @@ public class HealAbilty : Abilty
     public int healthAmount;
     public override void Excecute()
     {
-        HealthSystem.TakeDamage(-healthAmount, CharacterManager.ExecutorCharacter);
+        HealthSystem.TakeDamage(-healthAmount, EntityManager.ExecutorCharacter);
     }
 }
