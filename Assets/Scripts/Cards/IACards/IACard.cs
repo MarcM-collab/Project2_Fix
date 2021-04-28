@@ -46,16 +46,14 @@ public class IACard : MonoBehaviour
     public float cardUsageWait = 2;
     [Range(0, 1)] public float cardUsageRandomicity = 0.25f;
 
-    private TurnManager turn;
     private bool inTurn = false;
     public CardSpawner spawner;
-    private void Start()
-    {
-        turn = FindObjectOfType<TurnManager>();
-    }
+
+    public static bool StartAI;
+    public TurnManager TurnManager;
     private void Update()
     {
-        if (!turn.PlayerTurn)
+        if (!TurnManager.PlayerTurn)
         {
             if (!inTurn)
             {
@@ -147,7 +145,15 @@ public class IACard : MonoBehaviour
     private void EndTurn()
     {
         //turn.StartMovingIA();
-        turn.NextTurn();
+        if (EntityManager.GetActiveCharacters(Team.TeamAI).Length > 0)
+        {
+            StartAI = true;
+        }
+
+        if (EntityManager.GetActiveCharacters(Team.TeamAI).Length == 0)
+        {
+            TurnManager.NextTurn();
+        }
         SetSelectedHandCard(-1);
 
         currentWaitSelect = 0;
@@ -166,7 +172,7 @@ public class IACard : MonoBehaviour
     private void RemoveCardHand(Card cardToRemove)
     {
         IAHand.Remove(cardToRemove);
-        turn.SubstractMana(cardToRemove.Whiskas);
+        TurnManager.SubstractMana(cardToRemove.Whiskas);
         Destroy(cardToRemove.gameObject); //To make it visible that a card has been used.
     }
     private void AddCardHand(Card toSpawn)
@@ -314,7 +320,7 @@ public class IACard : MonoBehaviour
                 count++;
             }
 
-            if (_whiskasCombinationAccumulate <= turn.currentMana)
+            if (_whiskasCombinationAccumulate <= TurnManager.currentMana)
             {
                 _combinations.Add(tempList);//añadimos la combinación con su posición
                 _valueCardStats.Add(_cardStatsAccumulates); // su valor
@@ -333,7 +339,6 @@ public class IACard : MonoBehaviour
             qLinkedList.AddLast(s2 + "1");
         }
         int bestCombinationIndex = BestCombination();
-        print(bestCombinationIndex + ",,, Count: " + _valueCardStats.Count);
 
         if (_combinations.Count == 0|| _valueCardStats[bestCombinationIndex] < minimumScore)
             return null;

@@ -5,7 +5,7 @@ using UnityEngine.Tilemaps;
 
 public class CombatBehaviour : MonoBehaviour
 {
-    internal enum CharType
+    internal enum EntityType
     {
         Nothing,
         EnemyCharacter,
@@ -130,6 +130,7 @@ public class CombatBehaviour : MonoBehaviour
         animator.SetBool("Attacking", false);
         animator.SetBool("PreparingAttack", false);
         animator.SetBool("NotWaiting", false);
+        animator.SetBool("IsDragging", false);
 
         _executorCharacter.Exhausted = true;
 
@@ -186,24 +187,24 @@ public class CombatBehaviour : MonoBehaviour
             if (!(gameObject.GetComponent("Character") as Entity is null))
             {
                 if (_executorCharacter.Team != gameObject.GetComponent<Entity>().Team)
-                    return (int)CharType.EnemyCharacter;
+                    return (int)EntityType.EnemyCharacter;
                 else
-                    return (int)CharType.AllyCharacter;
+                    return (int)EntityType.AllyCharacter;
             }
             else if (!(gameObject.GetComponent("Hero") as Hero is null))
             {
                 if (_executorCharacter.Team != gameObject.GetComponent<Hero>().Team)
-                    return (int)CharType.EnemyHero;
+                    return (int)EntityType.EnemyHero;
                 else
-                    return (int)CharType.AllyHero;
+                    return (int)EntityType.AllyHero;
             }
         }
-        return (int)CharType.Nothing;
+        return (int)EntityType.Nothing;
     }
 
     public bool anyUnitInTile(Vector3 pos)
     {
-        return InTile(pos) == (int)CharType.EnemyCharacter || InTile(pos) == (int)CharType.AllyCharacter;
+        return InTile(pos) == (int)EntityType.EnemyCharacter || InTile(pos) == (int)EntityType.AllyCharacter;
     }
 
     public void ShowHeroTiles()

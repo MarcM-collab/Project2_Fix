@@ -11,9 +11,27 @@ public class Waiting : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (EntityManager.GetActiveCharacters(EntityManager.TeamPlaying).Length != 0)
+        TurnManager turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+        if (CardUsage.isDragging)
         {
-            animator.SetBool("NotWaiting", true);
+            animator.SetBool("IsDragging", true);
+        }
+        Team teamPlaying = turnManager.PlayerTurn ? Team.TeamPlayer : Team.TeamAI;
+        if (EntityManager.GetActiveCharacters(teamPlaying).Length > 0)
+        {
+            if (teamPlaying == Team.TeamAI && IACard.StartAI)
+            {
+                animator.SetBool("NotWaiting", true);
+            }
+            else if (teamPlaying == Team.TeamPlayer && turnManager.IsAttackRound)
+            {
+                animator.SetBool("NotWaiting", true);
+            }
+        }
+        else if (IACard.StartAI)
+        {
+            turnManager.NextTurn();
+            IACard.StartAI = false;
         }
     }
 

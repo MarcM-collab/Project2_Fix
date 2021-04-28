@@ -575,6 +575,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &241775185 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 448630065664535648, guid: 072a43297c1cc8847989d961def7f961, type: 3}
+  m_PrefabInstance: {fileID: 1042160147}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66cd295006ca03a49a8e4cc1188669bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &261991978
 GameObject:
   m_ObjectHideFlags: 0
@@ -607,7 +618,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 16
-  m_RefResolutionX: 192
+  m_RefResolutionX: 320
   m_RefResolutionY: 128
   m_UpscaleRT: 1
   m_PixelSnapping: 0
@@ -1642,14 +1653,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 823860431}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ef5e6c1069295de4e8d7a0d9ea4933a3, type: 3}
+  m_Script: {fileID: 11500000, guid: 5933e229df7d0594f849a2dfcb319eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   FloorTileMap: {fileID: 326411657}
   CollisionTileMap: {fileID: 2045229290}
   characters: {fileID: 36557528}
   IAColor: {r: 1, g: 0, b: 0, a: 1}
-  PlayerColor: {r: 0.013602972, g: 1, b: 0, a: 1}
+  PlayerColor: {r: 0.01534307, g: 1, b: 0, a: 1}
 --- !u!4 &823860433
 Transform:
   m_ObjectHideFlags: 0
@@ -1683,6 +1694,10 @@ PrefabInstance:
       propertyPath: whiskas
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 1191493020988424810, guid: ce7265f8064e65a4b92cd176b887493c, type: 3}
+      propertyPath: TurnManager
+      value: 
+      objectReference: {fileID: 74004085}
     - target: {fileID: 1191493020988424810, guid: ce7265f8064e65a4b92cd176b887493c, type: 3}
       propertyPath: Cards.Array.data[2]
       value: 
@@ -1964,6 +1979,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 448630065664535648, guid: 072a43297c1cc8847989d961def7f961, type: 3}
+      propertyPath: _art
+      value: 
+      objectReference: {fileID: 210666808}
+    - target: {fileID: 448630065664535648, guid: 072a43297c1cc8847989d961def7f961, type: 3}
       propertyPath: _camera
       value: 
       objectReference: {fileID: 261991981}
@@ -1975,6 +1994,10 @@ PrefabInstance:
       propertyPath: HandManager
       value: 
       objectReference: {fileID: 1456539419}
+    - target: {fileID: 448630065664535648, guid: 072a43297c1cc8847989d961def7f961, type: 3}
+      propertyPath: TurnManager
+      value: 
+      objectReference: {fileID: 74004085}
     - target: {fileID: 448630065664535648, guid: 072a43297c1cc8847989d961def7f961, type: 3}
       propertyPath: _floorTilemap
       value: 
@@ -3082,6 +3105,10 @@ PrefabInstance:
       propertyPath: _whiskas
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 348859221544747990, guid: 1daee9408838b2e4db77b1e44891e96d, type: 3}
+      propertyPath: TurnManager
+      value: 
+      objectReference: {fileID: 74004085}
     - target: {fileID: 348859221544747990, guid: 1daee9408838b2e4db77b1e44891e96d, type: 3}
       propertyPath: FloorTileMap
       value: 
@@ -4920,6 +4947,10 @@ PrefabInstance:
       propertyPath: _art
       value: 
       objectReference: {fileID: 210666808}
+    - target: {fileID: 6837086638381650446, guid: 77ad0abe5d779d544b9743c3c7cce811, type: 3}
+      propertyPath: _cardUsage
+      value: 
+      objectReference: {fileID: 241775185}
     - target: {fileID: 6837086638381650446, guid: 77ad0abe5d779d544b9743c3c7cce811, type: 3}
       propertyPath: EnemyHeroeGO
       value: 

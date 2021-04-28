@@ -12,9 +12,14 @@ public class CombatPlayerBehavior : CombatBehaviour
     private static Vector3 _mousePos;
     private static bool IsAttacking;
 
-    private static bool _isExecutorSelected;
+    private static List<Vector3Int> _spawnableTilesEdges = new List<Vector3Int>();
+
+    public CardUsage _cardUsage;
     private void OnEnable()
     {
+        Spawning.OnSpawningEnter += SpawningEnter;
+        Spawning.OnSpawningUpdate += SpawningUpdate;
+        Spawning.OnSpawningExit += SpawningExit;
         Selecting.OnSelectingUpdate += SelectingUpdate;
         Selecting.OnSelectingExit += SelectingExit;
         Melee_ShowRange.OnMelee_ShowRangeEnter += Melee_ShowRangeEnter;
@@ -26,8 +31,12 @@ public class CombatPlayerBehavior : CombatBehaviour
         Melee_HideAttackRange.OnMelee_HideAttackRangeEnter += Melee_HideAttackRangeEnter;
         HideRange.OnHideRangeEnter += HideRangeEnter;
     }
+
     private void OnDisable()
     {
+        Spawning.OnSpawningEnter -= SpawningEnter;
+        Spawning.OnSpawningUpdate -= SpawningUpdate;
+        Spawning.OnSpawningExit -= SpawningExit;
         Selecting.OnSelectingUpdate -= SelectingUpdate;
         Selecting.OnSelectingExit -= SelectingExit;
         Melee_ShowRange.OnMelee_ShowRangeEnter -= Melee_ShowRangeEnter;
@@ -41,6 +50,8 @@ public class CombatPlayerBehavior : CombatBehaviour
         _enemyHero = EnemyHeroeGO.GetComponent<Hero>();
         _enemyHeroTiles = new List<Vector3Int> { new Vector3Int(6, 0, 0), new Vector3Int(7, 0, 0), new Vector3Int(6, -1, 0), new Vector3Int(7, -1, 0) };
         _enemyHeroAttackableTiles = new List<Vector3Int> { new Vector3Int(6, 0, 0), new Vector3Int(6, -1, 0) };
+        _spawnableTilesEdges.Add(new Vector3Int(-6, -3, 0));
+        _spawnableTilesEdges.Add(new Vector3Int(-5, 2, 0));
     }
     private void Update()
     {
@@ -48,14 +59,62 @@ public class CombatPlayerBehavior : CombatBehaviour
         _currentGridPos = _floorTilemap.WorldToCell(_camera.ScreenToWorldPoint(_mousePos));
     }
 
+    //----------------------------------------Spawning----------------------------------------
+    private void SpawningEnter()
+    {
+        SpawnableTiles(_allyTile);
+    }
+    private void SpawningUpdate(Animator animator)
+    {
+        if (animator.GetBool("IsDragging"))
+        {
+            if (_currentGridPos != _lastGridPos)
+            {
+                if (_uITilemap.GetTile(_currentGridPos) == _allyTile)
+                {
+                    _uITilemap.SetTile(_currentGridPos, _pointingTile);
+                }
+                else
+                {
+                    if (_uITilemap.GetTile(_lastGridPos) == _pointingTile)
+                    {
+                        _uITilemap.SetTile(_lastGridPos, _allyTile);
+                    }
+                }
+                if (_uITilemap.GetTile(_lastGridPos) == _pointingTile)
+                {
+                    _uITilemap.SetTile(_lastGridPos, _allyTile);
+                }
+                _lastGridPos = _currentGridPos;
+            }
+        }
+
+        if (InputManager.LeftMouseClick)
+        { 
+            if (_uITilemap.GetTile(_currentGridPos) == _pointingTile)
+            {
+                _cardUsage.Spawn();
+            }
+            animator.SetBool("IsDragging", false);
+        }
+    }
+    private void SpawningExit()
+    {
+        HideSpawnableTiles();
+    }
+
     //----------------------------------------Selecting----------------------------------------
     private void SelectingUpdate(Animator animator)
     {
-        if (!_isExecutorSelected && _floorTilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos)
+        if (!animator.GetBool("IsDragging") && !animator.GetBool("Selected") && _floorTilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos)
         {
             _uITilemap.SetTile(_lastGridPos, null);
             _uITilemap.SetTile(_currentGridPos, _pointingTile);
             _lastGridPos = _currentGridPos;
+        }
+        else if (!_floorTilemap.HasTile(_currentGridPos))
+        {
+            _uITilemap.SetTile(_lastGridPos, null);
         }
 
         if (InputManager.LeftMouseClick)
@@ -67,7 +126,6 @@ public class CombatPlayerBehavior : CombatBehaviour
                 {
                     EntityManager.SetExecutor(tempCharacter);
                     _executorGridPos = _currentGridPos;
-                    _isExecutorSelected = true;
                     if (tempCharacter.Class == Class.Ranged)
                     {
                         //Check if an enemy is in range
@@ -84,7 +142,6 @@ public class CombatPlayerBehavior : CombatBehaviour
     }
     private void SelectingExit()
     {
-        _isExecutorSelected = false;
     }
     //----------------------------------------Melee_ShowRange----------------------------------------
     private void Melee_ShowRangeEnter()
@@ -108,20 +165,20 @@ public class CombatPlayerBehavior : CombatBehaviour
 
                 if (Mathf.Abs(i) < counter - 2)
                 {
-                    if (InTile(vToW) == (int)CharType.EnemyCharacter)
+                    if (InTile(vToW) == (int)EntityType.EnemyCharacter)
                         _uITilemap.SetTile(pos, _targetTile);
-                    else if (CanMove(pos) && InTile(vToW) == (int)CharType.Nothing)
+                    else if (CanMove(pos) && InTile(vToW) == (int)EntityType.Nothing)
                         _uITilemap.SetTile(pos, _rangeTile);
-                    else if (pos == _executorGridPos || InTile(vToW) == (int)CharType.AllyCharacter)
+                    else if (pos == _executorGridPos || InTile(vToW) == (int)EntityType.AllyCharacter)
                         _uITilemap.SetTile(pos, _allyTile);
                     else if (_floorTilemap.HasTile(pos))
                         _uITilemap.SetTile(pos, _nullTile);
-                    else if (InTile(vToW) == (int)CharType.EnemyHero)
+                    else if (InTile(vToW) == (int)EntityType.EnemyHero)
                         enemyHeroOnRange = true;
                 }
                 else if (Mathf.Abs(i) < counter)
                 {
-                    if (InTile(vToW) == (int)CharType.EnemyCharacter && i != -range && i != range && j != -range && j != range)
+                    if (InTile(vToW) == (int)EntityType.EnemyCharacter && i != -range && i != range && j != -range && j != range)
                         _uITilemap.SetTile(pos, _targetTile);
                 }
             }
@@ -278,7 +335,7 @@ public class CombatPlayerBehavior : CombatBehaviour
                     var pos = _targetGridPos + vector;
                     Vector3 vToW = pos + v;
 
-                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && (pos == _executorGridPos || !(InTile(vToW) == (int)CharType.AllyCharacter)) && !_collisionTilemap.HasTile(pos))
+                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && (pos == _executorGridPos || !(InTile(vToW) == (int)EntityType.AllyCharacter)) && !_collisionTilemap.HasTile(pos))
                     {
                         _uITilemap.SetTile(pos, _targetTile);
                     }
@@ -296,7 +353,7 @@ public class CombatPlayerBehavior : CombatBehaviour
                     var pos = _enemyHeroAttackableTiles[x] + vector;
                     Vector3 vToW = pos + v;
 
-                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && (pos == _executorGridPos || !(InTile(vToW) == (int)CharType.AllyCharacter)) && !_collisionTilemap.HasTile(pos))
+                    if (!(i == 0 && j == 0) && _uITilemap.HasTile(pos) && (pos == _executorGridPos || !(InTile(vToW) == (int)EntityType.AllyCharacter)) && !_collisionTilemap.HasTile(pos))
                     {
                         _uITilemap.SetTile(pos, _targetTile);
                     }
@@ -367,7 +424,7 @@ public class CombatPlayerBehavior : CombatBehaviour
                 var pos = _targetGridPos + vector;
                 Vector3 vToW = pos + v;
 
-                if (_uITilemap.GetTile(pos) == _targetTile && InTile(vToW) == (int)CharType.Nothing)
+                if (_uITilemap.GetTile(pos) == _targetTile && InTile(vToW) == (int)EntityType.Nothing)
                     _uITilemap.SetTile(pos, _rangeTile);
             }
         }
@@ -384,7 +441,7 @@ public class CombatPlayerBehavior : CombatBehaviour
         var pos = vector + v;
         if (IsAttacking)
         {
-            return (((_uITilemap.GetTile(vector) != _targetTile || (InTile(pos) != (int)CharType.EnemyHero && InTile(pos) != (int)CharType.EnemyCharacter)))
+            return (((_uITilemap.GetTile(vector) != _targetTile || (InTile(pos) != (int)EntityType.EnemyHero && InTile(pos) != (int)EntityType.EnemyCharacter)))
                 && vector != _tileChosenPos && vector != _executorGridPos);
         }
         else
@@ -455,5 +512,32 @@ public class CombatPlayerBehavior : CombatBehaviour
             }
         }
         return false;
+    }
+    private void SpawnableTiles(Tile tile)
+    {
+        Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
+        for (int i = _spawnableTilesEdges[0].x; i <= _spawnableTilesEdges[1].x; i++)
+        {
+            for (int j = _spawnableTilesEdges[0].y; j <= _spawnableTilesEdges[1].y; j++)
+            {
+                Vector3Int vector = new Vector3Int(i, j, 0);
+                Vector3 vToW = vector + v;
+                if (InTile(vToW) == (int)EntityType.Nothing)
+                    _uITilemap.SetTile(vector, tile);
+            }
+        }
+    }
+    private void HideSpawnableTiles()
+    {
+        Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
+        for (int i = _spawnableTilesEdges[0].x; i <= _spawnableTilesEdges[1].x; i++)
+        {
+            for (int j = _spawnableTilesEdges[0].y; j <= _spawnableTilesEdges[1].y; j++)
+            {
+                Vector3Int vector = new Vector3Int(i, j, 0);
+                Vector3 vToW = vector + v;
+                    _uITilemap.SetTile(vector, null);
+            }
+        }
     }
 }

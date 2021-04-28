@@ -20,7 +20,8 @@ public class TurnManager : MonoBehaviour
     {
         get { return currentTurn % 2 != 0; }
     }
-    void Awake()
+    public bool IsAttackRound;
+    void Start()
     {
         NextTurn();
     }
@@ -35,25 +36,23 @@ public class TurnManager : MonoBehaviour
         currentMana = maxMana;
         setDisplay?.Invoke((float)currentMana / maxMana, currentMana);
 
+        //EntityManager.SwapTeams();
         SetTeams();
+        EntityManager.TurnChaged = true;
+        EntityManager.RemoveExhaust();
     }
     private void SetTeams()
     {
-        if (EntityManager.TeamPlaying == Team.TeamAI)
+        if (PlayerTurn)
         {
             AI.SetActive(false);
             Player.SetActive(true);
         }
         else
         {
-            AI.SetActive(false);
+            AI.SetActive(true);
             Player.SetActive(false);
         }
-        EntityManager.SwapTeams();
-    }
-    public void StartMovingIA()
-    {
-        AI.SetActive(true);
     }
 
     public void SubstractMana(int amount)

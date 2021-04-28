@@ -11,6 +11,7 @@ public class CombatAIBehaviour : CombatBehaviour
     private void OnEnable()
     {
         Selecting.OnSelectingEnter += SelectingEnter;
+        Selecting.OnSelectingUpdate += SelectingUpdate;
         Melee_ChoosingTile.OnMelee_ChoosingTileEnter += Melee_ChoosingTileEnter;
         Ranged_ChoosingTile.OnRanged_ChoosingTileEnter += Ranged_ChoosingTileEnter;
         Melee_ChoosingAttackTile.OnMelee_ChoosingAttackTileEnter += Melee_ChoosingAttackTileEnter;
@@ -19,6 +20,7 @@ public class CombatAIBehaviour : CombatBehaviour
     private void OnDisable()
     {
         Selecting.OnSelectingEnter -= SelectingEnter;
+        Selecting.OnSelectingUpdate -= SelectingUpdate;
         Melee_ChoosingTile.OnMelee_ChoosingTileEnter -= Melee_ChoosingTileEnter;
         Ranged_ChoosingTile.OnRanged_ChoosingTileEnter -= Ranged_ChoosingTileEnter;
         Melee_ChoosingAttackTile.OnMelee_ChoosingAttackTileEnter -= Melee_ChoosingAttackTileEnter;
@@ -53,7 +55,14 @@ public class CombatAIBehaviour : CombatBehaviour
 
         _executorGridPos = _currentGridPos;
         _uITilemap.SetTile(_executorGridPos, _allyTile);
-
+    }
+    private void SelectingUpdate(Animator animator)
+    {
+        TurnManager turnManager = GameObject.Find("TurnManager").GetComponent<TurnManager>();
+        if (!turnManager.IsAttackRound)
+        {
+            animator.SetBool("NotWaiting", false);
+        }
     }
     //----------------------------------------Melee_ChoosingTile----------------------------------------
     private void Melee_ChoosingTileEnter(Animator animator)
@@ -83,14 +92,14 @@ public class CombatAIBehaviour : CombatBehaviour
                     {
                         if (!IsHeroCovered()) 
                         {
-                            if (InTile(vToW) == (int)CharType.EnemyHero && _enemyHeroAttackableTiles.Contains(pos))
+                            if (InTile(vToW) == (int)EntityType.EnemyHero && _enemyHeroAttackableTiles.Contains(pos))
                             {
                                 _targetGridPos = pos;
                                 targetOnRange = true;
                                 break;
                             }
                         }
-                        if (InTile(vToW) == (int)CharType.EnemyCharacter)
+                        if (InTile(vToW) == (int)EntityType.EnemyCharacter)
                         {
                             if (minPos.x + minPos.y > Mathf.Abs(i) + Mathf.Abs(j))
                             {
@@ -142,7 +151,7 @@ public class CombatAIBehaviour : CombatBehaviour
 
                     if (Mathf.Abs(i) < counter - 1)
                     {
-                        if (!(InTile(vToW) == (int)CharType.EnemyCharacter || InTile(vToW) == (int)CharType.AllyCharacter || _collisionTilemap.HasTile(pos) || !_floorTilemap.HasTile(pos)))
+                        if (!(InTile(vToW) == (int)EntityType.EnemyCharacter || InTile(vToW) == (int)EntityType.AllyCharacter || _collisionTilemap.HasTile(pos) || !_floorTilemap.HasTile(pos)))
                         {
                             var currentMin = Vector3.Distance(vToW, _enemyHero.transform.position);
                             if (min > currentMin)
@@ -194,7 +203,7 @@ public class CombatAIBehaviour : CombatBehaviour
                     var pos = _targetGridPos + vector;
                     Vector3 vToW = pos + v;
 
-                    if (!(i == 0 && j == 0) && _floorTilemap.HasTile(pos) && !_collisionTilemap.HasTile(pos) && InTile(vToW) == (int)CharType.Nothing)
+                    if (!(i == 0 && j == 0) && _floorTilemap.HasTile(pos) && !_collisionTilemap.HasTile(pos) && InTile(vToW) == (int)EntityType.Nothing)
                     {
                         possiblePos.Add(pos);
                     }
@@ -219,7 +228,7 @@ public class CombatAIBehaviour : CombatBehaviour
                 var pos = _executorGridPos + vector;
                 Vector3 vToW = pos + v;
 
-                if (InTile(vToW) == (int)CharType.EnemyCharacter || InTile(vToW) == (int)CharType.EnemyHero)
+                if (InTile(vToW) == (int)EntityType.EnemyCharacter || InTile(vToW) == (int)EntityType.EnemyHero)
                 {
                     return true;
                 }
