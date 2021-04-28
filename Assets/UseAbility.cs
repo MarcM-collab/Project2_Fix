@@ -5,10 +5,19 @@ using UnityEngine;
 public class UseAbility : MonoBehaviour
 {
     public Abilty ability;
+    private TurnManager turn;
     public void Use()
     {
-        print("Health!!");
-        ability.Excecute();
+        if (!turn)
+            turn = FindObjectOfType<TurnManager>();
+
+        if (ability.whiskasCost <= turn.currentMana)
+        {
+            ability.Excecute();
+            turn.SubstractMana(ability.whiskasCost);
+            print("health");
+        }
+
     }
 
     private void Update()

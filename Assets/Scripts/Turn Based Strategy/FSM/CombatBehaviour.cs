@@ -201,6 +201,11 @@ public class CombatBehaviour : MonoBehaviour
         return (int)CharType.Nothing;
     }
 
+    public bool anyUnitInTile(Vector3 pos)
+    {
+        return InTile(pos) == (int)CharType.EnemyCharacter || InTile(pos) == (int)CharType.AllyCharacter;
+    }
+
     public void ShowHeroTiles()
     {
         for (int i = 0; i < _enemyHeroTiles.Count; i++)

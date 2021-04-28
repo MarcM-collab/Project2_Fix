@@ -119,10 +119,10 @@
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\TestRunner\Callbacks\EditModeRunnerCallback.cs" />
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\GUI\TestListTreeView\Icons.cs" />
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\Api\ICallbacksDelegator.cs" />
+    <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\TestLaunchers\EditModeLauncher.cs" />
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\TestLaunchers\PlaymodeLauncher.cs" />
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\UnityTestProtocol\UnityTestProtocolListener.cs" />
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\TestLaunchers\PlatformSetup\AndroidPlatformSetup.cs" />
-    <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\TestLaunchers\EditModeLauncher.cs" />
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\TestRun\TestJobData.cs" />
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\GUI\Views\EditModeTestListGUI.cs" />
     <Compile Include="Library\PackageCache\com.unity.test-framework@1.1.22\UnityEditor.TestRunner\Api\ITestAdaptor.cs" />

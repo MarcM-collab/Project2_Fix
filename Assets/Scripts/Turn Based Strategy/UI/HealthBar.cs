@@ -8,7 +8,7 @@ public class HealthBar : MonoBehaviour
     private Slider _slider;
     private Entity _entity;
     public GameObject EntityGameObject;
-    public Gradient ColorGradient;
+    public Color color;
     public Image FillImage;
     // Start is called before the first frame update
     void Awake()
@@ -28,6 +28,6 @@ public class HealthBar : MonoBehaviour
     public void SetValue(float f)
     {
         _slider.value = f;
-        FillImage.color = ColorGradient.Evaluate(f);
+        FillImage.color = color; //should be setted in spawn
     }
 }

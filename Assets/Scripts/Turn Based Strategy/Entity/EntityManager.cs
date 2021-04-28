@@ -5,7 +5,7 @@ using UnityEngine;
 
 public static class EntityManager
 {
-    public static Team TeamPlaying = Team.TeamPlayer;
+    public static Team TeamPlaying = Team.TeamAI;
     private static List<Entity> Entities;
     private static int _currentTargetIndex = 1;
     private static int _currentExecutorIndex = 0;
@@ -65,6 +65,9 @@ public static class EntityManager
     }
     public static void RemoveExhaust()
     {
+        if (Entities == null) //Avoids null reference
+            InitCharacters();
+
         foreach (Entity character in Entities)
         {
             character.Exhausted = false;

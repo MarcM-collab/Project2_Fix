@@ -13,7 +13,6 @@ public class CardUsage : MonoBehaviour
     private Card _card;
 
     public HandManager HandManager;
-    public Whiskas Whiskas;
 
     [SerializeField]
     public Tilemap _floorTilemap;
@@ -25,17 +24,41 @@ public class CardUsage : MonoBehaviour
     private Vector3 mousePos;
     private Vector3 _currentGridPos;
 
+    private TurnManager mana;
+    public CardSpawner spawner;
+    private Camera mainCamera;
+    private Vector2 GetMouseTilePos
+    {
+        get 
+        {
+            Vector3 sizeTile = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2, 0);
+            mousePos = Input.mousePosition;
+
+            return _floorTilemap.WorldToCell(mainCamera.ScreenToWorldPoint(mousePos)) + sizeTile;
+        }
+    }
+    private void Start()
+    {
+        mana = FindObjectOfType<TurnManager>();
+        mainCamera = Camera.main;
+    }
     private void Update()
     {
         bool thereIsntAtile = !_collisionTilemap.HasTile(_floorTilemap.WorldToCell(_camera.ScreenToWorldPoint(Input.mousePosition)));
         
-        if (isDragging && InputManager.LeftMouseClick && thereIsntAtile && !IsEntity()) //si la carta está seleccionada y se pulsa en la escena, entra en la función.
+        if (isDragging && InputManager.LeftMouseClick && thereIsntAtile) //&& !IsEntity()) //si la carta está seleccionada y se pulsa en la escena, entra en la función.
         {
             if (_card is Unit)
             {
-                spawn();
+                Vector2 pos = GetMouseTilePos;
+                if (spawner.CheckPos(pos))
+                {
+                    spawner.SpawnCard(_card, GetMouseTilePos, Team.TeamPlayer);
+                    isDragging = false;
+                    mana.SubstractMana(_card.Whiskas);
+                    Destroy(_card.gameObject);
+                }
             }
-            Whiskas.RemoveWhiskas(_card.Whiskas);
         }
     }
     private bool IsEntity()
@@ -76,7 +99,7 @@ public class CardUsage : MonoBehaviour
     }
     private bool EnoughWhiskas(Card _card)//comprueba si hay whiskas (maná) suficiente para lanzar la carta
     {
-        return _card.Whiskas <= Whiskas.currentWhiskas;
+        return _card.Whiskas <= mana.currentMana;
     }
     private void spawn()
     {

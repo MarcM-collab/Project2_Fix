@@ -15,17 +15,18 @@ public class CardsManager : MonoBehaviour
     public HandManager Hand;
     [SerializeField]
     private int maxCardInHand = 6;
-    public Whiskas whiskas;
     private bool currentTurn = false;
+
+    private TurnManager turn;
     private void Start()
     {
         buttons[0].gameObject.SetActive(false);
         buttons[1].gameObject.SetActive(false);
-        NextTurn();
+        turn = FindObjectOfType<TurnManager>();
     }
     private void Update()
     {
-        if (whiskas.rounds % 2 != 0 && !currentTurn) //Player turn
+        if (turn.PlayerTurn && !currentTurn)
         {
             currentTurn = true; //avoids extra iterations
 
@@ -35,14 +36,13 @@ public class CardsManager : MonoBehaviour
     }
     public void PassTurn()
     {
-        if (whiskas.rounds % 2 != 0)
-            NextTurn();
+        if (turn.PlayerTurn)
+            NextTurn(); //can't click the button if it's not the player turn
     }
 
     private void NextTurn()
     {
-        whiskas.rounds++;
-        whiskas.RestartWhiskas();
+        turn.NextTurn();
         currentTurn = false;
     }
 
