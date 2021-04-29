@@ -7,7 +7,7 @@ using UnityEngine.Tilemaps;
 public class CardUsage : MonoBehaviour
 {
     public float scale = 1f;
-    private bool isDragging = false;
+    public static bool isDragging = false;
     private GameObject _gameObject;
     private GameObject _gameObjectCard;
     private Card _card;
@@ -15,51 +15,40 @@ public class CardUsage : MonoBehaviour
     public HandManager HandManager;
 
     [SerializeField]
-    public Tilemap _floorTilemap;
-    [SerializeField]
-    private Tilemap _collisionTilemap;
+    private Art _art;
 
-    public Camera _camera;
+    private Tilemap _floorTilemap => _art.FloorTilemap;
+    private Tilemap _collisionTilemap => _art.CollisionTilemap;
+    private Tilemap _uITilemap => _art.UITilemap;
+    private Tile _allyTile => _art.AllyTile;
+
+    private Camera _camera => _art.Camera;
 
     private Vector3 mousePos;
     private Vector3 _currentGridPos;
 
-    private TurnManager mana;
     public CardSpawner spawner;
     private Camera mainCamera;
+    public TurnManager TurnManager;
     private Vector2 GetMouseTilePos
     {
         get 
         {
             Vector3 sizeTile = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2, 0);
             mousePos = Input.mousePosition;
-
-            return _floorTilemap.WorldToCell(mainCamera.ScreenToWorldPoint(mousePos)) + sizeTile;
+            var vector = _floorTilemap.WorldToCell(mainCamera.ScreenToWorldPoint(mousePos));
+            return new Vector2(vector.x, vector.y);
         }
     }
     private void Start()
     {
-        mana = FindObjectOfType<TurnManager>();
         mainCamera = Camera.main;
     }
     private void Update()
     {
         bool thereIsntAtile = !_collisionTilemap.HasTile(_floorTilemap.WorldToCell(_camera.ScreenToWorldPoint(Input.mousePosition)));
-        
-        if (isDragging && InputManager.LeftMouseClick && thereIsntAtile) //&& !IsEntity()) //si la carta está seleccionada y se pulsa en la escena, entra en la función.
-        {
-            if (_card is Unit)
-            {
-                Vector2 pos = GetMouseTilePos;
-                if (spawner.CheckPos(pos))
-                {
-                    spawner.SpawnCard(_card, GetMouseTilePos, Team.TeamPlayer);
-                    isDragging = false;
-                    mana.SubstractMana(_card.Whiskas);
-                    Destroy(_card.gameObject);
-                }
-            }
-        }
+        bool isSpawnableTile = _uITilemap.HasTile(_floorTilemap.WorldToCell(_camera.ScreenToWorldPoint(Input.mousePosition)));
+
     }
     private bool IsEntity()
     {
@@ -99,19 +88,30 @@ public class CardUsage : MonoBehaviour
     }
     private bool EnoughWhiskas(Card _card)//comprueba si hay whiskas (maná) suficiente para lanzar la carta
     {
-        return _card.Whiskas <= mana.currentMana;
+        return _card.Whiskas <= TurnManager.currentMana;
     }
-    private void spawn()
+    public void Spawn()
     {
-        Vector3 sizeTile = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2, 0);
-        mousePos = Input.mousePosition;
+        if (_card is Unit)
+        {
+            Vector2 pos = GetMouseTilePos;
+            if (spawner.CheckPos(pos))
+            {
+                spawner.SpawnCard(_card, GetMouseTilePos, Team.TeamPlayer);
+                isDragging = false;
+                TurnManager.SubstractMana(_card.Whiskas);
+                Destroy(_card.gameObject);
+            }
+        }
+        //Vector3 sizeTile = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2, 0);
+        //mousePos = Input.mousePosition;
 
-        _currentGridPos = _floorTilemap.WorldToCell(Camera.main.ScreenToWorldPoint(mousePos)) + sizeTile;
+        //_currentGridPos = _floorTilemap.WorldToCell(Camera.main.ScreenToWorldPoint(mousePos)) + sizeTile;
 
-        Instantiate(_gameObject, _currentGridPos, Quaternion.identity);
-        HandManager.RemoveCard(_gameObjectCard.GetComponent<Card>());
+        //Instantiate(_gameObject, _currentGridPos, Quaternion.identity);
+        //HandManager.RemoveCard(_gameObjectCard.GetComponent<Card>());
 
-        Destroy(_gameObjectCard);
-        isDragging = false;
+        //Destroy(_gameObjectCard);
+        //isDragging = false;
     }
 }

@@ -17,16 +17,18 @@ public class CardsManager : MonoBehaviour
     private int maxCardInHand = 6;
     private bool currentTurn = false;
 
-    private TurnManager turn;
+    public TurnManager TurnManager;
+
+    public bool PressedFirst;
+
     private void Start()
     {
         buttons[0].gameObject.SetActive(false);
         buttons[1].gameObject.SetActive(false);
-        turn = FindObjectOfType<TurnManager>();
     }
     private void Update()
     {
-        if (turn.PlayerTurn && !currentTurn)
+        if (TurnManager.PlayerTurn && !currentTurn)
         {
             currentTurn = true; //avoids extra iterations
 
@@ -36,13 +38,25 @@ public class CardsManager : MonoBehaviour
     }
     public void PassTurn()
     {
-        if (turn.PlayerTurn)
-            NextTurn(); //can't click the button if it's not the player turn
+        if (TurnManager.PlayerTurn)
+        {
+            if (!PressedFirst)
+            {
+                PressedFirst = true;
+                TurnManager.IsAttackRound = true;
+            }
+            else
+            {
+                PressedFirst = false;
+                TurnManager.IsAttackRound = false;
+                NextTurn(); //can't click the button if it's not the player turn
+            }
+        }
     }
 
     private void NextTurn()
     {
-        turn.NextTurn();
+        TurnManager.NextTurn();
         currentTurn = false;
     }
 

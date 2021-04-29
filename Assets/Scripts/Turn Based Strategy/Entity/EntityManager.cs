@@ -13,8 +13,14 @@ public static class EntityManager
     public static Entity TargetCharacter => Entities[_currentTargetIndex];
     public static Character ExecutorCharacter => Entities[_currentExecutorIndex] as Character;
 
+    public static bool TurnChaged;
+
     [RuntimeInitializeOnLoadMethod]
-    private static void InitCharacters()
+    private static void InitEntities()
+    {
+        Entities = Object.FindObjectsOfType<Entity>().ToList();
+    }
+    public static void ActualizeEntities()
     {
         Entities = Object.FindObjectsOfType<Entity>().ToList();
     }
@@ -66,7 +72,7 @@ public static class EntityManager
     public static void RemoveExhaust()
     {
         if (Entities == null) //Avoids null reference
-            InitCharacters();
+            InitEntities();
 
         foreach (Entity character in Entities)
         {
@@ -84,10 +90,5 @@ public static class EntityManager
             }
         }
         return characters.ToArray();
-    }
-    public static void SwapTeams()
-    {
-        TeamPlaying = TeamPlaying == Team.TeamPlayer ? Team.TeamAI : Team.TeamPlayer;
-        RemoveExhaust();
     }
 }
