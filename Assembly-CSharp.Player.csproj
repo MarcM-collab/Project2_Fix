@@ -87,10 +87,12 @@
     <Compile Include="Assets\Scripts\Cards\IACards\IACard.cs" />
     <Compile Include="Assets\Scripts\Art.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Attacking.cs" />
+    <Compile Include="Assets\SetManaValue.cs" />
     <Compile Include="Assets\Scripts\Cards\Card.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Attack.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ChoosingAttackTile.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatBehaviour.cs" />
+    <Compile Include="Assets\CardSpawner.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\EntityManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\ExhaustingAndReset.cs" />
     <Compile Include="Assets\InfoManager.cs" />
@@ -100,14 +102,12 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ShowRange.cs" />
     <Compile Include="Assets\Scripts\Cards\ScriptButton.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UnitAbilities\HealAbilty.cs" />
+    <Compile Include="Assets\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Cards\HandManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Walking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Selecting.cs" />
-    <Compile Include="Assets\TurnManager.cs" />
-    <Compile Include="Assets\SetManaValue.cs" />
-    <Compile Include="Assets\CardSpawner.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">
