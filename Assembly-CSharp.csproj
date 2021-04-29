@@ -76,10 +76,12 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Ranged_ShowRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_HideAttackRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\UI.cs" />
+    <Compile Include="Assets\Scripts\UI\ChangeText.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatAIBehaviour.cs" />
     <Compile Include="Assets\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Chunk.cs" />
     <Compile Include="Assets\Scripts\Cards\Spells\Spell.cs" />
+    <Compile Include="Assets\PosHand.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Dead.cs" />
     <Compile Include="Assets\Scripts\Cards\CardUsage.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\HideUI.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Assets\Scripts\Cards\IACards\IACard.cs" />
     <Compile Include="Assets\Scripts\Art.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Attacking.cs" />
+    <Compile Include="Assets\SpellSpawner.cs" />
     <Compile Include="Assets\SetManaValue.cs" />
     <Compile Include="Assets\Scripts\Cards\Card.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Attack.cs" />
@@ -106,13 +109,11 @@
     <Compile Include="Assets\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Cards\HandManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Input\InputManager.cs" />
+    <Compile Include="Assets\ButtonSpell.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Walking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Selecting.cs" />
-    <Compile Include="Assets\Scripts\UI\ChangeText.cs" />
-    <Compile Include="Assets\PosHand.cs" />
-    <Compile Include="Assets\SpellSpawner.cs" />
-    <Compile Include="Assets\ButtonSpell.cs" />
+    <Compile Include="Assets\ExitGame.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

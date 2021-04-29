@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Hero : Entity
 {
@@ -17,5 +18,13 @@ public class Hero : Entity
         _animator.SetBool("Hit", Hit);
         _animator.SetBool("Dead", Dead);
         _animator.SetBool("Cast", Cast);
+
+        if (Dead)
+        {
+            if (Team == Team.TeamAI)
+                SceneManager.LoadScene("EndPlayer");
+            else
+                SceneManager.LoadScene("EndLoss");
+        }
     }
 }
