@@ -5,17 +5,30 @@ using UnityEngine;
 
 public class DebilitySpell : Spell
 {
-    private bool executing = false;
-    private bool used = false; //temporal
     public override void ExecuteSpell()
     {
-        executing = true;
+        RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
+
+        if (hit2D)
+        {
+            if (hit2D.transform.CompareTag("Character"))
+            {
+                Character target = hit2D.collider.gameObject.GetComponent<Character>();
+                ReduceAttack(target);
+                executed = true;
+            }
+        }
     }
     public override void IAUse()
     {
         //Pick an allie char
         Character[] chars = FindObjectsOfType<Character>();
-        ReduceAttack(GetHighestAttackUnit(chars));
+        Character priorChar = GetHighestAttackUnit(chars);
+        if (priorChar)
+        {
+            ReduceAttack(priorChar);
+            executed = true;
+        }
     }
 
     private Character GetHighestAttackUnit(Character[] allCharactersInScene)
@@ -32,33 +45,6 @@ public class DebilitySpell : Spell
             }
         }
         return priorChar;
-    }
-
-    private void Update()
-    {
-        if (executing)
-        {
-            if (Input.GetMouseButton(0) &&!used)
-            {
-                RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
-
-                if (hit2D)
-                {
-
-                    if (hit2D.transform.CompareTag("Character"))
-                    {
-                        used = true;
-                        Character target = hit2D.collider.gameObject.GetComponent<Character>();
-                        ReduceAttack(target);
-                    }
-                    else
-                    {
-                        executing = false;
-                    }
-                }
-
-            }
-        }
     }
     private void ReduceAttack(Character target)
     {

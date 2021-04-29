@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Spell : Card
 {
+    [HideInInspector]public bool executed = false;
     public int Priority = 2;
     private Camera mainCamera;
     public virtual void ExecuteSpell() {}

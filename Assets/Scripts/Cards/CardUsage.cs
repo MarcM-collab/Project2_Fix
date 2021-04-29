@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.UI;
 
 public class CardUsage : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class CardUsage : MonoBehaviour
 
     public CardSpawner spawner;
     private Camera mainCamera;
-    public TurnManager TurnManager;
+    public TurnManager turnManager;
     private Vector2 GetMouseTilePos
     {
         get 
@@ -43,6 +44,7 @@ public class CardUsage : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
+        turnManager = FindObjectOfType<TurnManager>();
     }
     private void Update()
     {
@@ -72,23 +74,35 @@ public class CardUsage : MonoBehaviour
     {
         ScriptButton._buttonCard -= Draggin;
     }
-    public void Draggin(GameObject gameObjectToSpawn, GameObject gameObjectCard)
+    public void Draggin(Unit card)
     {
         //el primer gameobject es el "sprite" (objeto) que spwnea el carta (su estado morfologico),
         //el otro gameobject es la carta (referenciada para que pueda ser destruida al usarla)
-        
-        _gameObjectCard = gameObjectCard;
-        _card = _gameObjectCard.GetComponent<Card>();
+
+        _gameObjectCard = card.gameObject;
+        _card = card;
 
         if (EnoughWhiskas(_card))
         {
-            _gameObject = gameObjectToSpawn;
+            _gameObject = card.character.gameObject;
             isDragging = true;//para saber si esta clicando(mas adelante posiblemente arrastre)
         }
+        else
+        {
+            StartCoroutine(NotEnough());
+        }
     }
+
+    private IEnumerator NotEnough()
+    {
+        _card.GetComponent<Image>().color = Color.red;
+        yield return new WaitForSeconds(0.2f);
+        _card.GetComponent<Image>().color = Color.white;
+    }
+
     private bool EnoughWhiskas(Card _card)//comprueba si hay whiskas (maná) suficiente para lanzar la carta
     {
-        return _card.Whiskas <= TurnManager.currentMana;
+        return _card.Whiskas <= turnManager.currentMana;
     }
     public void Spawn()
     {
@@ -99,8 +113,7 @@ public class CardUsage : MonoBehaviour
             {
                 spawner.SpawnCard(_card, GetMouseTilePos, Team.TeamPlayer);
                 isDragging = false;
-                TurnManager.SubstractMana(_card.Whiskas);
-                Destroy(_card.gameObject);
+                DestroyCard();
             }
         }
         //Vector3 sizeTile = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2, 0);
@@ -113,5 +126,10 @@ public class CardUsage : MonoBehaviour
 
         //Destroy(_gameObjectCard);
         //isDragging = false;
+    }
+    private void DestroyCard()
+    {
+        turnManager.SubstractMana(_card.Whiskas);
+        Destroy(_card.gameObject);
     }
 }

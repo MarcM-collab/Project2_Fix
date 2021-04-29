@@ -120,8 +120,8 @@ public class IACard : MonoBehaviour
         {
             SetSelectedHandCard(Random.Range(0, IAHand.Count));
             yield return new WaitForSeconds(cardUsageWait);
-            priorSpell.IAUse();
-            RemoveCardHand(priorSpell);
+            if (priorSpell.executed)
+                RemoveCardHand(priorSpell);
         }
 
 

@@ -90,12 +90,13 @@ public class CombatPlayerBehavior : CombatBehaviour
         }
 
         if (InputManager.LeftMouseClick)
-        { 
+        {
             if (_uITilemap.GetTile(_currentGridPos) == _pointingTile)
             {
                 _cardUsage.Spawn();
             }
             animator.SetBool("IsDragging", false);
+            CardUsage.isDragging = false;
         }
     }
     private void SpawningExit()

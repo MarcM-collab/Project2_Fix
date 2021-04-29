@@ -4,25 +4,18 @@ using UnityEngine;
 
 public class UseAbility : MonoBehaviour
 {
-    public TurnManager TurnManager;
+    public TurnManager turnManager;
     public Abilty ability;
     public void Use()
     {
-        if (ability.whiskasCost <= TurnManager.currentMana)
+        if (!turnManager)
+            turnManager = FindObjectOfType<TurnManager>();
+
+        if (ability.whiskasCost <= turnManager.currentMana)
         {
             ability.Excecute();
-            TurnManager.SubstractMana(ability.whiskasCost);
-            print("health");
+            turnManager.SubstractMana(ability.whiskasCost);
         }
 
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            HealthSystem.TakeDamage(2, EntityManager.ExecutorCharacter);
-            print("Damaged!");
-        }
     }
 }

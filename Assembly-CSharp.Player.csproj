@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Hit.cs" />
     <Compile Include="Assets\Scripts\Cards\Unit.cs" />
     <Compile Include="Assets\Scripts\Cards\CardsManager.cs" />
+    <Compile Include="Assets\Scripts\Cards\CardSpawner.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\HideRange.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Turn.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\MovingToTile.cs" />
@@ -92,7 +93,6 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Attack.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ChoosingAttackTile.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatBehaviour.cs" />
-    <Compile Include="Assets\CardSpawner.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\EntityManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\ExhaustingAndReset.cs" />
     <Compile Include="Assets\InfoManager.cs" />
@@ -102,12 +102,17 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Melee_ShowRange.cs" />
     <Compile Include="Assets\Scripts\Cards\ScriptButton.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UnitAbilities\HealAbilty.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Spawning.cs" />
     <Compile Include="Assets\TurnManager.cs" />
     <Compile Include="Assets\Scripts\Cards\HandManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Walking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\States\Selecting.cs" />
+    <Compile Include="Assets\Scripts\UI\ChangeText.cs" />
+    <Compile Include="Assets\PosHand.cs" />
+    <Compile Include="Assets\SpellSpawner.cs" />
+    <Compile Include="Assets\ButtonSpell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

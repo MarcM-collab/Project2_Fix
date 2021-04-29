@@ -57,8 +57,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Text.cs" />
-    <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Image.cs" />
     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\GraphicRaycaster.cs" />
+    <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Image.cs" />
     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Navigation.cs" />
     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\Layout\ContentSizeFitter.cs" />
     <Compile Include="C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\Resources\PackageManager\BuiltInPackages\com.unity.ugui\Runtime\UI\Core\VertexModifiers\Outline.cs" />
