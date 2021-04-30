@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &348859221544747991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 348859221544747989}
+  - component: {fileID: 348859221544747990}
+  m_Layer: 0
+  m_Name: IA
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &348859221544747989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348859221544747991}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 375.45288, y: 315.87415, z: -125.2613}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &348859221544747990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 348859221544747991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae79aa578dea2b42a0ec40e04b21e98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IADeck:
+  - card: {fileID: 5480704345394235149, guid: c946bbc647b903f43bf4c942ff452e11, type: 3}
+    priority: 1
+  - card: {fileID: 4526846348483723782, guid: 64af944539373e34683703445702201a, type: 3}
+    priority: 2
+  - card: {fileID: -1943764638452470376, guid: e9f55579a5b2f9e47b25c256f8500d87, type: 3}
+    priority: 3
+  _whiskas: {fileID: 0}
+  minimumScore: 10
+  IAHandCanvas: {fileID: 0}
+  scale: 1
+  FloorTileMap: {fileID: 0}
+  CollisionTileMap: {fileID: 0}
+  cardSprites: {fileID: 21300000, guid: 1d6f5b16e18ee8640bf415da65263d79, type: 3}
+  selectableStartCards:
+  - {fileID: 0}
+  - {fileID: 0}
+  selectWait: 2
+  selectWaitRandomicity: 0.25
+  selectCardFrequency: 0.55
+  selectCardColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
+  cardUsageWait: 1.25
+  cardUsageRandomicity: 0.25

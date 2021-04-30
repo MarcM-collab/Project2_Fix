@@ -12,6 +12,7 @@ public class Character : Entity
     [Header("Stats")]
     public Class Class;
     public int AttackPoints;
+    public int Health;
     public int Range;
 
     [Header("Animation")]

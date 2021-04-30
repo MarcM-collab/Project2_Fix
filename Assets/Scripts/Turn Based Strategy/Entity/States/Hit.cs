@@ -6,10 +6,10 @@ public class Hit : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        HealthSystem.TakeDamage(CharacterManager.ExecutorCharacter.AttackPoints);
-        animator.GetComponent<Character>().ChangeHealth();
+        HealthSystem.TakeDamage(EntityManager.ExecutorCharacter.AttackPoints);
+        animator.GetComponent<Entity>().ChangeHealth();
         animator.GetComponent<SpriteRenderer>().color = Color.red;
-        animator.GetComponent<Character>().Hit = false;
+        animator.GetComponent<Entity>().Hit = false;
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {

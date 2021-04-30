@@ -9,7 +9,7 @@ public class Walking : StateMachineBehaviour
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        var entity = CharacterManager.ExecutorCharacter;
+        var entity = EntityManager.ExecutorCharacter;
         Vector3 direction = (entity.Path[1] - entity.Path[0]);
         direction = direction.normalized;
         if (entity.transform.position != entity.Path[1])
