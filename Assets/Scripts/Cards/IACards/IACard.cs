@@ -50,10 +50,9 @@ public class IACard : MonoBehaviour
     public CardSpawner spawner;
 
     public static bool StartAI;
-    public TurnManager TurnManager;
     private void Update()
     {
-        if (!TurnManager.PlayerTurn)
+        if (TurnManager.TeamTurn == Team.TeamAI)
         {
             if (!inTurn)
             {

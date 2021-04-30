@@ -41,6 +41,23 @@ public class Character : Entity
         _animator.SetBool("Dead", Dead);
         _animator.SetBool("Attack", Attack);
     }
+    public void TurningExecutor(float deltaX)
+    {
+        if (deltaX < 0)
+        {
+            if (transform.rotation.eulerAngles.y == 180)
+            {
+                Turn = true;
+            }
+        }
+        if (deltaX > 0)
+        {
+            if (transform.rotation.eulerAngles.y == 0)
+            {
+                Turn = true;
+            }
+        }
+    }
     public static bool operator ==(Character e1, Character e2)
     {
         var positionE1 = e1.gameObject.transform.position;

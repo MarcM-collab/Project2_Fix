@@ -147,6 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Whiskas: 1
+  Back: {fileID: 21300000, guid: 1d6f5b16e18ee8640bf415da65263d79, type: 3}
   executed: 0
   Priority: 2
 --- !u!114 &605790150503887886

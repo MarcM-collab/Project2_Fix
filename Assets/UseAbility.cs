@@ -4,18 +4,13 @@ using UnityEngine;
 
 public class UseAbility : MonoBehaviour
 {
-    public TurnManager turnManager;
     public Abilty ability;
     public void Use()
     {
-        if (!turnManager)
-            turnManager = FindObjectOfType<TurnManager>();
-
-        if (ability.whiskasCost <= turnManager.currentMana)
+        if (ability.whiskasCost <= TurnManager.currentMana)
         {
             ability.Excecute();
-            turnManager.SubstractMana(ability.whiskasCost);
+            TurnManager.SubstractMana(ability.whiskasCost);
         }
-
     }
 }

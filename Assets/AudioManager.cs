@@ -17,26 +17,20 @@ public class AudioManager : MonoBehaviour
     private AudioSource music;
     public AudioSource transition;
     private bool playerTurn = false;
-    private TurnManager turn;
     private float prevVolume;
     private bool transitioning;
     private void Start()
     {
         music = GetComponent<AudioSource>();
         music.loop = true;
-
-        turn = FindObjectOfType<TurnManager>();
     }
 
     private void Update()
     {
-        if (turn)
+        if ((!playerTurn && TurnManager.TeamTurn == Team.TeamPlayer) || (playerTurn && TurnManager.TeamTurn == Team.TeamAI))
         {
-            if (!playerTurn && turn.PlayerTurn || playerTurn && !turn.PlayerTurn)
-            {
-                transitioning = true;
-                StartCoroutine(ChangeTurn());
-            }
+            transitioning = true;
+            StartCoroutine(ChangeTurn());
         }
         if (music.volume == 0 && !transitioning)
         {

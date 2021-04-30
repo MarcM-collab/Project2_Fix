@@ -8,13 +8,11 @@ public class ChangeText : MonoBehaviour
     public string Text1, Text2, IAText;
     public Color text1Color, text2Color, IAColor;
     private Text txt;
-    private TurnManager turn;
     private Image im;
     private bool hasToChange = true;
     private void Start()
     {
         im = GetComponent<Image>();
-        turn = FindObjectOfType<TurnManager>();
         txt = GetComponentInChildren<Text>();
         txt.text = Text2;
     }
@@ -35,7 +33,7 @@ public class ChangeText : MonoBehaviour
     }
     private void Update()
     {
-        if (txt.text != Text1 && turn.PlayerTurn && hasToChange)
+        if (txt.text != Text1 && TurnManager.TeamTurn == Team.TeamPlayer && hasToChange)
         {
             txt.text = Text1;
             im.color = text1Color;

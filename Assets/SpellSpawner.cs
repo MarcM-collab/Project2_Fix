@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SpellSpawner : MonoBehaviour
 {
-    private TurnManager turn;
     private Spell currentSpell;
     private void OnEnable()
     {
@@ -13,10 +12,6 @@ public class SpellSpawner : MonoBehaviour
     private void OnDisable()
     {
         ButtonSpell.spellButton -= SetSpellActive;
-    }
-    private void Start()
-    {
-        turn = FindObjectOfType<TurnManager>();
     }
     private void SetSpellActive(Spell spell)
     {
@@ -31,7 +26,7 @@ public class SpellSpawner : MonoBehaviour
                 currentSpell.ExecuteSpell();
                 if (currentSpell.executed)
                 {
-                    turn.SubstractMana(currentSpell.Whiskas);
+                    TurnManager.SubstractMana(currentSpell.Whiskas);
                     Destroy(currentSpell.gameObject);
                 }
                 currentSpell = null;

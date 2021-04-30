@@ -399,4 +399,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Whiskas: 2
+  Back: {fileID: 21300000, guid: 1d6f5b16e18ee8640bf415da65263d79, type: 3}
   character: {fileID: 507745496865460723, guid: 20892a19571806c43a7862cbc8be5adf, type: 3}

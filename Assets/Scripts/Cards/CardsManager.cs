@@ -17,28 +17,21 @@ public class CardsManager : MonoBehaviour
     private int maxCardInHand = 6;
     private bool currentTurn = false;
 
-    public TurnManager TurnManager;
-
     public bool PressedFirst;
 
-    private void Start()
-    {
-        buttons[0].gameObject.SetActive(false);
-        buttons[1].gameObject.SetActive(false);
-    }
     private void Update()
     {
-        if (TurnManager.PlayerTurn && !currentTurn)
+        if (TurnManager.TeamTurn == Team.TeamPlayer && !currentTurn)
         {
             currentTurn = true; //avoids extra iterations
-
-            if (Hand.hand.Count < maxCardInHand) //límite de cartas en mano. 
+            var IsBelowHandMaxSize = Hand.hand.Count < maxCardInHand;
+            if (IsBelowHandMaxSize)
                 ShowRandomCards(ChooseRandom());
         }
     }
     public void PassTurn()
     {
-        if (TurnManager.PlayerTurn)
+        if (TurnManager.TeamTurn == Team.TeamPlayer)
         {
             if (!PressedFirst)
             {

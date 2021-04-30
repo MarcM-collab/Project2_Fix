@@ -30,12 +30,10 @@ public class CardUsage : MonoBehaviour
 
     public CardSpawner spawner;
     private Camera mainCamera;
-    public TurnManager turnManager;
     private Vector2 GetMouseTilePos
     {
         get 
         {
-            Vector3 sizeTile = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2, 0);
             mousePos = Input.mousePosition;
             var vector = _floorTilemap.WorldToCell(mainCamera.ScreenToWorldPoint(mousePos));
             return new Vector2(vector.x, vector.y);
@@ -44,7 +42,6 @@ public class CardUsage : MonoBehaviour
     private void Start()
     {
         mainCamera = Camera.main;
-        turnManager = FindObjectOfType<TurnManager>();
     }
     private void Update()
     {
@@ -102,7 +99,7 @@ public class CardUsage : MonoBehaviour
 
     private bool EnoughWhiskas(Card _card)//comprueba si hay whiskas (maná) suficiente para lanzar la carta
     {
-        return _card.Whiskas <= turnManager.currentMana;
+        return _card.Whiskas <= TurnManager.currentMana;
     }
     public void Spawn()
     {
@@ -129,7 +126,7 @@ public class CardUsage : MonoBehaviour
     }
     private void DestroyCard()
     {
-        turnManager.SubstractMana(_card.Whiskas);
+        TurnManager.SubstractMana(_card.Whiskas);
         HandManager.RemoveCard(_card);
         Destroy(_card.gameObject);
     }

@@ -81,16 +81,17 @@ public class CardSpawner : MonoBehaviour
     }
     public bool CheckPos(Vector2 pos)
     {
-        Vector3 vector = FloorTileMap.WorldToCell(Camera.ScreenToWorldPoint(pos));
-        vector = vector + new Vector3(FloorTileMap.cellSize.x / 2, FloorTileMap.cellSize.y / 2, 0);
+        var vector = new Vector3(pos.x, pos.y) + TileManager.CellSize;
         RaycastHit2D rayCast = Physics2D.Raycast(vector, Vector3.zero);
-        if (rayCast)
+        var rayCastCollider = rayCast.collider;
+        if (rayCastCollider != null)
         {
-            if (rayCast.transform.CompareTag("Character"))
+            var gameObject = rayCastCollider.gameObject;
+            if (!(gameObject.GetComponent("Character") as Character is null))
             {
-                return false;
+                return true;
             }
         }
-        return true;
+        return false;
     }
 }
