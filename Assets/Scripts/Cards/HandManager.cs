@@ -8,6 +8,7 @@ public class HandManager : MonoBehaviour
     [SerializeField]
     private float scale = 1f;
     public Transform HandCanvas;
+
     public void AddCard(Card newCard)
     {
         Transform cardInstance = Instantiate(newCard, HandCanvas.position, Quaternion.identity).transform;

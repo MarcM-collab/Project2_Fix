@@ -37,7 +37,6 @@ public class ChangeText : MonoBehaviour
     {
         if (txt.text != Text1 && turn.PlayerTurn && hasToChange)
         {
-            print("CHANGING");
             txt.text = Text1;
             im.color = text1Color;
         }

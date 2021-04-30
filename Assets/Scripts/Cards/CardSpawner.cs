@@ -11,6 +11,7 @@ public class CardSpawner : MonoBehaviour
     public Tilemap CollisionTileMap;
     private List<Vector2> testedPos = new List<Vector2>();
     public Transform characters;
+    public Camera Camera;
 
     public Color IAColor;
     public Color PlayerColor;
@@ -80,8 +81,9 @@ public class CardSpawner : MonoBehaviour
     }
     public bool CheckPos(Vector2 pos)
     {
-        RaycastHit2D rayCast = Physics2D.Raycast(pos, Vector2.zero);
-
+        Vector3 vector = FloorTileMap.WorldToCell(Camera.ScreenToWorldPoint(pos));
+        vector = vector + new Vector3(FloorTileMap.cellSize.x / 2, FloorTileMap.cellSize.y / 2, 0);
+        RaycastHit2D rayCast = Physics2D.Raycast(vector, Vector3.zero);
         if (rayCast)
         {
             if (rayCast.transform.CompareTag("Character"))

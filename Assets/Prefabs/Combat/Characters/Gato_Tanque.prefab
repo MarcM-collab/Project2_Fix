@@ -130,7 +130,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &2294010376720223419
 MonoBehaviour:
@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 461c764d45c3a4b44aa76e7436d963dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurnManager: {fileID: 0}
+  turnManager: {fileID: 0}
   ability: {fileID: 2116078389631182469, guid: fc1389e6a11db2046b0df9c2ff7bc7f7, type: 3}
 --- !u!1 &2294010376777024407
 GameObject:

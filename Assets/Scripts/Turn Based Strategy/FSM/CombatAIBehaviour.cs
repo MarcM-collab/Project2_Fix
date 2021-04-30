@@ -7,6 +7,7 @@ using UnityEngine.Tilemaps;
 public class CombatAIBehaviour : CombatBehaviour
 {
     public GameObject EnemyHeroeGO;
+    private List<Vector3> _notPossibleTarget = new List<Vector3>();
 
     private void OnEnable()
     {
@@ -30,7 +31,7 @@ public class CombatAIBehaviour : CombatBehaviour
         _enemyHero = EnemyHeroeGO.GetComponent<Hero>();
         _enemyHeroTiles = new List<Vector3Int> { new Vector3Int(-7, 0, 0), new Vector3Int(-8, 0, 0), new Vector3Int(-7, -1, 0), new Vector3Int(-8, -1, 0) };
         _enemyHeroAttackableTiles = new List<Vector3Int> { new Vector3Int(-7, 0, 0), new Vector3Int(-7, -1, 0) };
-}
+    }
     //----------------------------------------Selecting----------------------------------------
     private void SelectingEnter(Animator animator)
     {
@@ -69,6 +70,19 @@ public class CombatAIBehaviour : CombatBehaviour
     {
         var targetOnRange = false;
 
+        FindTarget(ref targetOnRange);
+       
+        if (targetOnRange)
+        {
+            SetTarget(animator);
+        }
+        else
+        {
+            MoveToTile(animator);
+        }
+    }
+    private void FindTarget(ref bool targetOnRange)
+    {
         var v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
         var range = _executorCharacter.Range + 2;
         int counter = 0;
@@ -88,9 +102,9 @@ public class CombatAIBehaviour : CombatBehaviour
 
                 if (Mathf.Abs(i) < counter)
                 {
-                    if (i != -range && i != range && j != -range && j != range) 
+                    if (i != -range && i != range && j != -range && j != range)
                     {
-                        if (!IsHeroCovered()) 
+                        if (!(_notPossibleTarget.Contains(pos)))
                         {
                             if (InTile(vToW) == (int)EntityType.EnemyHero && _enemyHeroAttackableTiles.Contains(pos))
                             {
@@ -98,76 +112,77 @@ public class CombatAIBehaviour : CombatBehaviour
                                 targetOnRange = true;
                                 break;
                             }
-                        }
-                        if (InTile(vToW) == (int)EntityType.EnemyCharacter)
-                        {
-                            if (minPos.x + minPos.y > Mathf.Abs(i) + Mathf.Abs(j))
+                            if (InTile(vToW) == (int)EntityType.EnemyCharacter)
                             {
-                                minPos = new Vector3Int(Mathf.Abs(i), Mathf.Abs(j), 0);
-                                _targetGridPos = pos;
-                                targetOnRange = true;
+                                if (minPos.x + minPos.y > Mathf.Abs(i) + Mathf.Abs(j))
+                                {
+                                    minPos = new Vector3Int(Mathf.Abs(i), Mathf.Abs(j), 0);
+                                    _targetGridPos = pos;
+                                    targetOnRange = true;
+                                }
                             }
                         }
                     }
                 }
             }
-
-        }
-        if (targetOnRange)
-        {
-            Vector2 vector2 = new Vector2(_targetGridPos.x + v.x, _targetGridPos.y + v.y);
-            RaycastHit2D hit = Physics2D.Raycast(vector2, Vector2.zero);
-            var hitCollider = hit.collider;
-            if (hitCollider != null)
-            {
-                if (!(hitCollider.gameObject.GetComponent("Entity") as Entity is null))
-                {
-                    EntityManager.SetTarget(hitCollider.gameObject.GetComponent<Entity>());
-                    _uITilemap.SetTile(_targetGridPos, _targetTile);
-                }
-                if (!(hitCollider.gameObject.GetComponent("Hero") as Hero is null))
-                {
-                    ShowHeroTiles();
-                }
-                animator.SetBool("PreparingAttack", true);
-            }
-        }
-        else
-        {
-            range = _executorCharacter.Range;
-            counter = 0;
-            var min = Vector3.Distance(_executorGridPos, _enemyHero.transform.position);
-
-            for (int j = -range; j <= range; j++)
-            {
-                if (j <= 0) counter++;
-                else counter--;
-
-                for (int i = -range; i <= range; i++)
-                {
-                    Vector3Int vector = new Vector3Int(i, j, 0);
-                    var pos = _executorGridPos + vector;
-                    Vector3 vToW = pos + v;
-
-                    if (Mathf.Abs(i) < counter - 1)
-                    {
-                        if (!(InTile(vToW) == (int)EntityType.EnemyCharacter || InTile(vToW) == (int)EntityType.AllyCharacter || _collisionTilemap.HasTile(pos) || !_floorTilemap.HasTile(pos)))
-                        {
-                            var currentMin = Vector3.Distance(vToW, _enemyHero.transform.position);
-                            if (min > currentMin)
-                            {
-                                min = currentMin;
-                                _tileChosenPos = pos;
-                            }
-                        }
-                    }
-                }
-            }
-            _uITilemap.SetTile(_tileChosenPos, _allyTile);
-            animator.SetTrigger("TileChosen");
         }
     }
-    
+    private void SetTarget(Animator animator)
+    {
+        var v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
+        Vector2 vector2 = new Vector2(_targetGridPos.x + v.x, _targetGridPos.y + v.y);
+        RaycastHit2D hit = Physics2D.Raycast(vector2, Vector2.zero);
+        var hitCollider = hit.collider;
+        if (hitCollider != null)
+        {
+            if (!(hitCollider.gameObject.GetComponent("Entity") as Entity is null))
+            {
+                EntityManager.SetTarget(hitCollider.gameObject.GetComponent<Entity>());
+                _uITilemap.SetTile(_targetGridPos, _targetTile);
+            }
+            if (!(hitCollider.gameObject.GetComponent("Hero") as Hero is null))
+            {
+                ShowHeroTiles();
+            }
+            animator.SetBool("PreparingAttack", true);
+        }
+    }
+    private void MoveToTile(Animator animator)
+    {
+        var v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
+        var range = _executorCharacter.Range;
+        var counter = 0;
+        var min = Vector3.Distance(_executorGridPos, _enemyHero.transform.position);
+
+        for (int j = -range; j <= range; j++)
+        {
+            if (j <= 0) counter++;
+            else counter--;
+
+            for (int i = -range; i <= range; i++)
+            {
+                Vector3Int vector = new Vector3Int(i, j, 0);
+                var pos = _executorGridPos + vector;
+                Vector3 vToW = pos + v;
+
+                if (Mathf.Abs(i) < counter - 1)
+                {
+                    if (!(InTile(vToW) == (int)EntityType.EnemyCharacter || InTile(vToW) == (int)EntityType.AllyCharacter || _collisionTilemap.HasTile(pos) || !_floorTilemap.HasTile(pos)))
+                    {
+                        var currentMin = Vector3.Distance(vToW, _enemyHero.transform.position);
+                        if (min > currentMin)
+                        {
+                            min = currentMin;
+                            _tileChosenPos = pos;
+                        }
+                    }
+                }
+            }
+        }
+        _uITilemap.SetTile(_tileChosenPos, _allyTile);
+        animator.SetTrigger("TileChosen");
+    }
+
     //----------------------------------------Ranged_ChoosingTile----------------------------------------
     private void Ranged_ChoosingTileEnter(Animator animator)
     {
@@ -209,14 +224,31 @@ public class CombatAIBehaviour : CombatBehaviour
                     }
                 }
             }
+            if (possiblePos.Count == 0)
+            {
+                _notPossibleTarget.Add(_targetGridPos);
+                animator.SetBool("Selected", false);
+                animator.SetBool("PreparingAttack", false);
 
-            _tileChosenPos = possiblePos[UnityEngine.Random.Range(0, possiblePos.Count)];
+                if (!(_targetEntity.GetComponent("Entity") as Entity is null))
+                {
+                    _uITilemap.SetTile(_targetGridPos, null);
+                }
+                if (!(_targetEntity.GetComponent("Hero") as Hero is null))
+                {
+                    HideHeroTiles();
+                }
+                animator.SetBool("PreparingAttack", true);
+            }
+            else
+            {
+                _tileChosenPos = possiblePos[UnityEngine.Random.Range(0, possiblePos.Count)];
+                _uITilemap.SetTile(_tileChosenPos, _allyTile);
+                animator.SetTrigger("TileChosen");
+                animator.SetBool("Attacking", true);
+            }
         }
-        _uITilemap.SetTile(_tileChosenPos, _allyTile);
-        animator.SetTrigger("TileChosen");
-        animator.SetBool("Attacking", true);
     }
-    //----------------------------------------GENERAL FUNCTIONS----------------------------------------
     private bool IsEnemyNeighbour()
     {
         Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
@@ -234,19 +266,6 @@ public class CombatAIBehaviour : CombatBehaviour
                 }
             }
         }
-        return false;
-    }
-    private bool IsHeroCovered()
-    {
-        //Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
-
-        //for (int i = 0; i < _heroFrontTiles.Count; i++)
-        //{
-        //    Vector3 vToW = _heroFrontTiles[i] + v;
-        //    if (_cCB.InTile(vToW) == (int)CharType.Nothing)
-        //        return false;
-        //}
-        //return true;
         return false;
     }
 }

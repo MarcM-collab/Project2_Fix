@@ -41,6 +41,7 @@ public class CombatBehaviour : MonoBehaviour
     internal static Vector3Int _executorGridPos;
     internal static Vector3Int _tileChosenPos;
     internal static Vector3Int _targetGridPos;
+    internal static bool _wasAttacking;
 
     private void OnEnable()
     {
@@ -68,6 +69,7 @@ public class CombatBehaviour : MonoBehaviour
         ExhaustingAndReset.OnExhaustingAndResetUpdate -= ExhaustingAndResetUpdate;
         ExhaustingAndReset.OnExhaustingAndResetExit -= ExhaustingAndResetExit;
     }
+
     //----------------------------------------MovingToTileEnter----------------------------------------
     private void MovingToTileEnter()
     {
@@ -123,6 +125,10 @@ public class CombatBehaviour : MonoBehaviour
     //----------------------------------------ExhaustingAndReset----------------------------------------
     private void ExhaustingAndResetEnter(Animator animator)
     {
+        if (animator.GetBool("Attacking"))
+        {
+            _wasAttacking = true;
+        }
         animator.SetBool("Selected", false);
         animator.SetBool("TileChosen", false);
         animator.SetBool("MovedToTile", false);
@@ -138,10 +144,23 @@ public class CombatBehaviour : MonoBehaviour
     }
     private void ExhaustingAndResetUpdate(Animator animator)
     {
-        if (_executorCharacter.IsExhaustedAnim && (_targetEntity.IsDeadAnim || _targetEntity.IsAlive))
+
+        if (_executorCharacter.IsExhaustedAnim)
         {
-            animator.SetTrigger("Exhausted");
+            if (!_wasAttacking) 
+            {
+                animator.SetTrigger("Exhausted");
+            }
+            else
+            {
+                if (_targetEntity.IsDeadAnim || _targetEntity.IsAlive)
+                {
+                    animator.SetTrigger("Exhausted");
+                    _wasAttacking = false;
+                }
+            }
         }
+            
     }
     private void ExhaustingAndResetExit(Animator animator)
     {
@@ -212,6 +231,13 @@ public class CombatBehaviour : MonoBehaviour
         for (int i = 0; i < _enemyHeroTiles.Count; i++)
         {
             _uITilemap.SetTile(_enemyHeroTiles[i], _targetTile);
+        }
+    }
+    public void HideHeroTiles()
+    {
+        for (int i = 0; i < _enemyHeroTiles.Count; i++)
+        {
+            _uITilemap.SetTile(_enemyHeroTiles[i], null);
         }
     }
 }
