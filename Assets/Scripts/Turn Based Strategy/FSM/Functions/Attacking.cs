@@ -20,13 +20,13 @@ public class Attacking : CombatBehaviour
     {
         var deltaX = _targetGridPosition.x - _tileChosenGridPosition.x;
         _executorCharacter.TurningExecutor(deltaX);
+        _executorCharacter.Attack = true;
     }
     private void AttackingUpdate(Animator animator)
     {
-        animator.SetBool("Attacking", _executorCharacter.Turn);
+        animator.SetBool("Attacking", !_targetEntity.Hit);
     }
     private void AttackingExit()
     {
-        _executorCharacter.Attack = true;
     }
 }

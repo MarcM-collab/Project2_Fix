@@ -8,7 +8,18 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
+    [Header("UITiles")]
+    public Tile PointingTile;
+    public Tile TargetTile;
+    public Tile AllyTile;
+
+    [Header("TileMaps")]
+    public Tilemap FloorTilemap;
+    public Tilemap CollisionTilemap;
+    public Tilemap UITilemap;
+
     private static Grid _grid;
+
     public static Vector3 CellSize => new Vector3(_grid.cellSize.x / 2, _grid.cellSize.y / 2);
 
     private void Start()

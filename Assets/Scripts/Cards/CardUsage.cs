@@ -15,13 +15,13 @@ public class CardUsage : MonoBehaviour
 
     public HandManager HandManager;
 
-    [SerializeField]
-    private Art _art;
+    private TileManager _tileManager => FindObjectOfType<TileManager>();
+    private Art _art => FindObjectOfType<Art>();
 
-    private Tilemap _floorTilemap => _art.FloorTilemap;
-    private Tilemap _collisionTilemap => _art.CollisionTilemap;
-    private Tilemap _uITilemap => _art.UITilemap;
-    private Tile _allyTile => _art.AllyTile;
+    private Tilemap _floorTilemap => _tileManager.FloorTilemap;
+    private Tilemap _collisionTilemap => _tileManager.CollisionTilemap;
+    private Tilemap _uITilemap => _tileManager.UITilemap;
+    private Tile _allyTile => _tileManager.AllyTile;
 
     private Camera _camera => _art.Camera;
 
@@ -106,12 +106,9 @@ public class CardUsage : MonoBehaviour
         if (_card is Unit)
         {
             Vector2 pos = GetMouseTilePos;
-            if (spawner.CheckPos(pos))
-            {
-                spawner.SpawnCard(_card, GetMouseTilePos, Team.TeamPlayer);
-                isDragging = false;
-                DestroyCard();
-            }
+            spawner.SpawnCard(_card, GetMouseTilePos, Team.TeamPlayer);
+            isDragging = false;
+            DestroyCard();
         }
         //Vector3 sizeTile = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2, 0);
         //mousePos = Input.mousePosition;

@@ -16,6 +16,10 @@ public static class TurnManager
 
     public delegate void SwitchBehaviour();
     public static SwitchBehaviour OnSwitchBehaviour;
+
+    public static bool CardDrawn = false;
+    public static bool Spawned;
+
     public static Team TeamTurn
     {
         get 
@@ -41,7 +45,8 @@ public static class TurnManager
         setDisplay?.Invoke((float)currentMana / maxMana, currentMana);
 
         OnSwitchBehaviour?.Invoke();
-        EntityManager.TurnChaged = true;
+        CardDrawn = false;
+        Spawned = false;
         EntityManager.RemoveExhaust();
     }
 

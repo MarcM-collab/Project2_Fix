@@ -18,13 +18,13 @@ public class Character : Entity
     [Header("Animation")]
     public float Velocity;
 
-    public bool Walking;
+    public bool Teleporting;
     public bool Turn;
     public bool Attack;
 
     public bool IsExhaustedAnim;
 
-    public List<Vector3> Path;
+    public Vector3 TeleportPoint;
 
     private void Start()
     {
@@ -35,7 +35,7 @@ public class Character : Entity
     private void Update()
     {
         _animator.SetBool("Exhausted", Exhausted);
-        _animator.SetBool("Walking", Walking);
+        _animator.SetBool("Teleporting", Teleporting);
         _animator.SetBool("Turn", Turn);
         _animator.SetBool("Hit", Hit);
         _animator.SetBool("Dead", Dead);

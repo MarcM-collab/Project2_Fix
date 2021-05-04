@@ -43,10 +43,8 @@ public class MeleeShowRangePlayer : CombatPlayerBehaviour
                         _uITilemap.SetTile(currentGridPosition, _targetTile);
 
                     else if (ThereIsNothing)
-                        _uITilemap.SetTile(currentGridPosition, _rangeTile);
-
-                    else if (ThereIsAnAlly)
                         _uITilemap.SetTile(currentGridPosition, _allyTile);
+
                     else if (ThereIsAnEnemyHero)
                         enemyHeroOnRange = true;
                 }

@@ -4,17 +4,65 @@ using UnityEngine;
 
 public class SelectingPlayer : CombatPlayerBehaviour
 {
+    private bool _pressedFirst;
+    private bool _buttonEnabled;
     private void OnEnable()
     {
+        SelectingBehaviour.OnSelectingEnter += SelectingEnter;
         SelectingBehaviour.OnSelectingUpdate += SelectingUpdate;
         SelectingBehaviour.OnSelectingExit += SelectingExit;
     }
     private void OnDisable()
     {
+        SelectingBehaviour.OnSelectingEnter -= SelectingEnter;
         SelectingBehaviour.OnSelectingUpdate -= SelectingUpdate;
         SelectingBehaviour.OnSelectingExit -= SelectingExit;
     }
+    private void SelectingEnter(Animator animator)
+    {
+        EnablePassButton(true);
+    }
     private void SelectingUpdate(Animator animator)
+    {
+        if(TurnManager.CardDrawn)
+        {
+            if (!CardUsage.isDragging)
+            {
+                TileHighlighting(animator);
+
+                Selected(animator);
+            }
+            else
+            {
+                animator.SetBool("IsDragging", true);
+                _uITilemap.SetTile(_currentGridPos, null);
+            }
+        }
+        else
+        {
+            animator.SetBool("ChooseCard", true);
+            _uITilemap.SetTile(_currentGridPos, null);
+        }
+    }
+    private void SelectingExit()
+    {
+        EnablePassButton(false);
+    }
+    private void EnablePassButton(bool _bool)
+    {
+        _buttonEnabled = _bool;
+    }
+    public void PassTurnButton()
+    {
+        if (_buttonEnabled)
+        {
+            if (TurnManager.TeamTurn == Team.TeamPlayer)
+            {
+                TurnManager.NextTurn();
+            }
+        }
+    }
+    private void TileHighlighting(Animator animator)
     {
         var PointingNewFloorTile = _floorTilemap.HasTile(_currentGridPos) && _currentGridPos != _lastGridPos;
         var PointingOutOfFloor = !_floorTilemap.HasTile(_currentGridPos);
@@ -32,7 +80,9 @@ public class SelectingPlayer : CombatPlayerBehaviour
                 _uITilemap.SetTile(_lastGridPos, null);
             }
         }
-
+    }
+    private void Selected(Animator animator)
+    {
         var TileSelected = InputManager.LeftMouseClick;
 
         if (TileSelected)
@@ -63,8 +113,5 @@ public class SelectingPlayer : CombatPlayerBehaviour
                 }
             }
         }
-    }
-    private void SelectingExit()
-    {
     }
 }

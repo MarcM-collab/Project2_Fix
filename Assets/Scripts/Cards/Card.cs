@@ -6,5 +6,4 @@ using UnityEngine.UI;
 public class Card : MonoBehaviour
 {
     public int Whiskas;
-    public Sprite Back;
 }

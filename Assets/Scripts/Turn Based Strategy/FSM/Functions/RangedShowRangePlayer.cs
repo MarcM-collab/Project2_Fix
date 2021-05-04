@@ -37,12 +37,11 @@ public class RangedShowRangePlayer : CombatPlayerBehaviour
                     var ThereIsNothing = CanMove(currentGridPosition);
                     var ThereIsACollider = _floorTilemap.HasTile(currentGridPosition);
 
-                    if (ThereIsAnAlly)
-                        _uITilemap.SetTile(currentGridPosition, _allyTile);
-                    else if (ThereIsNothing)
-                        _uITilemap.SetTile(currentGridPosition, _rangeTile);
-                    else if (ThereIsACollider)
-                        _uITilemap.SetTile(currentGridPosition, _nullTile);
+                    if (_floorTilemap.HasTile(currentGridPosition))
+                    {
+                        if (ThereIsAnAlly || ThereIsNothing)
+                            _uITilemap.SetTile(currentGridPosition, _allyTile);
+                    }
                 }
             }
         }

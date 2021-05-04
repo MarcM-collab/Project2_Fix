@@ -13,8 +13,6 @@ public static class EntityManager
     public static Entity TargetCharacter => Entities[_currentTargetIndex];
     public static Character ExecutorCharacter => Entities[_currentExecutorIndex] as Character;
 
-    public static bool TurnChaged;
-
     [RuntimeInitializeOnLoadMethod]
     private static void InitEntities()
     {
@@ -90,5 +88,23 @@ public static class EntityManager
             }
         }
         return characters.ToArray();
+    }
+
+    public static Hero GetHero(Team team)
+    {
+        return HerosInList(Entities.Where(x => x.Team == team).ToArray())[0];
+    }
+
+    private static Hero[] HerosInList(Entity[] entities)
+    {
+        List<Hero> heros = new List<Hero>();
+        for (int i = 0; i < entities.Length; i++)
+        {
+            if (!(entities[i].GetComponent("Hero") as Hero is null))
+            {
+                heros.Add(entities[i] as Hero);
+            }
+        }
+        return heros.ToArray();
     }
 }

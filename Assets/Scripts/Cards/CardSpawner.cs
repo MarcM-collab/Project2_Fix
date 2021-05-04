@@ -18,9 +18,6 @@ public class CardSpawner : MonoBehaviour
 
     public void SpawnCard(Card toSpawn, Vector2 pos, Team team)
     {
-        if (!CheckPos(pos))
-            return;
-
         GameObject theTile = Instantiate(toSpawn.GetComponent<Unit>().character.gameObject, pos, Quaternion.identity);
         theTile.transform.position = new Vector3(pos.x + (FloorTileMap.cellSize.x / 2), pos.y + (FloorTileMap.cellSize.y / 2), 0);
 
@@ -89,9 +86,9 @@ public class CardSpawner : MonoBehaviour
             var gameObject = rayCastCollider.gameObject;
             if (!(gameObject.GetComponent("Character") as Character is null))
             {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }

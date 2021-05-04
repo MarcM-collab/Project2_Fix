@@ -15,17 +15,16 @@ public class CombatBehaviour : MonoBehaviour
     }
 
     protected Art _art => FindObjectOfType<Art>();
+    protected TileManager _tileManager => FindObjectOfType<TileManager>();
     protected Camera _camera => _art.Camera;
 
-    protected Tile _pointingTile => _art.PointingTile;
-    protected Tile _rangeTile => _art.RangeTile;
-    protected Tile _targetTile => _art.TargetTile;
-    protected Tile _nullTile => _art.NullTile;
-    protected Tile _allyTile => _art.AllyTile;
+    protected Tile _pointingTile => _tileManager.PointingTile;
+    protected Tile _targetTile => _tileManager.TargetTile;
+    protected Tile _allyTile => _tileManager.AllyTile;
 
-    protected Tilemap _floorTilemap => _art.FloorTilemap;
-    protected Tilemap _collisionTilemap => _art.CollisionTilemap;
-    protected Tilemap _uITilemap => _art.UITilemap;
+    protected Tilemap _floorTilemap => _tileManager.FloorTilemap;
+    protected Tilemap _collisionTilemap => _tileManager.CollisionTilemap;
+    protected Tilemap _uITilemap => _tileManager.UITilemap;
 
     protected Texture2D _cursorHand => _art.CursorHand;
     protected Texture2D _cursorSword => _art.CursorSword;
@@ -50,14 +49,14 @@ public class CombatBehaviour : MonoBehaviour
             var gameObject = hitCollider.gameObject;
             if (!(gameObject.GetComponent("Character") as Entity is null))
             {
-                if (_executorCharacter.Team != gameObject.GetComponent<Entity>().Team)
+                if (TurnManager.TeamTurn != gameObject.GetComponent<Entity>().Team)
                     return (int)EntityType.EnemyCharacter;
                 else
                     return (int)EntityType.AllyCharacter;
             }
             else if (!(gameObject.GetComponent("Hero") as Hero is null))
             {
-                if (_executorCharacter.Team != gameObject.GetComponent<Hero>().Team)
+                if (TurnManager.TeamTurn != gameObject.GetComponent<Hero>().Team)
                     return (int)EntityType.EnemyHero;
                 else
                     return (int)EntityType.AllyHero;

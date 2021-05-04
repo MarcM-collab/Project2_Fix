@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TEMP_UI_0
   m_EditorClassIdentifier: 
   m_Sprite: {fileID: -1794500601130170705, guid: 67699ba9a6eae524d84e4a72127f4b9d, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.6556604, b: 0.6556604, a: 1}
   m_Transform:
     e00: 1
     e01: 0

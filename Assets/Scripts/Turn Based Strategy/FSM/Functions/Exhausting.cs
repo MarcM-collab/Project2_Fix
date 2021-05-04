@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Exhausting : CombatBehaviour
 {
-    private bool _executorHasAttacked;
+    private bool _targetIsDead;
     private void OnEnable()
     {
         ExhaustingBehaviour.OnExhaustingEnter += ExhaustingEnter;
@@ -19,9 +19,9 @@ public class Exhausting : CombatBehaviour
     }
     private void ExhaustingEnter(Animator animator)
     {
-        if (animator.GetBool("Attacking"))
+        if (!_targetEntity.IsAlive)
         {
-            _executorHasAttacked = true;
+            _targetIsDead = true;
         }
 
         ResetAnimatorParamaters(animator);
@@ -44,16 +44,16 @@ public class Exhausting : CombatBehaviour
     {
         if (_executorCharacter.IsExhaustedAnim)
         {
-            if (!_executorHasAttacked)
+            if (!_targetIsDead)
             {
                 animator.SetTrigger("Exhausted");
             }
             else
             {
-                if (_targetEntity.IsDeadAnim || _targetEntity.IsAlive)
+                if (!_targetEntity.IsActive)
                 {
                     animator.SetTrigger("Exhausted");
-                    _executorHasAttacked = false;
+                    _targetIsDead = false;
                 }
             }
         }
