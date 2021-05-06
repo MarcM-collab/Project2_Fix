@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DebilitySpell : Spell
 {
+    private Character priorChar;
     public override void ExecuteSpell()
     {
         RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
@@ -15,22 +16,29 @@ public class DebilitySpell : Spell
             {
                 Character target = hit2D.collider.gameObject.GetComponent<Character>();
                 ReduceAttack(target);
-                executed = true;
             }
         }
     }
     public override void IAUse()
     {
         //Pick an allie char
-        Character[] chars = FindObjectsOfType<Character>();
-        Character priorChar = GetHighestAttackUnit(chars);
-        if (priorChar)
-        {
-            ReduceAttack(priorChar);
-            executed = true;
-        }
-    }
+        if (!priorChar)
+            SetPriorChar();
 
+        if (priorChar)
+            ReduceAttack(priorChar);
+    }
+    public override bool CanBeUsed()
+    {
+        //Pick an allie char
+        SetPriorChar();
+        return priorChar;
+    }
+    private void SetPriorChar()
+    {
+        Character[] chars = FindObjectsOfType<Character>();
+        priorChar = GetHighestAttackUnit(chars);
+    }
     private Character GetHighestAttackUnit(Character[] allCharactersInScene)
     {
         Character priorChar = null;

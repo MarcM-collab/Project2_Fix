@@ -11,8 +11,8 @@ public class SpawningAI : CardAIBehaviour
     private int _whiskasCombinationAccumulate = 0;
     private int _cardStatsAccumulates = 0;
 
-    private LinkedList<string> qLinkedList = new LinkedList<string>();
-    private List<List<int>> _combinations = new List<List<int>>(); //remover publicas
+    //private LinkedList<string> qLinkedList = new LinkedList<string>();
+    private List<List<Unit>> _combinations = new List<List<Unit>>(); //remover publicas
     private List<int> _valueCardStats = new List<int>(); //remover publicas
 
     public int minimumScore = 7;
@@ -28,8 +28,6 @@ public class SpawningAI : CardAIBehaviour
 
     private bool inTurn = false;
     public CardSpawner spawner;
-
-    private List<int> combinations;
     private void OnEnable()
     {
         SpawningBehaviour.OnSpawningEnter += SpawningEnter;
@@ -44,7 +42,6 @@ public class SpawningAI : CardAIBehaviour
     }
     private void SpawningEnter()
     {
-        combinations = CombinationCard(UnitList());
         StartCoroutine(IATurn());
     }
     private IEnumerator IATurn()
@@ -53,25 +50,29 @@ public class SpawningAI : CardAIBehaviour
         //    RandomCardChosen();
 
         Spell priorSpell = GetPriorSpell();
-        if (priorSpell) //Has any spell in hand
+        if (priorSpell && priorSpell.CanBeUsed()) //Has any spell in hand, spells are only used if there are units of the player ingame
         {
             SetSelectedHandCard(Random.Range(0, IAHand.Count));
             yield return new WaitForSeconds(cardUsageWait);
-            if (priorSpell.executed)
-                RemoveCardHand(priorSpell);
+            RemoveCardHand(priorSpell);
         }
 
 
-        List<int> combinations = CombinationCard(UnitList());
+        List<Unit> combinations = CombinationCard(UnitList());
+        print(combinations);
         if (combinations != null)
         {
-            combinations.Sort(); //First order [3, 1, 2] --> [1,2,3], then iterate reversly --> [3,2,1] so removing will not be out of the range.
-            for (int i = combinations.Count - 1; i >= 0; i--)
+            print(combinations.Count);
+            //combinations.Sort(); //First order [3, 1, 2] --> [1,2,3], then iterate reversly --> [3,2,1] so removing will not be out of the range.
+            for (int i = 0; i < combinations.Count; i++)
             {
+                print(combinations[i]);
                 SetSelectedHandCard(Random.Range(0, IAHand.Count));
+
                 yield return new WaitForSeconds(cardUsageWait + Random.Range(-cardUsageRandomicity, cardUsageRandomicity)); //Adds random to make it feel human.
-                spawner.SpawnCard(IAHand[combinations[i]], spawner.GetValidRandomPos(4, 6, -3, 3), Team.TeamAI);
-                RemoveCardHand(IAHand[combinations[i]]);
+                
+                spawner.SpawnCard(combinations[i], spawner.GetValidRandomPos(4, 6, -3, 3), Team.TeamAI);
+                RemoveCardHand(combinations[i]);
                 //indexToRemove.Add(combinations[i]); //Add the index to remove it later, removing an element of the list will change the indexes causing an index out of range error when accessing to an element. List [1] --> List [0] when removing.
             }
         }
@@ -104,9 +105,9 @@ public class SpawningAI : CardAIBehaviour
         TurnManager.SubstractMana(cardToRemove.Whiskas);
         Destroy(cardToRemove.gameObject); //To make it visible that a card has been used.
     }
-    private List<int> CombinationCard(List<Card> list)
+    private List<Unit> CombinationCard(List<Card> list)
     {
-        _combinations = new List<List<int>>();
+        _combinations = new List<List<Unit>>();
         _valueCardStats = new List<int>();
         var qLinkedList = new LinkedList<string>(); // Create an empty queue of strings
 
@@ -119,7 +120,7 @@ public class SpawningAI : CardAIBehaviour
         float e = Mathf.Pow(2, list.Count) - 1;
         while (e-- > 0)
         {
-            List<int> tempList = new List<int>();
+            //List<int> tempList = new List<int>();
             List<Unit> tempUnit = new List<Unit>();
             // print the front of queue
             string s1 = qLinkedList.First.Value;
@@ -135,14 +136,15 @@ public class SpawningAI : CardAIBehaviour
 
                     _cardStatsAccumulates += tempUnit[tempUnit.Count - 1].character.Health + tempUnit[tempUnit.Count - 1].character.AttackPoints + tempUnit[tempUnit.Count - 1].Whiskas + 1;
 
-                    tempList.Add(count);//añadimos posición
+                    //tempList.Add(count);//añadimos posición
                 }
                 count++;
             }
 
             if (_whiskasCombinationAccumulate <= TurnManager.currentMana)
             {
-                _combinations.Add(tempList);//añadimos la combinación con su posición
+                //_combinations.Add(tempList);//añadimos la combinación con su posición
+                _combinations.Add(tempUnit);
                 _valueCardStats.Add(_cardStatsAccumulates); // su valor
             }
 

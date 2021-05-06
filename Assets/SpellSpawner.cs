@@ -23,9 +23,9 @@ public class SpellSpawner : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                currentSpell.ExecuteSpell();
-                if (currentSpell.executed)
+                if (currentSpell.CanBeUsed())
                 {
+                    currentSpell.ExecuteSpell();
                     TurnManager.SubstractMana(currentSpell.Whiskas);
                     Destroy(currentSpell.gameObject);
                 }
