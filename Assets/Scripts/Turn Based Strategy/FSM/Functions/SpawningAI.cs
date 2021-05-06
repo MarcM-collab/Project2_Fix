@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 public class SpawningAI : CardAIBehaviour
 {
+    private Animator anim;
     private int _whiskasCombinationAccumulate = 0;
     private int _cardStatsAccumulates = 0;
 
@@ -28,90 +29,54 @@ public class SpawningAI : CardAIBehaviour
     private bool inTurn = false;
     public CardSpawner spawner;
 
-    private float timer;
-    private int count;
     private List<int> combinations;
-    private bool spellCheck;
-    private bool spawnCheck;
-    private bool cardSelected;
     private void OnEnable()
     {
         SpawningBehaviour.OnSpawningEnter += SpawningEnter;
-        SpawningBehaviour.OnSpawningUpdate += SpawningUpdate;
     }
     private void OnDisable()
     {
         SpawningBehaviour.OnSpawningEnter -= SpawningEnter;
-        SpawningBehaviour.OnSpawningUpdate -= SpawningUpdate;
     }
-
+    private void Start()
+    {
+        anim = GetComponentInParent<Animator>();
+    }
     private void SpawningEnter()
     {
         combinations = CombinationCard(UnitList());
-        spellCheck = false;
-        spawnCheck = false;
+        StartCoroutine(IATurn());
     }
-    private void SpawningUpdate(Animator animator)
+    private IEnumerator IATurn()
     {
+        //if (IAHand.Count < maxCardsInHand)
+        //    RandomCardChosen();
+
         Spell priorSpell = GetPriorSpell();
         if (priorSpell) //Has any spell in hand
         {
             SetSelectedHandCard(Random.Range(0, IAHand.Count));
-            if (priorSpell.executed && cardUsageWait <= timer)
-            {
-                Debug.Log("A");
+            yield return new WaitForSeconds(cardUsageWait);
+            if (priorSpell.executed)
                 RemoveCardHand(priorSpell);
-                timer = 0;
-                spellCheck = true;
-            }
-        }
-        else
-        {
-            spellCheck = true;
         }
 
+
+        List<int> combinations = CombinationCard(UnitList());
         if (combinations != null)
         {
             combinations.Sort(); //First order [3, 1, 2] --> [1,2,3], then iterate reversly --> [3,2,1] so removing will not be out of the range.
-            if (count < combinations.Count)
+            for (int i = combinations.Count - 1; i >= 0; i--)
             {
-                if (!cardSelected)
-                {
-                    SetSelectedHandCard(Random.Range(0, IAHand.Count));
-                    cardSelected = true;
-                    //indexToRemove.Add(combinations[i]); //Add the index to remove it later, removing an element of the list will change the indexes causing an index out of range error when accessing to an element. List [1] --> List [0] when removing.
-                }
-                if (cardSelected && cardUsageWait + Random.Range(-cardUsageRandomicity, cardUsageRandomicity) <= timer)//Adds random to make it feel human.
-                {
-                    spawner.SpawnCard(IAHand[combinations[count]], spawner.GetValidRandomPos(4, 6, -3, 3), Team.TeamAI);
-                    RemoveCardHand(IAHand[combinations[count]]);
-                    timer = 0;
-                    cardSelected = false;
-                    count++;
-                }
-            }
-            else
-            {
-                spawnCheck = true;
+                SetSelectedHandCard(Random.Range(0, IAHand.Count));
+                yield return new WaitForSeconds(cardUsageWait + Random.Range(-cardUsageRandomicity, cardUsageRandomicity)); //Adds random to make it feel human.
+                spawner.SpawnCard(IAHand[combinations[i]], spawner.GetValidRandomPos(4, 6, -3, 3), Team.TeamAI);
+                RemoveCardHand(IAHand[combinations[i]]);
+                //indexToRemove.Add(combinations[i]); //Add the index to remove it later, removing an element of the list will change the indexes causing an index out of range error when accessing to an element. List [1] --> List [0] when removing.
             }
         }
-        else
-        {
-            spawnCheck = true;
-        }
-
-        if (betweenSpawnTime >= timer && spellCheck && spawnCheck) 
-        { 
-            EndTurn();
-            timer = 0;
-            animator.SetBool("IsDragging", false);
-        }
-
-        Debug.Log("spellCheck " + spellCheck);
-        Debug.Log("spawnCheck " + spawnCheck);
-        Debug.Log("timer " + (betweenSpawnTime >= timer));
-
-        timer += Time.deltaTime;
+        yield return new WaitForSeconds(cardUsageWait);
+        EndTurn();
     }
     private Spell GetPriorSpell()  //Will only use the one with more priority so it will not always be throwing spells
     {
@@ -230,6 +195,7 @@ public class SpawningAI : CardAIBehaviour
     private void EndTurn()
     {
         TurnManager.Spawned = true;
+        anim.SetBool("IsDragging", false);
         SetSelectedHandCard(-1);
     }
     private List<Card> UnitList()

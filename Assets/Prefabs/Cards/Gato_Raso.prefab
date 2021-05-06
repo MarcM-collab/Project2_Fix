@@ -161,8 +161,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4761a51813125469f6201f65153f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explanationSprite: {fileID: 21300000, guid: 47b0eb63393ad2749963d322ade302ee, type: 3}
   Whiskas: 2
-  Back: {fileID: 21300000, guid: 1d6f5b16e18ee8640bf415da65263d79, type: 3}
   character: {fileID: 2294010376720223419, guid: 83b6b02657ae2e6478268228581140a8, type: 3}
 --- !u!1 &3447948832534483961
 GameObject:

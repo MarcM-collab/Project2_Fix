@@ -5,5 +5,6 @@ using UnityEngine.UI;
 
 public class Card : MonoBehaviour
 {
+    public Sprite explanationSprite;
     public int Whiskas;
 }

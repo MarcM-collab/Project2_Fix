@@ -127,7 +127,7 @@ public class IACard : MonoBehaviour
     //    if (combinations != null)
     //    {
     //        combinations.Sort(); //First order [3, 1, 2] --> [1,2,3], then iterate reversly --> [3,2,1] so removing will not be out of the range.
-    //        for (int i = combinations.Count-1; i >= 0; i--)
+    //        for (int i = combinations.Count - 1; i >= 0; i--)
     //        {
     //            SetSelectedHandCard(Random.Range(0, IAHand.Count));
     //            yield return new WaitForSeconds(cardUsageWait + Random.Range(-cardUsageRandomicity, cardUsageRandomicity)); //Adds random to make it feel human.
@@ -202,7 +202,7 @@ public class IACard : MonoBehaviour
     //    {
     //        random2 = Random.Range(0, IADeck.Count);
     //    }
-        
+
     //    AddCardHand(ComproveHand(random1, random2));
     //}
     /*
@@ -312,7 +312,7 @@ public class IACard : MonoBehaviour
     //            {
     //                _whiskasCombinationAccumulate += list[count].Whiskas;
     //                tempUnit.Add(list[count] as Unit);
-                    
+
     //                _cardStatsAccumulates += tempUnit[tempUnit.Count - 1].character.Health + tempUnit[tempUnit.Count - 1].character.AttackPoints + tempUnit[tempUnit.Count - 1].Whiskas + 1;
 
     //                tempList.Add(count);//añadimos posición
