@@ -10,7 +10,14 @@ public class UseAbility : MonoBehaviour
         if (ability.whiskasCost <= TurnManager.currentMana)
         {
             ability.Excecute();
+        }
+    }
+    private void Update()
+    {
+        if (ability.executed)
+        {
             TurnManager.SubstractMana(ability.whiskasCost);
+            ability.executed = false;
         }
     }
 }
