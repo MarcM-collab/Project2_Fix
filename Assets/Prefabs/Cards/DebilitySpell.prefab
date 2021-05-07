@@ -123,8 +123,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 605790150503887886}
-        m_TargetAssemblyTypeName: ButtonSpell, Assembly-CSharp
-        m_MethodName: OnClick
+        m_TargetAssemblyTypeName: ScriptButton, Assembly-CSharp
+        m_MethodName: ClicButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -146,9 +146,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b9c8864ca6f73742a2c0da1c56f20a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  explanationSprite: {fileID: 21300000, guid: 5e8ea008c8b8198418d34565404d3591, type: 3}
   Whiskas: 1
-  Back: {fileID: 21300000, guid: 1d6f5b16e18ee8640bf415da65263d79, type: 3}
-  executed: 0
   Priority: 2
 --- !u!114 &605790150503887886
 MonoBehaviour:
@@ -159,6 +158,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 4722527769057458597}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6fb9bea34e7d7e04ea620d40495ee61b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9cde27b4390ad7f4d9496cab5f7da083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

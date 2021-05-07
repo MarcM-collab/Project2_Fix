@@ -9,12 +9,12 @@ public class PosHandZoomButton : MonoBehaviour
     public PosHand posHand;
     private void OnEnable()
     {
-        ButtonSpell.spellButton += SetDisabledCard;
+        ScriptButton.spellButton += SetDisabledCard;
         ScriptButton._buttonCard += SetDisabledCard;
     }
     private void OnDisable()
     {
-        ButtonSpell.spellButton -= SetDisabledCard;
+        ScriptButton.spellButton -= SetDisabledCard;
         ScriptButton._buttonCard -= SetDisabledCard;
     }
     public void SetActivated()

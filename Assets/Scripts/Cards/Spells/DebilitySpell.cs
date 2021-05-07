@@ -16,6 +16,7 @@ public class DebilitySpell : Spell
             {
                 Character target = hit2D.collider.gameObject.GetComponent<Character>();
                 ReduceAttack(target);
+                executed = true;
             }
         }
     }

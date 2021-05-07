@@ -78,28 +78,8 @@ public class CardUsage : MonoBehaviour
 
         _gameObjectCard = card.gameObject;
         _card = card;
-
-        if (EnoughWhiskas(_card))
-        {
-            _gameObject = card.character.gameObject;
-            isDragging = true;//para saber si esta clicando(mas adelante posiblemente arrastre)
-        }
-        else
-        {
-            StartCoroutine(NotEnough());
-        }
-    }
-
-    private IEnumerator NotEnough()
-    {
-        _card.GetComponent<Image>().color = Color.red;
-        yield return new WaitForSeconds(0.2f);
-        _card.GetComponent<Image>().color = Color.white;
-    }
-
-    private bool EnoughWhiskas(Card _card)//comprueba si hay whiskas (maná) suficiente para lanzar la carta
-    {
-        return _card.Whiskas <= TurnManager.currentMana;
+        _gameObject = card.character.gameObject;
+        isDragging = true;//para saber si esta clicando(mas adelante posiblemente arrastre)
     }
     public void Spawn()
     {
@@ -108,7 +88,7 @@ public class CardUsage : MonoBehaviour
             Vector2 pos = GetMouseTilePos;
             spawner.SpawnCard(_card, GetMouseTilePos, Team.TeamPlayer);
             isDragging = false;
-            DestroyCard();
+            DestroyCard(_card);
         }
         //Vector3 sizeTile = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2, 0);
         //mousePos = Input.mousePosition;
@@ -121,10 +101,10 @@ public class CardUsage : MonoBehaviour
         //Destroy(_gameObjectCard);
         //isDragging = false;
     }
-    private void DestroyCard()
+    public void DestroyCard(Card c)
     {
-        TurnManager.SubstractMana(_card.Whiskas);
-        HandManager.RemoveCard(_card);
-        Destroy(_card.gameObject);
+        TurnManager.SubstractMana(c.Whiskas);
+        HandManager.RemoveCard(c);
+        Destroy(c.gameObject);
     }
 }

@@ -5,13 +5,14 @@ using UnityEngine;
 public class SpellSpawner : MonoBehaviour
 {
     private Spell currentSpell;
+    public HandManager hand;
     private void OnEnable()
     {
-        ButtonSpell.spellButton += SetSpellActive;
+        ScriptButton.spellButton += SetSpellActive;
     }
     private void OnDisable()
     {
-        ButtonSpell.spellButton -= SetSpellActive;
+        ScriptButton.spellButton -= SetSpellActive;
     }
     private void SetSpellActive(Spell spell)
     {
@@ -23,16 +24,21 @@ public class SpellSpawner : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (currentSpell.CanBeUsed())
+                currentSpell.ExecuteSpell();
+                if (currentSpell.executed)
                 {
-                    currentSpell.ExecuteSpell();
-                    TurnManager.SubstractMana(currentSpell.Whiskas);
-                    Destroy(currentSpell.gameObject);
+                    DestroyCard(currentSpell);
                 }
                 currentSpell = null;
             }
 
         }
 
+    }
+    public void DestroyCard(Card c)
+    {
+        TurnManager.SubstractMana(c.Whiskas);
+        hand.RemoveCard(c);
+        Destroy(c.gameObject);
     }
 }

@@ -13,17 +13,17 @@ public class SetExplanationSprite : MonoBehaviour
     }
     private void OnEnable()
     {
-        ButtonSpell.spellButton += SetCardInfo;
+        ScriptButton.spellButton += SetCardInfo;
         ScriptButton._buttonCard += SetCardInfo;
     }
     private void OnDisable()
     {
-        ButtonSpell.spellButton -= SetCardInfo;
+        ScriptButton.spellButton -= SetCardInfo;
         ScriptButton._buttonCard -= SetCardInfo;
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && im.color.a > 0)
         {
             SetSpriteTransparency(0);
         }
