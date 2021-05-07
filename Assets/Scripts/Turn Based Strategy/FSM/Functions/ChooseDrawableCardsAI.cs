@@ -42,7 +42,7 @@ public class ChooseDrawableCardsAI : CardAIBehaviour
         ChooseDrawableCardsBehaviour.OnChooseDrawableCardsUpdate -= ChooseDrawableCardsUpdate;
     }
 
-    private void ChooseDrawableCardsEnter()
+    private void ChooseDrawableCardsEnter(Animator animator)
     {
         ShowInitialCards();
     }
@@ -149,7 +149,7 @@ public class ChooseDrawableCardsAI : CardAIBehaviour
         }
         else //sistema de prioridad.
         {
-            if (IADeck[random1].priority >= IADeck[random2].priority) //They shouldn't be equal but if they are it will be chosen randomly (the one on the first spot which was randomly assigned)
+            if (IADeck[random1].priority <= IADeck[random2].priority) //They shouldn't be equal but if they are it will be chosen randomly (the one on the first spot which was randomly assigned)
                 return IADeck[random1].card;
             else
                 return IADeck[random2].card;

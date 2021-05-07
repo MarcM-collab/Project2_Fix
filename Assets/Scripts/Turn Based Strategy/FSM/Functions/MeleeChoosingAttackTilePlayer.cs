@@ -16,14 +16,14 @@ public class MeleeChoosingAttackTilePlayer : CombatPlayerBehaviour
     {
         var PointingNewTile = _currentGridPos != _lastGridPos;
         var PointingSpawnableTile = _uITilemap.GetTile(_currentGridPos) == _targetTile && _currentGridPos != _targetGridPosition;
-        var LeavingSpawnableZone = _uITilemap.GetTile(_lastGridPos) == _pointingTile;
-        var PointingNewSpawnableTile = _uITilemap.GetTile(_lastGridPos) == _pointingTile;
+        var LeavingSpawnableZone = _uITilemap.GetTile(_lastGridPos) == _attackingTile;
+        var PointingNewSpawnableTile = _uITilemap.GetTile(_lastGridPos) == _attackingTile;
 
         if (PointingNewTile)
         {
             if (PointingSpawnableTile)
             {
-                _uITilemap.SetTile(_currentGridPos, _pointingTile);
+                _uITilemap.SetTile(_currentGridPos, _attackingTile);
             }
             else
             {
@@ -42,7 +42,7 @@ public class MeleeChoosingAttackTilePlayer : CombatPlayerBehaviour
         var TileSelected = InputManager.LeftMouseClick;
         if (TileSelected)
         {
-            var AttackTileNotSelcted = _pointingTile != _uITilemap.GetTile(_currentGridPos) || IsEnemy();
+            var AttackTileNotSelcted = _attackingTile != _uITilemap.GetTile(_currentGridPos) || IsEnemy();
             if (AttackTileNotSelcted)
             {
                 animator.SetBool("PreparingAttack", false);
@@ -54,7 +54,6 @@ public class MeleeChoosingAttackTilePlayer : CombatPlayerBehaviour
                 _uITilemap.SetTile(_currentGridPos, _allyTile);
                 animator.SetTrigger("TileChosen");
                 animator.SetBool("Attacking", true);
-                IsAttacking = true;
             }
         }
     }

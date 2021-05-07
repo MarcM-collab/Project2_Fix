@@ -20,7 +20,7 @@ public class SelectingAI : CombatAIBehaviour
     }
     private void SelectingUpdate(Animator animator)
     {
-        var CharactersActive = EntityManager.GetActiveCharacters(TurnManager.TeamTurn).Length > 0;
+        var CharactersActive = EntityManager.GetActiveCharacters(Team.TeamAI).Length > 0;
         if (!TurnManager.CardDrawn)
         {
             animator.SetBool("ChooseCard", true);
@@ -47,8 +47,9 @@ public class SelectingAI : CombatAIBehaviour
                 }
                 animator.SetBool("Selected", true);
 
-                _executorGridPos = _currentGridPos;
-                _uITilemap.SetTile(_executorGridPos, _allyTile);
+                _executorGridPosition = _currentGridPos;
+                _uITilemap.SetTile(_executorGridPosition, _allyTile);
+                EntityManager.SetExecutor(characters[0]);
             }
             else
             {

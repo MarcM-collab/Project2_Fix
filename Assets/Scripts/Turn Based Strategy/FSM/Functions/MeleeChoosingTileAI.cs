@@ -33,8 +33,9 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
         var attackRange = _executorCharacter.Range + 2;
         int counter = 0;
 
-        Vector3Int minPos = new Vector3Int(attackRange + 1, attackRange + 1, 0);
-
+        var max = new Vector3(_executorGridPosition.x + _executorCharacter.Range + 2 + cellSize.x, _executorGridPosition.y + cellSize.y, 0);
+        _maxDistance = Mathf.Abs(Vector3.Distance(_executorGridPosition + cellSize, max));
+        var minDistance = _maxDistance;
         for (int j = -attackRange; j <= attackRange; j++)
         {
             if (j <= 0) counter++;
@@ -43,7 +44,7 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
             for (int i = -attackRange; i <= attackRange; i++)
             {
                 var position = new Vector3Int(i, j, 0);
-                var currentGridPosition = _targetGridPosition + position;
+                var currentGridPosition = _executorGridPosition + position;
                 var currentGridCenterPosition = currentGridPosition + cellSize;
 
                 var OnAttackRange = Mathf.Abs(i) < counter;
@@ -66,9 +67,10 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
                             if (EnemyOnRange)
                             {
                                 //Take the nearest enemy
-                                if (minPos.x + minPos.y > Mathf.Abs(i) + Mathf.Abs(j))
+                                var currentMin = Mathf.Abs(Vector3.Distance(_executorGridPosition + cellSize, currentGridCenterPosition));
+                                if (minDistance > currentMin)
                                 {
-                                    minPos = new Vector3Int(Mathf.Abs(i), Mathf.Abs(j), 0);
+                                    minDistance = currentMin;
                                     _targetGridPosition = currentGridPosition;
                                     targetOnRange = true;
                                 }
@@ -81,8 +83,8 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
     }
     private void SetTarget(Animator animator)
     {
-        var v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
-        Vector2 vector2 = new Vector2(_targetGridPosition.x + v.x, _targetGridPosition.y + v.y);
+        var cellSize = TileManager.CellSize;
+        Vector2 vector2 = new Vector2(_targetGridPosition.x + cellSize.x, _targetGridPosition.y + cellSize.y);
         RaycastHit2D hit = Physics2D.Raycast(vector2, Vector2.zero);
         var hitCollider = hit.collider;
         if (hitCollider != null)
@@ -94,6 +96,7 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
             }
             if (!(hitCollider.gameObject.GetComponent("Hero") as Hero is null))
             {
+                EntityManager.SetTarget(hitCollider.gameObject.GetComponent<Entity>());
                 ShowHeroTiles();
             }
             animator.SetBool("PreparingAttack", true);
@@ -104,7 +107,7 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
         var cellSize = TileManager.CellSize;
         var movementRange = _executorCharacter.Range;
         var counter = 0;
-        var min = Vector3.Distance(_executorGridPos, _enemyHero.transform.position);
+        var min = Vector3.Distance(_executorGridPosition, _enemyHero.transform.position);
 
         for (int j = -movementRange; j <= movementRange; j++)
         {
@@ -114,14 +117,14 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
             for (int i = -movementRange; i <= movementRange; i++)
             {
                 var position = new Vector3Int(i, j, 0);
-                var currentGridPosition = _targetGridPosition + position;
+                var currentGridPosition = _executorGridPosition + position;
                 var currentGridCenterPosition = currentGridPosition + cellSize;
 
-                var OnMovementRange = Mathf.Abs(i) < counter - 1;
+                var OnMovementRange = Mathf.Abs(i) < counter;
                 if (OnMovementRange)
                 {
                     var IsEmptyFloorTile = InTile(currentGridCenterPosition) == (int)EntityType.Nothing 
-                        && _collisionTilemap.HasTile(currentGridPosition) && _floorTilemap.HasTile(currentGridPosition);
+                        && _floorTilemap.HasTile(currentGridPosition);
                     if (IsEmptyFloorTile)
                     {
                         //Take the tile nearest to the Player Hero

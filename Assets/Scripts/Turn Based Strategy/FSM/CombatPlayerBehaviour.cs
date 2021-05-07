@@ -10,14 +10,13 @@ public class CombatPlayerBehaviour : CombatBehaviour
     protected static Vector3Int _currentGridPos;
     protected static Vector3Int _lastGridPos;
     protected static Vector3 _mousePos;
-    protected static bool IsAttacking;
 
     protected static List<Vector3Int> _spawnableTilesEdges = new List<Vector3Int>();
     private void Start()
     {
         _enemyHero = EntityManager.GetHero(Team.TeamAI);
-        _enemyHeroTiles = new List<Vector3Int> { new Vector3Int(6, 0, 0), new Vector3Int(7, 0, 0), new Vector3Int(6, -1, 0), new Vector3Int(7, -1, 0) };
-        _enemyHeroAttackableTiles = new List<Vector3Int> { new Vector3Int(6, 0, 0), new Vector3Int(6, -1, 0) };
+        _enemyHeroTiles = new List<Vector3Int> { new Vector3Int(4, 0, 0), new Vector3Int(5, 0, 0), new Vector3Int(4, -1, 0), new Vector3Int(5, -1, 0) };
+        _enemyHeroAttackableTiles = new List<Vector3Int> { new Vector3Int(3, 1, 0), new Vector3Int(3, 0, 0), new Vector3Int(3, -1, 0), new Vector3Int(3, -2, 0) };
         _spawnableTilesEdges.Add(new Vector3Int(-4, -2, 0));
         _spawnableTilesEdges.Add(new Vector3Int(-3, 1, 0));
     }

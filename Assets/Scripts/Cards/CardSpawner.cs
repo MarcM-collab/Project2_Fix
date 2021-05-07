@@ -9,7 +9,6 @@ public class CardSpawner : MonoBehaviour
 {
     public Tilemap FloorTileMap;
     public Tilemap CollisionTileMap;
-    private List<Vector2> testedPos = new List<Vector2>();
     public Transform characters;
     public Camera Camera;
 
@@ -46,49 +45,5 @@ public class CardSpawner : MonoBehaviour
                 break;
         }
         colorSetter.SetValue(1);
-    }
-    public Vector2 GetValidRandomPos(int minX, int maxX, int minY, int maxY)
-    {
-        int tilesLength = 0;
-        for (int i = minX; i < maxX; i++)
-        {
-            for (int v = minY; v < maxY; v++)
-            {
-                tilesLength++;
-            }
-        }
-        testedPos.Clear();
-        Vector2 pos;
-        do
-        {
-            pos = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
-
-            if (!testedPos.Contains(pos))
-                testedPos.Add(pos);
-
-            if (testedPos.Count >= tilesLength)
-            {
-                print("ALL TESTED");
-                break;
-            }
-        }
-        while (!CheckPos(pos));
-
-        return pos;
-    }
-    public bool CheckPos(Vector2 pos)
-    {
-        var vector = new Vector3(pos.x, pos.y) + TileManager.CellSize;
-        RaycastHit2D rayCast = Physics2D.Raycast(vector, Vector3.zero);
-        var rayCastCollider = rayCast.collider;
-        if (rayCastCollider != null)
-        {
-            var gameObject = rayCastCollider.gameObject;
-            if (!(gameObject.GetComponent("Character") as Character is null))
-            {
-                return false;
-            }
-        }
-        return true;
     }
 }

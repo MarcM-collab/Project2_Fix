@@ -27,14 +27,14 @@ public class SpawningPlayer : CombatPlayerBehaviour
         {
             var PointingNewTile = _currentGridPos != _lastGridPos;
             var PointingSpawnableTile = _uITilemap.GetTile(_currentGridPos) == _allyTile;
-            var LeavingSpawnableZone = _uITilemap.GetTile(_lastGridPos) == _pointingTile;
-            var PointingNewSpawnableTile = _uITilemap.GetTile(_lastGridPos) == _pointingTile;
+            var LeavingSpawnableZone = _uITilemap.GetTile(_lastGridPos) == _spawningTile;
+            var PointingNewSpawnableTile = _uITilemap.GetTile(_lastGridPos) == _spawningTile;
 
             if (PointingNewTile)
             {
                 if (PointingSpawnableTile)
                 {
-                    _uITilemap.SetTile(_currentGridPos, _pointingTile);
+                    _uITilemap.SetTile(_currentGridPos, _spawningTile);
                 }
                 else
                 {
@@ -52,7 +52,7 @@ public class SpawningPlayer : CombatPlayerBehaviour
         }
 
         var ChoseTileToSpawn = InputManager.LeftMouseClick;
-        var IsInSpawnableTile = _uITilemap.GetTile(_currentGridPos) == _pointingTile;
+        var IsInSpawnableTile = _uITilemap.GetTile(_currentGridPos) == _spawningTile;
 
         if (ChoseTileToSpawn)
         {

@@ -12,6 +12,12 @@ public class TileManager : MonoBehaviour
     public Tile PointingTile;
     public Tile TargetTile;
     public Tile AllyTile;
+    public Tile SpawningTile;
+    public Tile SpawningSelectedTile;
+    public Tile MovingTile;
+    public Tile MovingSelectedTile;
+    public Tile AttackingTile;
+    public Tile AttackingSelectedTile;
 
     [Header("TileMaps")]
     public Tilemap FloorTilemap;
@@ -28,9 +34,9 @@ public class TileManager : MonoBehaviour
     }
     public static void ShowTilesInTilemap(Tilemap tilemapToLook, Tilemap tilemapToEdit, Tile tile, System.Func<Vector3Int, bool> function)
     {
-        for (int x = tilemapToLook.cellBounds.min.x; x < tilemapToLook.cellBounds.max.x; x++)
+        for (int x = tilemapToLook.cellBounds.min.x; x <= tilemapToLook.cellBounds.max.x; x++)
         {
-            for (int y = tilemapToLook.cellBounds.min.y; y < tilemapToLook.cellBounds.max.y; y++)
+            for (int y = tilemapToLook.cellBounds.min.y; y <= tilemapToLook.cellBounds.max.y; y++)
             {
                 Vector3Int vector = new Vector3Int(x, y, 0);
 

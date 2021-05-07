@@ -17,15 +17,15 @@ public class MeleeChoosingTilePlayer : CombatPlayerBehaviour
         //ChangeCursorIfEnemy();
 
         var PointingNewTile = _currentGridPos != _lastGridPos;
-        var PointingSpawnableTile = _uITilemap.GetTile(_currentGridPos) == _allyTile && _currentGridPos != _executorGridPos;
-        var LeavingSpawnableZone = _uITilemap.GetTile(_lastGridPos) == _pointingTile;
-        var PointingNewSpawnableTile = _uITilemap.GetTile(_lastGridPos) == _pointingTile;
+        var PointingSpawnableTile = _uITilemap.GetTile(_currentGridPos) == _allyTile && _currentGridPos != _executorGridPosition;
+        var LeavingSpawnableZone = _uITilemap.GetTile(_lastGridPos) == _movingTile;
+        var PointingNewSpawnableTile = _uITilemap.GetTile(_lastGridPos) == _movingTile;
 
         if (PointingNewTile)
         {
             if (PointingSpawnableTile)
             {
-                _uITilemap.SetTile(_currentGridPos, _pointingTile);
+                _uITilemap.SetTile(_currentGridPos, _movingTile);
             }
             else
             {
@@ -44,9 +44,9 @@ public class MeleeChoosingTilePlayer : CombatPlayerBehaviour
         var TileSelected = InputManager.LeftMouseClick;
         if (TileSelected)
         {
-            var OutsiedeRangeSelected = !_uITilemap.HasTile(_currentGridPos) || _executorGridPos == _currentGridPos;
+            var OutsiedeRangeSelected = !_uITilemap.HasTile(_currentGridPos) || _executorGridPosition == _currentGridPos;
             var EnemySelected = _uITilemap.GetTile(_currentGridPos) == _targetTile;
-            var InRangeTileSelected = _pointingTile == _uITilemap.GetTile(_currentGridPos);
+            var InRangeTileSelected = _movingTile == _uITilemap.GetTile(_currentGridPos);
 
             if (OutsiedeRangeSelected)
                 animator.SetBool("Selected", false);

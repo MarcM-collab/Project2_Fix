@@ -30,10 +30,10 @@ public class RangedShowRangePlayer : CombatPlayerBehaviour
                 if (IsMovementRange)
                 {
                     var position = new Vector3Int(i, j, 0);
-                    var currentGridPosition = _executorGridPos + position;
+                    var currentGridPosition = _executorGridPosition + position;
                     var currentGridCenterPosition = currentGridPosition + cellSize;
 
-                    var ThereIsAnAlly = currentGridPosition == _executorGridPos || InTile(currentGridCenterPosition) == 2;
+                    var ThereIsAnAlly = currentGridPosition == _executorGridPosition || InTile(currentGridCenterPosition) == 2;
                     var ThereIsNothing = CanMove(currentGridPosition);
                     var ThereIsACollider = _floorTilemap.HasTile(currentGridPosition);
 

@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,7 +16,10 @@ public class MeleeChoosingAttackTileAI : CombatAIBehaviour
     {
         if (IsEnemyNeighbour())
         {
-            _tileChosenGridPosition = _executorGridPos;
+            _tileChosenGridPosition = _executorGridPosition;
+            _uITilemap.SetTile(_tileChosenGridPosition, _allyTile);
+            animator.SetTrigger("TileChosen");
+            animator.SetBool("Attacking", true);
         }
         else
         {
@@ -26,7 +28,6 @@ public class MeleeChoosingAttackTileAI : CombatAIBehaviour
             if (possiblePosition.Count == 0)
             {
                 _notPossibleTarget.Add(_targetGridPosition);
-                animator.SetBool("Selected", false);
                 animator.SetBool("PreparingAttack", false);
 
                 if (!(_targetEntity.GetComponent("Entity") as Entity is null))
@@ -41,11 +42,12 @@ public class MeleeChoosingAttackTileAI : CombatAIBehaviour
             else
             {
                 _tileChosenGridPosition = possiblePosition[UnityEngine.Random.Range(0, possiblePosition.Count)];
+                possiblePosition.Clear();
+                _uITilemap.SetTile(_tileChosenGridPosition, _allyTile);
+                animator.SetTrigger("TileChosen");
+                animator.SetBool("Attacking", true);
             }
         }
-        _uITilemap.SetTile(_tileChosenGridPosition, _allyTile);
-        animator.SetTrigger("TileChosen");
-        animator.SetBool("Attacking", true);
     }
     private void GetPossiblePosition()
     {
@@ -58,27 +60,32 @@ public class MeleeChoosingAttackTileAI : CombatAIBehaviour
                 var currentGridPosition = _targetGridPosition + position;
                 var currentGridCenterPosition = currentGridPosition + cellSize;
 
-                var ThereIsNothing = !(i == 0 && j == 0) && _floorTilemap.HasTile(currentGridPosition)
-                    && !_collisionTilemap.HasTile(currentGridPosition) && InTile(currentGridCenterPosition) == (int)EntityType.Nothing;
-                if (ThereIsNothing)
+                var ThereIsNothing = _floorTilemap.HasTile(currentGridPosition) && !_collisionTilemap.HasTile(currentGridPosition) && InTile(currentGridCenterPosition) == (int)EntityType.Nothing;
+
+                var currentDistance = Mathf.Abs(Vector3.Distance(_executorGridPosition + cellSize, currentGridCenterPosition));
+
+                if (currentDistance < _maxDistance)
                 {
-                    possiblePosition.Add(currentGridPosition);
+                    if (ThereIsNothing)
+                    {
+                        possiblePosition.Add(currentGridPosition);
+                    }
                 }
             }
         }
     }
     private bool IsEnemyNeighbour()
     {
-        Vector3 v = new Vector3(_floorTilemap.cellSize.x / 2, _floorTilemap.cellSize.y / 2);
+        var cellSize = TileManager.CellSize;
         for (int j = -1; j <= 1; j++)
         {
             for (int i = -1; i <= 1; i++)
             {
-                Vector3Int vector = new Vector3Int(i, j, 0);
-                var pos = _executorGridPos + vector;
-                Vector3 vToW = pos + v;
+                var position = new Vector3Int(i, j, 0);
+                var currentGridPosition = _executorGridPosition + position;
+                var currentGridCenterPosition = currentGridPosition + cellSize;
 
-                if (InTile(vToW) == (int)EntityType.EnemyCharacter || InTile(vToW) == (int)EntityType.EnemyHero)
+                if (InTile(currentGridCenterPosition) == (int)EntityType.EnemyCharacter || InTile(currentGridCenterPosition) == (int)EntityType.EnemyHero)
                 {
                     return true;
                 }

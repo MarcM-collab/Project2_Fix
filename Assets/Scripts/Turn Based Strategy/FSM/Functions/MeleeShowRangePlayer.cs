@@ -27,7 +27,7 @@ public class MeleeShowRangePlayer : CombatPlayerBehaviour
             for (int i = -attackRange; i <= attackRange; i++)
             {
                 var position = new Vector3Int(i, j, 0);
-                var currentGridPosition = _executorGridPos + position;
+                var currentGridPosition = _executorGridPosition + position;
                 var currentGridCenterPosition = currentGridPosition + cellSize;
 
                 var IsMovementRange = Mathf.Abs(i) < counter - 2;

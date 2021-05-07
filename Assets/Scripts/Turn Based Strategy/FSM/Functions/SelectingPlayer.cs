@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class SelectingPlayer : CombatPlayerBehaviour
 {
-    private bool _pressedFirst;
     private bool _buttonEnabled;
     private void OnEnable()
     {
@@ -28,7 +27,7 @@ public class SelectingPlayer : CombatPlayerBehaviour
         {
             if (!CardUsage.isDragging)
             {
-                TileHighlighting(animator);
+                //TileHighlighting(animator);
 
                 Selected(animator);
             }
@@ -54,7 +53,7 @@ public class SelectingPlayer : CombatPlayerBehaviour
     }
     public void PassTurnButton()
     {
-        if (_buttonEnabled)
+        if (_buttonEnabled && TurnManager.CardDrawn)
         {
             if (TurnManager.TeamTurn == Team.TeamPlayer)
             {
@@ -97,7 +96,7 @@ public class SelectingPlayer : CombatPlayerBehaviour
                 if (CharacterOfTeamPlayer)
                 {
                     EntityManager.SetExecutor(tempCharacter);
-                    _executorGridPos = _currentGridPos;
+                    _executorGridPosition = _currentGridPos;
 
                     var CharacterIsRanged = tempCharacter.Class == Class.Ranged;
 
@@ -110,6 +109,7 @@ public class SelectingPlayer : CombatPlayerBehaviour
                         animator.SetBool("Ranged", false);
                     }
                     animator.SetBool("Selected", true);
+                    _uITilemap.SetTile(_currentGridPos, null);
                 }
             }
         }

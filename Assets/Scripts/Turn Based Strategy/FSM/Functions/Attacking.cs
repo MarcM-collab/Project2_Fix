@@ -24,7 +24,7 @@ public class Attacking : CombatBehaviour
     }
     private void AttackingUpdate(Animator animator)
     {
-        animator.SetBool("Attacking", !_targetEntity.Hit);
+        animator.SetBool("Attacking", false);
     }
     private void AttackingExit()
     {

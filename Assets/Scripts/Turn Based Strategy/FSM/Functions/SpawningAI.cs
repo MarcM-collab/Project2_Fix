@@ -10,6 +10,7 @@ public class SpawningAI : CardAIBehaviour
     private Animator anim;
     private int _whiskasCombinationAccumulate = 0;
     private int _cardStatsAccumulates = 0;
+    private bool NoPossibleTiles;
 
     //private LinkedList<string> qLinkedList = new LinkedList<string>();
     private List<List<Unit>> _combinations = new List<List<Unit>>(); //remover publicas
@@ -59,20 +60,25 @@ public class SpawningAI : CardAIBehaviour
 
 
         List<Unit> combinations = CombinationCard(UnitList());
-        print(combinations);
         if (combinations != null)
         {
-            print(combinations.Count);
             //combinations.Sort(); //First order [3, 1, 2] --> [1,2,3], then iterate reversly --> [3,2,1] so removing will not be out of the range.
             for (int i = 0; i < combinations.Count; i++)
             {
-                print(combinations[i]);
                 SetSelectedHandCard(Random.Range(0, IAHand.Count));
 
                 yield return new WaitForSeconds(cardUsageWait + Random.Range(-cardUsageRandomicity, cardUsageRandomicity)); //Adds random to make it feel human.
-                
-                spawner.SpawnCard(combinations[i], spawner.GetValidRandomPos(4, 6, -3, 3), Team.TeamAI);
-                RemoveCardHand(combinations[i]);
+                var position = GetValidRandomPos(2, 4, -2, 2);
+                if (!NoPossibleTiles) 
+                {
+                    spawner.SpawnCard(combinations[i], position, Team.TeamAI);
+                    RemoveCardHand(combinations[i]);
+                }
+                else
+                {
+                    Debug.Log("NoTilesToSpawn");
+                    break;
+                }
                 //indexToRemove.Add(combinations[i]); //Add the index to remove it later, removing an element of the list will change the indexes causing an index out of range error when accessing to an element. List [1] --> List [0] when removing.
             }
         }
@@ -211,6 +217,50 @@ public class SpawningAI : CardAIBehaviour
             }
         }
         return e;
+    }
+    public Vector2 GetValidRandomPos(int minX, int maxX, int minY, int maxY)
+    {
+        NoPossibleTiles = false;
+        int tilesLength = 0;
+        for (int i = minX; i < maxX; i++)
+        {
+            for (int v = minY; v < maxY; v++)
+            {
+                tilesLength++;
+            }
+        }
+        List<Vector2> testedPos = new List<Vector2>();
+        Vector2 pos;
+        do
+        {
+            pos = new Vector2(UnityEngine.Random.Range(minX, maxX), UnityEngine.Random.Range(minY, maxY));
 
+            if (!testedPos.Contains(pos))
+                testedPos.Add(pos);
+
+            if (testedPos.Count >= tilesLength)
+            {
+                NoPossibleTiles = true;
+                break;
+            }
+        }
+        while (!CheckPos(pos));
+
+        return pos;
+    }
+    public bool CheckPos(Vector2 pos)
+    {
+        var vector = new Vector3(pos.x, pos.y) + TileManager.CellSize;
+        RaycastHit2D rayCast = Physics2D.Raycast(vector, Vector3.zero, Mathf.Infinity);
+        var rayCastCollider = rayCast.collider;
+        if (rayCastCollider != null)
+        {
+            var gameObject = rayCastCollider.gameObject;
+            if (!(gameObject.GetComponent("Character") as Character is null))
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }

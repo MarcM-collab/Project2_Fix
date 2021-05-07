@@ -34,11 +34,17 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
         ChooseDrawableCardsBehaviour.OnChooseDrawableCardsUpdate -= ChooseDrawableCardsUpdate;
     }
 
-    private void ChooseDrawableCardsEnter()
+    private void ChooseDrawableCardsEnter(Animator animator)
     {
         var IsBelowHandMaxSize = Hand.hand.Count < maxCardInHand;
         if (IsBelowHandMaxSize)
             ShowRandomCards(ChooseRandom());
+        else
+        {
+            animator.SetBool("ChooseCard", false);
+            cardSelected = false;
+            TurnManager.CardDrawn = true;
+        }
     }
     private void ChooseDrawableCardsUpdate(Animator animator)
     {

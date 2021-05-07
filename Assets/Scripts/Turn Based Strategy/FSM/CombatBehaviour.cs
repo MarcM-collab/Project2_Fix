@@ -21,6 +21,12 @@ public class CombatBehaviour : MonoBehaviour
     protected Tile _pointingTile => _tileManager.PointingTile;
     protected Tile _targetTile => _tileManager.TargetTile;
     protected Tile _allyTile => _tileManager.AllyTile;
+    protected Tile _spawningTile => _tileManager.SpawningTile;
+    protected Tile _spawningSelectedTile => _tileManager.SpawningSelectedTile;
+    protected Tile _movingTile => _tileManager.MovingTile;
+    protected Tile _movingSelectedTile => _tileManager.MovingSelectedTile;
+    protected Tile _attackingTile => _tileManager.AttackingTile;
+    protected Tile _attackingSelectedTile => _tileManager.AttackingSelectedTile;
 
     protected Tilemap _floorTilemap => _tileManager.FloorTilemap;
     protected Tilemap _collisionTilemap => _tileManager.CollisionTilemap;
@@ -36,20 +42,21 @@ public class CombatBehaviour : MonoBehaviour
 
     protected static Character _executorCharacter => EntityManager.ExecutorCharacter;
     protected static Entity _targetEntity => EntityManager.TargetCharacter;
-    protected static Vector3Int _executorGridPos;
+    protected static Vector3Int _executorGridPosition;
     protected static Vector3Int _tileChosenGridPosition;
     protected static Vector3Int _targetGridPosition;
 
     protected int InTile(Vector3 vector)
     {
-        RaycastHit2D hit = Physics2D.Raycast(vector, Vector2.zero);
+        var postion = new Vector2(vector.x, vector.y);
+        RaycastHit2D hit = Physics2D.Raycast(postion, Vector2.zero,Mathf.Infinity);
         var hitCollider = hit.collider;
         if (hitCollider != null)
         {
             var gameObject = hitCollider.gameObject;
-            if (!(gameObject.GetComponent("Character") as Entity is null))
+            if (!(gameObject.GetComponent("Character") as Character is null))
             {
-                if (TurnManager.TeamTurn != gameObject.GetComponent<Entity>().Team)
+                if (TurnManager.TeamTurn != gameObject.GetComponent<Character>().Team)
                     return (int)EntityType.EnemyCharacter;
                 else
                     return (int)EntityType.AllyCharacter;

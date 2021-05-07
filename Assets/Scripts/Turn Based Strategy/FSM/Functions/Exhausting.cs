@@ -19,11 +19,6 @@ public class Exhausting : CombatBehaviour
     }
     private void ExhaustingEnter(Animator animator)
     {
-        if (!_targetEntity.IsAlive)
-        {
-            _targetIsDead = true;
-        }
-
         ResetAnimatorParamaters(animator);
 
         _executorCharacter.Exhausted = true;
@@ -42,21 +37,7 @@ public class Exhausting : CombatBehaviour
     }
     private void ExhaustingUpdate(Animator animator)
     {
-        if (_executorCharacter.IsExhaustedAnim)
-        {
-            if (!_targetIsDead)
-            {
-                animator.SetTrigger("Exhausted");
-            }
-            else
-            {
-                if (!_targetEntity.IsActive)
-                {
-                    animator.SetTrigger("Exhausted");
-                    _targetIsDead = false;
-                }
-            }
-        }
+        animator.SetTrigger("Exhausted");
     }
     private void ExhaustingExit(Animator animator)
     {

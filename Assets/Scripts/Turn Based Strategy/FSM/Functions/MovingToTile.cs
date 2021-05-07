@@ -16,7 +16,7 @@ public class MovingToTile : CombatBehaviour
     }
     private void MovingToTileEnter()
     {
-        if (_tileChosenGridPosition != _executorGridPos)
+        if (_tileChosenGridPosition != _executorGridPosition)
         {
             var cellSize = TileManager.CellSize;
             _executorCharacter.TeleportPoint = _tileChosenGridPosition + cellSize;
@@ -26,7 +26,7 @@ public class MovingToTile : CombatBehaviour
     }
     private void MovingToTileUpdate(Animator animator)
     {
-        if (_tileChosenGridPosition != _executorGridPos) 
+        if (_tileChosenGridPosition != _executorGridPosition) 
         { 
             animator.SetBool("MovedToTile", !_executorCharacter.Teleporting);
         }

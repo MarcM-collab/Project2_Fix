@@ -41,25 +41,19 @@ public class MeleeShowAttackTilePlayer : CombatPlayerBehaviour
         }
         else
         {
-            for (int x = 0; x < _enemyHeroAttackableTiles.Count; x++) {
-                for (int j = -1; j <= 1; j++)
-                {
-                    for (int i = -1; i <= 1; i++)
-                    {
-                        var position = new Vector3Int(i, j, 0);
-                        var currentGridPosition = _enemyHeroAttackableTiles[x] + position;
-                        var currentGridCenterPosition = currentGridPosition + cellSize;
+            for (int x = 0; x < _enemyHeroAttackableTiles.Count; x++)
+            {
+                var currentGridPosition = _enemyHeroAttackableTiles[x];
+                var currentGridCenterPosition = currentGridPosition + cellSize;
 
-                        var IsNothingOrIsEnemy = InTile(currentGridCenterPosition) == (int)EntityType.Nothing ||
-                            InTile(currentGridCenterPosition) == (int)EntityType.EnemyCharacter || InTile(currentGridCenterPosition) == (int)EntityType.EnemyHero;
-                        
-                        if (_floorTilemap.HasTile(currentGridPosition))
-                        {
-                            if (IsNothingOrIsEnemy)
-                            {
-                                _uITilemap.SetTile(currentGridPosition, _targetTile);
-                            }
-                        }
+                var IsNothingOrIsEnemy = InTile(currentGridCenterPosition) == (int)EntityType.Nothing ||
+                    InTile(currentGridCenterPosition) == (int)EntityType.EnemyCharacter || InTile(currentGridCenterPosition) == (int)EntityType.EnemyHero;
+
+                if (_floorTilemap.HasTile(currentGridPosition))
+                {
+                    if (IsNothingOrIsEnemy)
+                    {
+                        _uITilemap.SetTile(currentGridPosition, _targetTile);
                     }
                 }
             }
