@@ -7,7 +7,6 @@ using UnityEngine.Tilemaps;
 public class CombatAIBehaviour : CombatBehaviour
 {
     protected static List<Vector3> _notPossibleTarget = new List<Vector3>();
-    protected static float _maxDistance;
     private void Start()
     {
         _enemyHero = EntityManager.GetHero(Team.TeamPlayer);

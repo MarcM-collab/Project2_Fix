@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MeleeChoosingTileAI : CombatAIBehaviour
 {
+    List<Vector3Int> attackableCharactersTiles = new List<Vector3Int>();
     private void OnEnable()
     {
         MeleeChoosingTileBehaviour.OnMeleeChoosingTileEnter += MeleeChoosingTileEnter;
@@ -21,6 +22,7 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
         if (targetOnRange)
         {
             SetTarget(animator);
+            attackableCharactersTiles.Clear();
         }
         else
         {
@@ -33,9 +35,6 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
         var attackRange = _executorCharacter.Range + 2;
         int counter = 0;
 
-        var max = new Vector3(_executorGridPosition.x + _executorCharacter.Range + 2 + cellSize.x, _executorGridPosition.y + cellSize.y, 0);
-        _maxDistance = Mathf.Abs(Vector3.Distance(_executorGridPosition + cellSize, max));
-        var minDistance = _maxDistance;
         for (int j = -attackRange; j <= attackRange; j++)
         {
             if (j <= 0) counter++;
@@ -67,13 +66,9 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
                             if (EnemyOnRange)
                             {
                                 //Take the nearest enemy
-                                var currentMin = Mathf.Abs(Vector3.Distance(_executorGridPosition + cellSize, currentGridCenterPosition));
-                                if (minDistance > currentMin)
-                                {
-                                    minDistance = currentMin;
-                                    _targetGridPosition = currentGridPosition;
+                                    attackableCharactersTiles.Add(currentGridPosition);
                                     targetOnRange = true;
-                                }
+                                
                             }
                         }
                     }
@@ -84,23 +79,27 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
     private void SetTarget(Animator animator)
     {
         var cellSize = TileManager.CellSize;
-        Vector2 vector2 = new Vector2(_targetGridPosition.x + cellSize.x, _targetGridPosition.y + cellSize.y);
-        RaycastHit2D hit = Physics2D.Raycast(vector2, Vector2.zero);
-        var hitCollider = hit.collider;
-        if (hitCollider != null)
+        Entity target;
+        if (InTile(_targetGridPosition + cellSize) == (int)EntityType.EnemyHero)
         {
-            if (!(hitCollider.gameObject.GetComponent("Entity") as Entity is null))
-            {
-                EntityManager.SetTarget(hitCollider.gameObject.GetComponent<Entity>());
-                _uITilemap.SetTile(_targetGridPosition, _targetTile);
-            }
-            if (!(hitCollider.gameObject.GetComponent("Hero") as Hero is null))
-            {
-                EntityManager.SetTarget(hitCollider.gameObject.GetComponent<Entity>());
-                ShowHeroTiles();
-            }
-            animator.SetBool("PreparingAttack", true);
+            ShowHeroTiles();
         }
+        else
+        {
+            var enemiesWhoDieOnHit = TakeEnemiesWhoDieOnHit(attackableCharactersTiles);
+            if (enemiesWhoDieOnHit.Count > 0)
+            {
+                _targetGridPosition = TakeNearestToExecutor(enemiesWhoDieOnHit);
+            }
+            else
+            {
+                _targetGridPosition = TakeNearestToExecutor(attackableCharactersTiles);
+            }
+        }
+        target = GetEntityOnTile(_targetGridPosition);
+        EntityManager.SetTarget(target);
+        animator.SetBool("PreparingAttack", true);
+        
     }
     private void MoveToTile(Animator animator)
     {
@@ -140,5 +139,56 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
         }
         _uITilemap.SetTile(_tileChosenGridPosition, _allyTile);
         animator.SetTrigger("TileChosen");
+    }
+
+    private List<Vector3Int> TakeEnemiesWhoDieOnHit(List<Vector3Int> list)
+    {
+        List<Vector3Int> enemiesWhoDieOnHit = new List<Vector3Int>();
+        foreach (Vector3Int vector3Int in list)
+        {
+            if (GetEntityOnTile(vector3Int).HP <= _executorCharacter.AttackPoints)
+            {
+                enemiesWhoDieOnHit.Add(vector3Int);
+            }
+        }
+        return enemiesWhoDieOnHit;
+    }
+
+    private Vector3Int TakeNearestToExecutor(List<Vector3Int> list)
+    {
+        var attackRange = _executorCharacter.Range + 2;
+        var max = new Vector3(_executorGridPosition.x + attackRange, _executorGridPosition.y, 0);
+        var maxDistance = Mathf.Abs(Vector3.Distance(_executorGridPosition, max));
+        var minDistance = maxDistance;
+        Vector3Int nearestPosition = Vector3Int.zero;
+
+        foreach (Vector3Int vector3Int in list) 
+        {
+            var currentMin = Mathf.Abs(Vector3.Distance(_executorGridPosition, vector3Int));
+            if (minDistance > currentMin)
+            {
+                minDistance = currentMin;
+                nearestPosition = vector3Int;
+            }
+        }
+
+        return nearestPosition;
+    }
+
+    private Entity GetEntityOnTile(Vector3Int vector3Int)
+    {
+        var cellSize = TileManager.CellSize;
+        var postion = new Vector2(vector3Int.x + cellSize.x, vector3Int.y + cellSize.y);
+        RaycastHit2D hit = Physics2D.Raycast(postion, Vector2.zero, Mathf.Infinity);
+        var hitCollider = hit.collider;
+        if (hitCollider != null)
+        {
+            var gameObject = hitCollider.gameObject;
+            if (!(gameObject.GetComponent("Entity") as Entity is null))
+            {
+                return gameObject.GetComponent<Entity>();
+            }
+        }
+        return null;
     }
 }
