@@ -430,7 +430,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1039971011
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9d764b721417d6040aed2a3373163d75, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -501,13 +501,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 1
+  MaxHP: 1
   Team: 0
   Exhausted: 0
   Hit: 0
   Dead: 0
   Class: 1
   AttackPoints: 2
-  Health: 1
   Range: 1
   Velocity: 5
   Teleporting: 0
@@ -633,7 +633,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 524843471
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   m_Color: {r: 0, g: 1, b: 0.7672777, a: 1}

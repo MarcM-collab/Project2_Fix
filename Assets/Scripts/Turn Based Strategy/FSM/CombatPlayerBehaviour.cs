@@ -15,7 +15,6 @@ public class CombatPlayerBehaviour : CombatBehaviour
     private void Start()
     {
         _enemyHero = EntityManager.GetHero(Team.TeamAI);
-        _enemyHeroTiles = new List<Vector3Int> { new Vector3Int(4, 0, 0), new Vector3Int(5, 0, 0), new Vector3Int(4, -1, 0), new Vector3Int(5, -1, 0) };
         _enemyHeroAttackableTiles = new List<Vector3Int> { new Vector3Int(3, 1, 0), new Vector3Int(3, 0, 0), new Vector3Int(3, -1, 0), new Vector3Int(3, -2, 0) };
         _spawnableTilesEdges.Add(new Vector3Int(-4, -2, 0));
         _spawnableTilesEdges.Add(new Vector3Int(-3, 1, 0));

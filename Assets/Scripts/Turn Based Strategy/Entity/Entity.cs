@@ -13,7 +13,7 @@ public class Entity : MonoBehaviour
     public ChangeHealthDelegate OnChangeHealth;
 
     public float HP;
-    internal float MaxHP;
+    public float MaxHP;
     public Team Team;
     public bool IsAlive => HP > 0;
     public bool IsActive => IsAlive && !Exhausted;

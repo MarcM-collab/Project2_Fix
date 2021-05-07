@@ -140,7 +140,7 @@ public class SpawningAI : CardAIBehaviour
                     _whiskasCombinationAccumulate += list[count].Whiskas;
                     tempUnit.Add(list[count] as Unit);
 
-                    _cardStatsAccumulates += tempUnit[tempUnit.Count - 1].character.Health + tempUnit[tempUnit.Count - 1].character.AttackPoints + tempUnit[tempUnit.Count - 1].Whiskas + 1;
+                    _cardStatsAccumulates += (int)tempUnit[tempUnit.Count - 1].character.HP + tempUnit[tempUnit.Count - 1].character.AttackPoints + tempUnit[tempUnit.Count - 1].Whiskas + 1;
 
                     //tempList.Add(count);//añadimos posición
                 }

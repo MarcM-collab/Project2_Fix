@@ -41,6 +41,10 @@ public class MeleeChoosingAttackTileAI : CombatAIBehaviour
             }
             else
             {
+                foreach (Vector3Int i in possiblePosition)
+                {
+                    Debug.Log(i + TileManager.CellSize);
+                }
                 _tileChosenGridPosition = possiblePosition[UnityEngine.Random.Range(0, possiblePosition.Count)];
                 possiblePosition.Clear();
                 _uITilemap.SetTile(_tileChosenGridPosition, _allyTile);
@@ -76,16 +80,14 @@ public class MeleeChoosingAttackTileAI : CombatAIBehaviour
     }
     private bool IsEnemyNeighbour()
     {
-        var cellSize = TileManager.CellSize;
         for (int j = -1; j <= 1; j++)
         {
             for (int i = -1; i <= 1; i++)
             {
                 var position = new Vector3Int(i, j, 0);
                 var currentGridPosition = _executorGridPosition + position;
-                var currentGridCenterPosition = currentGridPosition + cellSize;
 
-                if (InTile(currentGridCenterPosition) == (int)EntityType.EnemyCharacter || InTile(currentGridCenterPosition) == (int)EntityType.EnemyHero)
+                if (_targetGridPosition == currentGridPosition)
                 {
                     return true;
                 }

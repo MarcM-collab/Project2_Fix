@@ -124,7 +124,7 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
                 if (OnMovementRange)
                 {
                     var IsEmptyFloorTile = InTile(currentGridCenterPosition) == (int)EntityType.Nothing 
-                        && _floorTilemap.HasTile(currentGridPosition);
+                        && _floorTilemap.HasTile(currentGridPosition) && !_collisionTilemap.HasTile(currentGridPosition);
                     if (IsEmptyFloorTile)
                     {
                         //Take the tile nearest to the Player Hero

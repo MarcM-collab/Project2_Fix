@@ -12,7 +12,6 @@ public class Character : Entity
     [Header("Stats")]
     public Class Class;
     public int AttackPoints;
-    public int Health;
     public int Range;
 
     [Header("Animation")]
@@ -29,7 +28,7 @@ public class Character : Entity
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        MaxHP= HP;
+        HP = MaxHP;
         OnChangeHealth?.Invoke(HP / MaxHP);
     }
     private void Update()

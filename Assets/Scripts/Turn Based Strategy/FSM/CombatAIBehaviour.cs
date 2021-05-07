@@ -11,7 +11,6 @@ public class CombatAIBehaviour : CombatBehaviour
     private void Start()
     {
         _enemyHero = EntityManager.GetHero(Team.TeamPlayer);
-        _enemyHeroTiles = new List<Vector3Int> { new Vector3Int(-5, 0, 0), new Vector3Int(-6, 0, 0), new Vector3Int(-5, -1, 0), new Vector3Int(-6, -1, 0) };
         _enemyHeroAttackableTiles = new List<Vector3Int> { new Vector3Int(-5, -1, 0), new Vector3Int(-5, 0, 0)};
     }
 }
