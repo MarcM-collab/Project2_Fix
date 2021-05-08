@@ -17,7 +17,9 @@ public static class HealthSystem
             if (currentHealth - amount < 0.0f)
                 amount = (float)OnOverkill(currentHealth);
         }
-        currentHealth -= amount;
+
+        if (currentHealth - amount <= target.MaxHP)
+            currentHealth -= amount;
 
         OnHit((int)amount);
 

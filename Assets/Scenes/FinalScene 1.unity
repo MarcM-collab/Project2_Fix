@@ -1225,10 +1225,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Cards:
+  - {fileID: -1943764638452470376, guid: 4dc94a6f8fdf1b64e886a4b3ccd18bbb, type: 3}
   - {fileID: 4526846348483723782, guid: 64af944539373e34683703445702201a, type: 3}
+  - {fileID: -1943764638452470376, guid: 988c8a267801acc438fa88b201a0a7a8, type: 3}
+  - {fileID: 8933277958290082131, guid: 23679815dc404b440abaa330a94c2b0f, type: 3}
+  - {fileID: 8933277958290082131, guid: 2d13e5b3d53cdd64bbdfc3c9755ff9ab, type: 3}
+  - {fileID: 2550887415716234037, guid: fc1db05dc7d9619418ea8c78aeefb13f, type: 3}
   - {fileID: -1943764638452470376, guid: e9f55579a5b2f9e47b25c256f8500d87, type: 3}
   - {fileID: -1943764638452470376, guid: cc1655c125678f44da84069b1393ec87, type: 3}
-  - {fileID: 8933277958290082131, guid: 23679815dc404b440abaa330a94c2b0f, type: 3}
   buttons:
   - {fileID: 1276120771}
   - {fileID: 1276120770}
@@ -2043,6 +2047,10 @@ PrefabInstance:
     - target: {fileID: 6693800163717699729, guid: 01a9aa6171003304fbe9857c6e587195, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6693800163717699730, guid: 01a9aa6171003304fbe9857c6e587195, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6693800163717699741, guid: 01a9aa6171003304fbe9857c6e587195, type: 3}
       propertyPath: m_Name

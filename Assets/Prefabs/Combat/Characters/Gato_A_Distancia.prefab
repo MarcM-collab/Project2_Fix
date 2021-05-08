@@ -368,7 +368,6 @@ GameObject:
   - component: {fileID: 507745496865460685}
   - component: {fileID: 507745496865460722}
   - component: {fileID: 507745496865460723}
-  - component: {fileID: 4552217383504228236}
   m_Layer: 0
   m_Name: Gato_A_Distancia
   m_TagString: Character
@@ -430,7 +429,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1039971011
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 9d764b721417d6040aed2a3373163d75, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -515,19 +514,6 @@ MonoBehaviour:
   Attack: 0
   IsExhaustedAnim: 0
   TeleportPoint: {x: 0, y: 0, z: 0}
---- !u!114 &4552217383504228236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 507745496865460720}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 461c764d45c3a4b44aa76e7436d963dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ability: {fileID: -1261576596295524061, guid: 17dcecd48a4f0e748a828e1ebc3bcaa8, type: 3}
 --- !u!1 &507745497298803552
 GameObject:
   m_ObjectHideFlags: 0
@@ -633,7 +619,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 524843471
-  m_SortingLayer: 7
+  m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
   m_Color: {r: 0, g: 1, b: 0.7672777, a: 1}
