@@ -50,6 +50,7 @@ public class SelectingAI : CombatAIBehaviour
                 _executorGridPosition = _currentGridPos;
                 _uITilemap.SetTile(_executorGridPosition, _allyTile);
                 EntityManager.SetExecutor(characters[0]);
+                _notPossibleTarget.Clear();
             }
             else
             {

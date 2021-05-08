@@ -18,6 +18,11 @@ public class TileManager : MonoBehaviour
     public Tile MovingSelectedTile;
     public Tile AttackingTile;
     public Tile AttackingSelectedTile;
+    public Tile CollisionAllyTile;
+
+    [Header("HeroTiles")]
+    public GameObject AIHeroTile;
+    public GameObject PlayerHeroTile;
 
     [Header("TileMaps")]
     public Tilemap FloorTilemap;

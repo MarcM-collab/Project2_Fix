@@ -33,14 +33,20 @@ public class RangedShowRangePlayer : CombatPlayerBehaviour
                     var currentGridPosition = _executorGridPosition + position;
                     var currentGridCenterPosition = currentGridPosition + cellSize;
 
-                    var ThereIsAnAlly = currentGridPosition == _executorGridPosition || InTile(currentGridCenterPosition) == 2;
-                    var ThereIsNothing = CanMove(currentGridPosition);
-                    var ThereIsACollider = _floorTilemap.HasTile(currentGridPosition);
+                    var ThereIsAnAlly = InTile(currentGridCenterPosition) == (int)EntityType.AllyCharacter;
+                    var ThereIsNothing = CanMove(currentGridPosition) && InTile(currentGridCenterPosition) == (int)EntityType.Nothing;
+                    var ThereIsACollider = _collisionTilemap.HasTile(currentGridPosition);
 
                     if (_floorTilemap.HasTile(currentGridPosition))
                     {
-                        if (ThereIsAnAlly || ThereIsNothing)
+                        if (_executorGridPosition == currentGridPosition)
+                            _uITilemap.SetTile(currentGridPosition, _pointingTile);
+                        else if (ThereIsNothing)
                             _uITilemap.SetTile(currentGridPosition, _allyTile);
+                        else if (ThereIsACollider || ThereIsAnAlly)
+                        {
+                            _uITilemap.SetTile(currentGridPosition, _collisionAllyTile);
+                        }
                     }
                 }
             }

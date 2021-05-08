@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 8
+  MaxHP: 8
   Team: 0
   Exhausted: 0
   Hit: 0
@@ -153,7 +154,7 @@ MonoBehaviour:
   Class: 0
   AttackPoints: 1
   Health: 8
-  Range: 2
+  Range: 3
   Velocity: 5
   Teleporting: 0
   Turn: 0

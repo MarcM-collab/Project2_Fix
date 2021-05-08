@@ -27,6 +27,10 @@ public class CombatBehaviour : MonoBehaviour
     protected Tile _movingSelectedTile => _tileManager.MovingSelectedTile;
     protected Tile _attackingTile => _tileManager.AttackingTile;
     protected Tile _attackingSelectedTile => _tileManager.AttackingSelectedTile;
+    protected Tile _collisionAllyTile => _tileManager.CollisionAllyTile;
+
+    protected GameObject _aIHeroTile => _tileManager.AIHeroTile;
+    protected GameObject _playerHeroTile => _tileManager.PlayerHeroTile;
 
     protected Tilemap _floorTilemap => _tileManager.FloorTilemap;
     protected Tilemap _collisionTilemap => _tileManager.CollisionTilemap;
@@ -37,7 +41,6 @@ public class CombatBehaviour : MonoBehaviour
     protected Texture2D _cursorArrow => _art.CursorArrow;
 
     protected Hero _enemyHero;
-    protected List<Vector3Int> _enemyHeroTiles;
     protected List<Vector3Int> _enemyHeroAttackableTiles;
 
     protected static Character _executorCharacter => EntityManager.ExecutorCharacter;
@@ -79,16 +82,24 @@ public class CombatBehaviour : MonoBehaviour
 
     protected void ShowHeroTiles()
     {
-        for (int i = 0; i < _enemyHeroTiles.Count; i++)
+        if (TurnManager.TeamTurn == Team.TeamAI)
         {
-            _uITilemap.SetTile(_enemyHeroTiles[i], _targetTile);
+            _playerHeroTile.SetActive(true);
+        }
+        else
+        {
+            _aIHeroTile.SetActive(true);
         }
     }
     protected void HideHeroTiles()
     {
-        for (int i = 0; i < _enemyHeroTiles.Count; i++)
+        if (TurnManager.TeamTurn == Team.TeamAI)
         {
-            _uITilemap.SetTile(_enemyHeroTiles[i], null);
+            _playerHeroTile.SetActive(false);
+        }
+        else
+        {
+            _aIHeroTile.SetActive(false);
         }
     }
 }

@@ -15,6 +15,7 @@ public class HideUI : CombatBehaviour
     private void HideUIEnter()
     {
         TileManager.ShowTilesInTilemap(_uITilemap, _uITilemap,null, Everything);
+        HideHeroTiles();
     }
     private bool Everything(Vector3Int vector)
     {

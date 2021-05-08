@@ -500,13 +500,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HP: 1
+  MaxHP: 1
   Team: 0
   Exhausted: 0
   Hit: 0
   Dead: 0
   Class: 1
   AttackPoints: 2
-  Health: 1
   Range: 1
   Velocity: 5
   Teleporting: 0

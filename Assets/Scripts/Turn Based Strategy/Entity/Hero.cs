@@ -9,7 +9,7 @@ public class Hero : Entity
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        MaxHP = HP;
+        HP = MaxHP;
         OnChangeHealth?.Invoke(HP / MaxHP);
     }
     private void Update()

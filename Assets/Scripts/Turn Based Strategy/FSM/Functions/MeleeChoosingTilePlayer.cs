@@ -44,14 +44,11 @@ public class MeleeChoosingTilePlayer : CombatPlayerBehaviour
         var TileSelected = InputManager.LeftMouseClick;
         if (TileSelected)
         {
-            var OutsiedeRangeSelected = !_uITilemap.HasTile(_currentGridPos) || _executorGridPosition == _currentGridPos;
-            var EnemySelected = _uITilemap.GetTile(_currentGridPos) == _targetTile;
+            var CharacterSelected = _uITilemap.GetTile(_currentGridPos) == _targetTile;
+            var HeroSelected = _aIHeroTile.activeSelf && InTile(_currentGridPos + TileManager.CellSize) == (int)EntityType.EnemyHero;
             var InRangeTileSelected = _movingTile == _uITilemap.GetTile(_currentGridPos);
 
-            if (OutsiedeRangeSelected)
-                animator.SetBool("Selected", false);
-
-            else if (EnemySelected)
+            if (CharacterSelected || HeroSelected)
             {
                 _targetGridPosition = _currentGridPos;
                 EntityManager.SetTarget(SelectEntity());
@@ -63,6 +60,10 @@ public class MeleeChoosingTilePlayer : CombatPlayerBehaviour
                 _tileChosenGridPosition = _currentGridPos;
                 _uITilemap.SetTile(_currentGridPos, _allyTile);
                 animator.SetTrigger("TileChosen");
+            }
+            else
+            {
+                animator.SetBool("Selected", false);
             }
         }
     }
