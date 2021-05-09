@@ -106,6 +106,7 @@
     <Compile Include="Assets\Scripts\UI\MenuPanel.cs" />
     <Compile Include="Assets\Scripts\Cards\IACards\IACard.cs" />
     <Compile Include="Assets\Scripts\Art.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\UnitAbilities\LifeStealAbility.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\AttackingBehaviour.cs" />
     <Compile Include="Assets\SpellSpawner.cs" />
     <Compile Include="Assets\SetManaValue.cs" />
@@ -121,6 +122,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\ExhaustingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeShowAttackTilePlayer.cs" />
     <Compile Include="Assets\InfoManager.cs" />
+    <Compile Include="Assets\GasSpell.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\HidePath.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\RangedChoosingTileBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Entity.cs" />
@@ -141,8 +143,6 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\UnitAbilities\LifeStealAbility.cs" />
-    <Compile Include="Assets\GasSpell.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

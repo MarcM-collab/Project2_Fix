@@ -12,22 +12,13 @@ public class Riccochet : Abilty
     private List<Character> damagedCharacters = new List<Character>();
     public override void Excecute()
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
-
-        if (hit2D)
-        {
-            if (hit2D.transform.CompareTag("Character"))
-            {
-                Character target = hit2D.collider.gameObject.GetComponent<Character>();
-                if (target.Team == Team.TeamAI)
-                {
-                    HealthSystem.TakeDamage(damage, target);
-                    StartCoroutine(FindNewTargets(Team.TeamAI, target));
-                }
-            }
-        }
+        Use(Team.TeamAI);
     }
     public override void IAExecute()
+    {
+        Use(Team.TeamPlayer);
+    }
+    private void Use(Team targetTeam)
     {
         RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
 
@@ -36,10 +27,10 @@ public class Riccochet : Abilty
             if (hit2D.transform.CompareTag("Character"))
             {
                 Character target = hit2D.collider.gameObject.GetComponent<Character>();
-                if (target.Team == Team.TeamAI)
+                if (target.Team == targetTeam)
                 {
                     HealthSystem.TakeDamage(damage, target);
-                    FindNewTargets(Team.TeamPlayer, target);
+                    FindNewTargets(targetTeam, target);
                 }
             }
         }
