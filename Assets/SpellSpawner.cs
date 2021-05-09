@@ -9,29 +9,27 @@ public class SpellSpawner : MonoBehaviour
     private void OnEnable()
     {
         ScriptButton.spellButton += SetSpellActive;
+        ScriptButton.endDrag += Execute;
     }
     private void OnDisable()
     {
         ScriptButton.spellButton -= SetSpellActive;
+        ScriptButton.endDrag -= Execute;
     }
     private void SetSpellActive(Spell spell)
     {
         currentSpell = spell;
     }
-    private void Update()
+    private void Execute()
     {
         if (currentSpell)
         {
-            if (Input.GetMouseButtonDown(0))
+            currentSpell.ExecuteSpell();
+            if (currentSpell.executed)
             {
-                currentSpell.ExecuteSpell();
-                if (currentSpell.executed)
-                {
-                    DestroyCard(currentSpell);
-                }
-                currentSpell = null;
+                DestroyCard(currentSpell);
             }
-
+            currentSpell = null;
         }
 
     }

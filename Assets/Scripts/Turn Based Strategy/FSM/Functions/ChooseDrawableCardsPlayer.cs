@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,10 +9,13 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
     [SerializeField]
     private List<Card> Cards; //Baraja elegida por el player (8 cartas)
 
-    List<Card> twoCardsRandom = new List<Card>(); //lista para las dos cartas aleatorias.
+
+    Card[] twoCardsRandom = new Card[2]; //lista para las dos cartas aleatorias.
 
     [SerializeField]
     private Image[] buttons;
+    private RectTransform[] cardInstancePos = new RectTransform[2];
+    private GameObject[] cardsGO = new GameObject[2];
 
     [SerializeField]
     private HandManager Hand;
@@ -33,12 +37,22 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
         ChooseDrawableCardsBehaviour.OnChooseDrawableCardsEnter -= ChooseDrawableCardsEnter;
         ChooseDrawableCardsBehaviour.OnChooseDrawableCardsUpdate -= ChooseDrawableCardsUpdate;
     }
-
+    private void Awake()
+    {
+        for (int i = 0; i < buttons.Length; i++)
+        {
+            cardInstancePos[i] = buttons[i].GetComponentInChildren<RectTransform>();
+        }
+    }
     private void ChooseDrawableCardsEnter(Animator animator)
     {
-        var IsBelowHandMaxSize = Hand.hand.Count < maxCardInHand;
-        if (IsBelowHandMaxSize)
-            ShowRandomCards(ChooseRandom());
+        if (Hand.hand.Count < maxCardInHand)
+        {
+            RemovePreviousCards();
+            ChooseRandom();
+            ShowRandomCards();
+        }
+
         else
         {
             animator.SetBool("ChooseCard", false);
@@ -46,6 +60,16 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
             TurnManager.CardDrawn = true;
         }
     }
+
+    private void RemovePreviousCards()
+    {
+        for (int i = 0; i < twoCardsRandom.Length; i++)
+        {
+            Destroy(cardsGO[i]);
+            cardsGO[i] = null;
+        }
+    }
+
     private void ChooseDrawableCardsUpdate(Animator animator)
     {
         if (cardSelected)
@@ -55,18 +79,27 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
             TurnManager.CardDrawn = true;
         }
     }
-    private void ShowRandomCards(List<Card> _twoCardsRandom) //muestra las dos cartas random
+    private void ShowRandomCards() //muestra las dos cartas random
     {
-        for (int i = 0; i < _twoCardsRandom.Count; i++)
+        for (int i = 0; i < twoCardsRandom.Length; i++) 
         {
-            var sprite = _twoCardsRandom[i].GetComponent<Image>().sprite;
-
-            buttons[i].sprite = sprite;
             buttons[i].gameObject.SetActive(true);
+
+            cardsGO[i] = Instantiate(twoCardsRandom[i].gameObject, buttons[i].transform);
+
+            cardsGO[i].GetComponent<Button>().enabled = false;
+
+            CursorUIShower ui = cardsGO[i].GetComponent<CursorUIShower>();
+            if (ui)
+                ui.use = true;
+
+            RectTransform rt = cardsGO[i].GetComponent<RectTransform>();
+            rt.position = cardInstancePos[i].position;
+            rt.localScale = cardInstancePos[i].localScale; 
         }
 
     }
-    private List<Card> ChooseRandom() //salen dos cartas random y las guarda en una lista.
+    private void ChooseRandom() //salen dos cartas random y las guarda en una lista.
     {
         int random1 = UnityEngine.Random.Range(0, Cards.Count);
         int random2 = UnityEngine.Random.Range(0, Cards.Count);
@@ -75,10 +108,8 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
         {
             random2 = UnityEngine.Random.Range(0, Cards.Count);
         }
-        twoCardsRandom.Add(Cards[random1]);
-        twoCardsRandom.Add(Cards[random2]);
-
-        return twoCardsRandom;
+        twoCardsRandom[0] = Cards[random1];
+        twoCardsRandom[1] = Cards[random2];
     }
     public void ConfirmAddCard(int number) //se pasa información de la carta escogida y se desactivan después.
     {
@@ -88,7 +119,6 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
         {
             buttons[i].gameObject.SetActive(false);
         }
-        twoCardsRandom.Clear();
         cardSelected = true;
     }
 }

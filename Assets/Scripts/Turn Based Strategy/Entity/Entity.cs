@@ -12,9 +12,11 @@ public class Entity : MonoBehaviour
     public delegate void ChangeHealthDelegate(float fractionHealth);
     public ChangeHealthDelegate OnChangeHealth;
 
-    public float HP;
-    public float MaxHP;
+    [HideInInspector] public float HP;
     public Team Team;
+
+
+
     public bool IsAlive => HP > 0;
     public bool IsActive => IsAlive && !Exhausted;
 
@@ -24,6 +26,8 @@ public class Entity : MonoBehaviour
 
     internal Animator _animator;
 
+    [Header("Stats")]
+    public float MaxHP;
     public void ChangeHealth()
     {
         OnChangeHealth?.Invoke(HP / MaxHP);

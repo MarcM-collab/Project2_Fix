@@ -9,7 +9,6 @@ public enum Class
 }
 public class Character : Entity
 {
-    [Header("Stats")]
     public Class Class;
     public int AttackPoints;
     public int Range;

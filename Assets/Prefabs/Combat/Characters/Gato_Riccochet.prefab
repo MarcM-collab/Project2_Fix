@@ -505,9 +505,9 @@ MonoBehaviour:
   Exhausted: 0
   Hit: 0
   Dead: 0
+  MaxHP: 6
   Class: 1
   AttackPoints: 2
-  Health: 6
   Range: 2
   Velocity: 5
   Teleporting: 0

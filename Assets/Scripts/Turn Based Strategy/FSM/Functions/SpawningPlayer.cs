@@ -5,17 +5,20 @@ using UnityEngine.Tilemaps;
 
 public class SpawningPlayer : CombatPlayerBehaviour
 {
+    Animator anim;
     private void OnEnable()
     {
         SpawningBehaviour.OnSpawningEnter += SpawningEnter;
         SpawningBehaviour.OnSpawningUpdate += SpawningUpdate;
         SpawningBehaviour.OnSpawningExit += SpawningExit;
+        ScriptButton.endDrag += ConfirmSpawn;
     }
     private void OnDisable()
     {
         SpawningBehaviour.OnSpawningEnter -= SpawningEnter;
         SpawningBehaviour.OnSpawningUpdate -= SpawningUpdate;
         SpawningBehaviour.OnSpawningExit -= SpawningExit;
+        ScriptButton.endDrag -= ConfirmSpawn;
     }
     private void SpawningEnter()
     {
@@ -23,6 +26,9 @@ public class SpawningPlayer : CombatPlayerBehaviour
     }
     private void SpawningUpdate(Animator animator)
     {
+        if (!anim)
+            anim = animator;
+
         if (animator.GetBool("IsDragging"))
         {
             var PointingNewTile = _currentGridPos != _lastGridPos;
@@ -50,19 +56,19 @@ public class SpawningPlayer : CombatPlayerBehaviour
                 _lastGridPos = _currentGridPos;
             }
         }
-
-        var ChoseTileToSpawn = InputManager.LeftMouseClick;
+    }
+    private void ConfirmSpawn()
+    {
         var IsInSpawnableTile = _uITilemap.GetTile(_currentGridPos) == _spawningTile;
 
-        if (ChoseTileToSpawn)
+        if (IsInSpawnableTile)
         {
-            if (IsInSpawnableTile)
-            {
-                _cardUsage.Spawn();
-            }
-            animator.SetBool("IsDragging", false);
-            CardUsage.isDragging = false;
+            _cardUsage.Spawn();
         }
+        if (anim)
+            anim.SetBool("IsDragging", false);
+
+        CardUsage.isDragging = false;
     }
     private void SpawningExit()
     {

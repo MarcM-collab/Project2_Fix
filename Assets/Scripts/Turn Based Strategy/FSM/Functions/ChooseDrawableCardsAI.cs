@@ -113,11 +113,14 @@ public class ChooseDrawableCardsAI : CardAIBehaviour
         IAHand.Add(cardInstance.GetComponent<Card>()); //Avoids modifing the prefab
         cardInstance.GetComponent<Button>().enabled = false; //Avoids interaction with player
         cardInstance.GetComponent<Image>().sprite = cardSprites;
-        Text[] texts = cardInstance.GetComponentsInChildren<Text>();
-        foreach (Text t in texts)
+
+        Transform[] stats = cardInstance.GetComponentsInChildren<Transform>();
+        foreach (Transform t in stats)
         {
-            t.text = "";
+            if (t != cardInstance.transform)
+                t.gameObject.SetActive(false);
         }
+
         cardInstance.SetParent(IAHandCanvas);
         cardInstance.localScale = new Vector3(scale, scale, scale);//escalamos las cartas que se ven en la mano.
     }

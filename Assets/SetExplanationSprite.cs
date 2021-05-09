@@ -34,7 +34,6 @@ public class SetExplanationSprite : MonoBehaviour
     }
     private void SetCardInfo(Card c)
     {
-        im.sprite = c.explanationSprite;
         SetSpriteTransparency(1);
     }
 }

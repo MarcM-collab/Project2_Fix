@@ -61,6 +61,7 @@
     <Compile Include="Assets\PosHandZoomButton.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\HidePathBehaviour.cs" />
     <Compile Include="Assets\UseAbility.cs" />
+    <Compile Include="Assets\SetStats.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingAttackTileAI.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Hero.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\RangedChoosingTileAI.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Assets\PosHand.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Dead.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTilePlayer.cs" />
+    <Compile Include="Assets\CursorUIShower.cs" />
     <Compile Include="Assets\Scripts\Cards\CardUsage.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeShowRangePlayer.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\HideUIBehaviour.cs" />
@@ -139,12 +141,34 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CardAIBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Input\InputManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\InitialTeleport.cs" />
+    <Compile Include="Assets\Explanation.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\SpawningPlayer.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
   </ItemGroup>
   <ItemGroup>
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Mobile.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF SSD.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
+     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile SSD.shader" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Properties.cginc" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMPro_Surface.cginc" />
+     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF Overlay.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
+     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <Reference Include="UnityEngine">
       <HintPath>C:\Program Files\Unity\Hub\Editor\2020.2.7f1\Editor\Data\PlaybackEngines\WindowsStandaloneSupport\Variations\mono\Managed\UnityEngine.dll</HintPath>
     </Reference>

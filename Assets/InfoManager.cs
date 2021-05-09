@@ -27,20 +27,24 @@ public class InfoManager : MonoBehaviour
 
     private void Update()
     {
-        RaycastHit2D rayCast = Physics2D.Raycast(GetMousePosition, Vector2.zero);
-
-        if(rayCast)
+        if (Input.GetMouseButtonDown(0))
         {
-            if (rayCast.transform.CompareTag("Character"))
+            RaycastHit2D rayCast = Physics2D.Raycast(GetMousePosition, Vector2.zero);
+
+            if (rayCast)
             {
-                targetChar = rayCast.transform.gameObject.GetComponent<Character>();
-                ShowBasicInfo();
-                if (targetChar.Team == Team.TeamPlayer)
+                if (rayCast.transform.CompareTag("Character"))
                 {
-                    ShowAbility();
+                    targetChar = rayCast.transform.gameObject.GetComponent<Character>();
+                    ShowBasicInfo();
+                    if (targetChar.Team == Team.TeamPlayer)
+                    {
+                        ShowAbility();
+                    }
                 }
             }
         }
+
     }
 
     private void ShowBasicInfo()
