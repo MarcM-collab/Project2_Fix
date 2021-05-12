@@ -4,40 +4,39 @@ using UnityEngine;
 
 public class SpellSpawner : MonoBehaviour
 {
-    private TurnManager turn;
     private Spell currentSpell;
+    public HandManager hand;
     private void OnEnable()
     {
-        ButtonSpell.spellButton += SetSpellActive;
+        ScriptButton.spellButton += SetSpellActive;
+        ScriptButton.endDrag += Execute;
     }
     private void OnDisable()
     {
-        ButtonSpell.spellButton -= SetSpellActive;
-    }
-    private void Start()
-    {
-        turn = FindObjectOfType<TurnManager>();
+        ScriptButton.spellButton -= SetSpellActive;
+        ScriptButton.endDrag -= Execute;
     }
     private void SetSpellActive(Spell spell)
     {
         currentSpell = spell;
     }
-    private void Update()
+    private void Execute()
     {
         if (currentSpell)
         {
-            if (Input.GetMouseButtonDown(0))
+            currentSpell.ExecuteSpell();
+            if (currentSpell.executed)
             {
-                currentSpell.ExecuteSpell();
-                if (currentSpell.executed)
-                {
-                    turn.SubstractMana(currentSpell.Whiskas);
-                    Destroy(currentSpell.gameObject);
-                }
-                currentSpell = null;
+                DestroyCard(currentSpell);
             }
-
+            currentSpell = null;
         }
 
+    }
+    public void DestroyCard(Card c)
+    {
+        TurnManager.SubstractMana(c.Whiskas);
+        hand.RemoveCard(c);
+        Destroy(c.gameObject);
     }
 }

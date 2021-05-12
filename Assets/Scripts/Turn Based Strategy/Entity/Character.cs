@@ -9,37 +9,52 @@ public enum Class
 }
 public class Character : Entity
 {
-    [Header("Stats")]
     public Class Class;
     public int AttackPoints;
-    public int Health;
     public int Range;
 
     [Header("Animation")]
     public float Velocity;
 
-    public bool Walking;
+    public bool Teleporting;
     public bool Turn;
     public bool Attack;
 
     public bool IsExhaustedAnim;
 
-    public List<Vector3> Path;
+    public Vector3 TeleportPoint;
 
     private void Start()
     {
         _animator = GetComponent<Animator>();
-        MaxHP= HP;
+        HP = MaxHP;
         OnChangeHealth?.Invoke(HP / MaxHP);
     }
     private void Update()
     {
         _animator.SetBool("Exhausted", Exhausted);
-        _animator.SetBool("Walking", Walking);
+        _animator.SetBool("Teleporting", Teleporting);
         _animator.SetBool("Turn", Turn);
         _animator.SetBool("Hit", Hit);
         _animator.SetBool("Dead", Dead);
         _animator.SetBool("Attack", Attack);
+    }
+    public void TurningExecutor(float deltaX)
+    {
+        if (deltaX < 0)
+        {
+            if (transform.rotation.eulerAngles.y == 180)
+            {
+                Turn = true;
+            }
+        }
+        if (deltaX > 0)
+        {
+            if (transform.rotation.eulerAngles.y == 0)
+            {
+                Turn = true;
+            }
+        }
     }
     public static bool operator ==(Character e1, Character e2)
     {

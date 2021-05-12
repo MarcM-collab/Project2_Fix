@@ -54,9 +54,15 @@ TagManager:
   - name: Collision Tiles
     uniqueID: 620239045
     locked: 0
+  - name: Grid
+    uniqueID: 3895912367
+    locked: 0
   - name: Characters
     uniqueID: 3254996285
     locked: 0
   - name: UI
     uniqueID: 3391688929
+    locked: 0
+  - name: Effects
+    uniqueID: 524843471
     locked: 0

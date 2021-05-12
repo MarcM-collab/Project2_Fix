@@ -4,11 +4,12 @@ using UnityEngine;
 
 public class Spell : Card
 {
-    [HideInInspector]public bool executed = false;
+    [HideInInspector] public bool executed = false;
     public int Priority = 2;
     private Camera mainCamera;
     public virtual void ExecuteSpell() {}
     public virtual void IAUse() {}
+    public virtual bool CanBeUsed() { return false; }
     protected Vector2 GetMousePosition
     {
         get { return mainCamera.ScreenToWorldPoint(Input.mousePosition); }

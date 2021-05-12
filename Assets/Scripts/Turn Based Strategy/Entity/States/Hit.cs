@@ -18,5 +18,6 @@ public class Hit : StateMachineBehaviour
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         animator.GetComponent<SpriteRenderer>().color = Color.white;
+        animator.GetComponent<Entity>().Hit = false;
     }
 }

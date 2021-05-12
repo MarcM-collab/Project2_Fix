@@ -4,18 +4,21 @@ using UnityEngine;
 
 public class UseAbility : MonoBehaviour
 {
-    public TurnManager turnManager;
     public Abilty ability;
     public void Use()
     {
-        if (!turnManager)
-            turnManager = FindObjectOfType<TurnManager>();
-
-        if (ability.whiskasCost <= turnManager.currentMana)
+        if (ability.whiskasCost <= TurnManager.currentMana && TurnManager.TeamTurn == Team.TeamPlayer)
         {
             ability.Excecute();
-            turnManager.SubstractMana(ability.whiskasCost);
         }
-
+    }
+    private void Update()
+    {
+        if (ability.executed)
+        {
+            EntityManager.ExecutorCharacter.Exhausted = true;
+            TurnManager.SubstractMana(ability.whiskasCost);
+            ability.executed = false;
+        }
     }
 }
