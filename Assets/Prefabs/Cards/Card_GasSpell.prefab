@@ -146,9 +146,9 @@ GameObject:
   - component: {fileID: 5891673321983217296}
   - component: {fileID: 2352267231514790245}
   - component: {fileID: 5615327265515765252}
-  - component: {fileID: 8933277958290082131}
   - component: {fileID: 605790150503887886}
   - component: {fileID: 5911558757500978930}
+  - component: {fileID: -8550791944411300663}
   m_Layer: 5
   m_Name: Card_GasSpell
   m_TagString: Untagged
@@ -271,21 +271,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8933277958290082131
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4722527769057458597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b9c8864ca6f73742a2c0da1c56f20a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Whiskas: 1
-  executed: 0
-  Priority: 2
 --- !u!114 &605790150503887886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,6 +302,23 @@ MonoBehaviour:
   attack: {fileID: 0}
   cost: {fileID: 3450097086094775560}
   range: {fileID: 0}
+--- !u!114 &-8550791944411300663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4722527769057458597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f16f306d938d51b43a8928bc0217f00a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Whiskas: 3
+  executed: 0
+  Priority: 1
+  GasSpellPrefab: {fileID: 2758618109334501071, guid: 05548e4b8d8ceb443b7c7021c151a2f1, type: 3}
+  damage: 2
 --- !u!1 &5713441574064518238
 GameObject:
   m_ObjectHideFlags: 0

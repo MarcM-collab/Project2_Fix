@@ -6,6 +6,7 @@ using UnityEngine;
 public class DebilitySpell : Spell
 {
     private Character priorChar;
+    public GameObject FX;
     public override void ExecuteSpell()
     {
         RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
@@ -16,6 +17,9 @@ public class DebilitySpell : Spell
             {
                 Character target = hit2D.collider.gameObject.GetComponent<Character>();
                 ReduceAttack(target);
+                if (FX)
+                    Instantiate(FX, hit2D.transform.position, Quaternion.identity);
+
                 executed = true;
             }
         }

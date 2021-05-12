@@ -7,7 +7,7 @@ public class UseAbility : MonoBehaviour
     public Abilty ability;
     public void Use()
     {
-        if (ability.whiskasCost <= TurnManager.currentMana)
+        if (ability.whiskasCost <= TurnManager.currentMana && TurnManager.TeamTurn == Team.TeamPlayer)
         {
             ability.Excecute();
         }
@@ -16,6 +16,7 @@ public class UseAbility : MonoBehaviour
     {
         if (ability.executed)
         {
+            EntityManager.ExecutorCharacter.Exhausted = true;
             TurnManager.SubstractMana(ability.whiskasCost);
             ability.executed = false;
         }

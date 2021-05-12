@@ -5,22 +5,27 @@ using UnityEngine;
 public class LifeStealAbility : Abilty
 {
     public int damage;
-    public override void Excecute()
+    private Character selfChar;
+    private void Start()
     {
-        DoAction(Team.TeamPlayer);
+        selfChar = gameObject.GetComponent<Character>();
     }
-    public override void IAExecute()
+    public override void Excecute()
     {
         DoAction(Team.TeamAI);
     }
-    private void DoAction(Team team)
+    public override void IAExecute()
     {
-        Character[] characters = EntityManager.GetLivingCharacters(team);
-
+        DoAction(Team.TeamPlayer);
+    }
+    private void DoAction(Team targetTeam)
+    {
+        Character[] characters = EntityManager.GetCharacters(targetTeam);
+        print(characters.Length);
         if (characters.Length > 0)
         {
             HealthSystem.TakeDamage(damage, characters[Random.Range(0, characters.Length)]); //damage
-            HealthSystem.TakeDamage(-damage, EntityManager.ExecutorCharacter); //heal
+            HealthSystem.TakeDamage(-damage, selfChar); //heal
             executed = true;
         }
     }

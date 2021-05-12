@@ -7,10 +7,11 @@ public class HealAbilty : Abilty
     public int healthAmount;
     public override void Excecute()
     {
-        float prevHP = EntityManager.ExecutorCharacter.HP;
-        HealthSystem.TakeDamage(-healthAmount, EntityManager.ExecutorCharacter);
-
-        if (prevHP != EntityManager.ExecutorCharacter.HP)
+        Character c = EntityManager.ExecutorCharacter;
+        if (c.HP - healthAmount <= c.MaxHP)
+        {
+            HealthSystem.TakeDamage(-healthAmount, c);
             executed = true;
+        }
     }
 }

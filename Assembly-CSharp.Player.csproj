@@ -68,6 +68,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Hit.cs" />
     <Compile Include="Assets\Scripts\Cards\Unit.cs" />
     <Compile Include="Assets\Scripts\Cards\CardSpawner.cs" />
+    <Compile Include="Assets\GasDamage.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MovingToTile.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Spawning.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\RangedShowRangePlayer.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Assets\SetManaValue.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UnitAbilities\Riccochet.cs" />
     <Compile Include="Assets\Scripts\Cards\Card.cs" />
+    <Compile Include="Assets\Reminder.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\TileManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Attack.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\MeleeChoosingAttackTileBehaviour.cs" />
@@ -146,6 +148,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
+    <Compile Include="Assets\DestroyAfterTime.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

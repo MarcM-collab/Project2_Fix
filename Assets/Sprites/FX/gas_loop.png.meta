@@ -1,0 +1,1332 @@
+fileFormatVersion: 2
+guid: 7941e0b293fb6eb429c42396ba097f85
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 8473998454604831271
+    second: gas_loop_0
+  - first:
+      213: -9157942499470704760
+    second: gas_loop_1
+  - first:
+      213: -2484049312338087215
+    second: gas_loop_2
+  - first:
+      213: -4771228620406228854
+    second: gas_loop_3
+  - first:
+      213: 2139860425551235277
+    second: gas_loop_4
+  - first:
+      213: -8067637828154376127
+    second: gas_loop_5
+  - first:
+      213: -559497762720961663
+    second: gas_loop_6
+  - first:
+      213: -8436911400905208513
+    second: gas_loop_7
+  - first:
+      213: 3311468694319765591
+    second: gas_loop_8
+  - first:
+      213: 7769848419404824964
+    second: gas_loop_9
+  - first:
+      213: 1265460056573757178
+    second: gas_loop_10
+  - first:
+      213: 5610291708143930993
+    second: gas_loop_11
+  - first:
+      213: -1482230559180598774
+    second: gas_loop_12
+  - first:
+      213: -4383693081580819793
+    second: gas_loop_13
+  - first:
+      213: -7220938694557733048
+    second: gas_loop_14
+  - first:
+      213: -1540486885657233810
+    second: gas_loop_15
+  - first:
+      213: 3241434119023811798
+    second: gas_loop_16
+  - first:
+      213: -6120458923895066790
+    second: gas_loop_17
+  - first:
+      213: -330413958522759087
+    second: gas_loop_18
+  - first:
+      213: 8984196812619853830
+    second: gas_loop_19
+  - first:
+      213: -1361112963947278013
+    second: gas_loop_20
+  - first:
+      213: -2197880964748271902
+    second: gas_loop_21
+  - first:
+      213: -6350505073830848685
+    second: gas_loop_22
+  - first:
+      213: 8929840611576309011
+    second: gas_loop_23
+  - first:
+      213: 7011496601685132923
+    second: gas_loop_24
+  - first:
+      213: -8497192182349756612
+    second: gas_loop_25
+  - first:
+      213: -2484663945927742139
+    second: gas_loop_26
+  - first:
+      213: -4198013072410232230
+    second: gas_loop_27
+  - first:
+      213: 4565523309918518493
+    second: gas_loop_28
+  - first:
+      213: 1010279159198304433
+    second: gas_loop_29
+  - first:
+      213: -8328655303024180019
+    second: gas_loop_30
+  - first:
+      213: 1931490353811553232
+    second: gas_loop_31
+  - first:
+      213: -2074883528780063011
+    second: gas_loop_32
+  - first:
+      213: 5349346822539441484
+    second: gas_loop_33
+  - first:
+      213: -2262056202469517870
+    second: gas_loop_34
+  - first:
+      213: -1756071027202933395
+    second: gas_loop_35
+  - first:
+      213: 7261414666092755016
+    second: gas_loop_36
+  - first:
+      213: -8383970107293731003
+    second: gas_loop_37
+  - first:
+      213: -1449675205993247379
+    second: gas_loop_38
+  - first:
+      213: 2331102964726792697
+    second: gas_loop_39
+  - first:
+      213: -4712978024690907984
+    second: gas_loop_40
+  - first:
+      213: -2800992887520385418
+    second: gas_loop_41
+  - first:
+      213: 5673615860366723658
+    second: gas_loop_42
+  - first:
+      213: 6225853895834774203
+    second: gas_loop_43
+  - first:
+      213: -6005811552642612960
+    second: gas_loop_44
+  - first:
+      213: 756254553720549471
+    second: gas_loop_45
+  - first:
+      213: 195968030664612562
+    second: gas_loop_46
+  - first:
+      213: 4906130576652025975
+    second: gas_loop_47
+  - first:
+      213: -3735667027349227677
+    second: gas_loop_48
+  - first:
+      213: -1045044218545143307
+    second: gas_loop_49
+  - first:
+      213: 6568072752358227708
+    second: gas_loop_50
+  - first:
+      213: -6961890623229339517
+    second: gas_loop_51
+  - first:
+      213: -260321210307749621
+    second: gas_loop_52
+  - first:
+      213: -829154139188467377
+    second: gas_loop_53
+  - first:
+      213: -6585320099512255767
+    second: gas_loop_54
+  - first:
+      213: -2483885015834900839
+    second: gas_loop_55
+  - first:
+      213: -1632313598361307971
+    second: gas_loop_56
+  - first:
+      213: 7653346902624604144
+    second: gas_loop_57
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 1
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: gas_loop_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 343
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72a1ee182b0b99570800000000000000
+      internalID: 8473998454604831271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_1
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 343
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f789d41d378e080800000000000000
+      internalID: -9157942499470704760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_2
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 343
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d2f88dbf42e68dd0800000000000000
+      internalID: -2484049312338087215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_3
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 343
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a88728a49d039cdb0800000000000000
+      internalID: -4771228620406228854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_4
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 343
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc8c5e538bf42bd10800000000000000
+      internalID: 2139860425551235277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_5
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 343
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 140ca54b32ef90090800000000000000
+      internalID: -8067637828154376127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_6
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 343
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18b2468cfb34c38f0800000000000000
+      internalID: -559497762720961663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_7
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 343
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3d0a9318c11aea80800000000000000
+      internalID: -8436911400905208513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 294
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75891c98b33b4fd20800000000000000
+      internalID: 3311468694319765591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_9
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 294
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 481414598fb04db60800000000000000
+      internalID: 7769848419404824964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_10
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 294
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af6468d7731df8110800000000000000
+      internalID: 1265460056573757178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_11
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 294
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17e0d3e7592cbdd40800000000000000
+      internalID: 5610291708143930993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_12
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 294
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a02dfccd82f0e6be0800000000000000
+      internalID: -1482230559180598774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_13
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 294
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: faaa90c3e5ef923c0800000000000000
+      internalID: -4383693081580819793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_14
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 294
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84f6306f3821acb90800000000000000
+      internalID: -7220938694557733048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_15
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 294
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e66b04fd6571f9ae0800000000000000
+      internalID: -1540486885657233810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 245
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dcde3b4823ebfc20800000000000000
+      internalID: 3241434119023811798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_17
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 245
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5f6dda4903cf0ba0800000000000000
+      internalID: -6120458923895066790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_18
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 245
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1589b6d51422a6bf0800000000000000
+      internalID: -330413958522759087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_19
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 245
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 600376896674eac70800000000000000
+      internalID: 8984196812619853830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_20
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 245
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3415eb488fa5c1de0800000000000000
+      internalID: -1361112963947278013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_21
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 245
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ee169d48ee8f71e0800000000000000
+      internalID: -2197880964748271902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_22
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 245
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3571ff128497ed7a0800000000000000
+      internalID: -6350505073830848685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_23
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 245
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 315ecd159ba2deb70800000000000000
+      internalID: 8929840611576309011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_24
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 196
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b760d4fb207dd4160800000000000000
+      internalID: 7011496601685132923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_25
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 196
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3701deeab8e31a80800000000000000
+      internalID: -8497192182349756612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_26
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 196
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54da1c43e43b48dd0800000000000000
+      internalID: -2484663945927742139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_27
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 196
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5aba884a59adb5c0800000000000000
+      internalID: -4198013072410232230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_28
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 196
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddc757dd24ffb5f30800000000000000
+      internalID: 4565523309918518493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_29
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 196
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b8cef7ea8b350e00800000000000000
+      internalID: 1010279159198304433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_30
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 196
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc40296012caa6c80800000000000000
+      internalID: -8328655303024180019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_31
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 196
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dbf70a4e380eca10800000000000000
+      internalID: 1931490353811553232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_32
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 147
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dde51cc7c688433e0800000000000000
+      internalID: -2074883528780063011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_33
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 147
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c45f3d1d792bc3a40800000000000000
+      internalID: 5349346822539441484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_34
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 147
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d5d5d56edf8b90e0800000000000000
+      internalID: -2262056202469517870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_35
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 147
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6db63f64be21a7e0800000000000000
+      internalID: -1756071027202933395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_36
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 147
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 848354b8a2ab5c460800000000000000
+      internalID: 7261414666092755016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_37
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 147
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 547734b8b9726ab80800000000000000
+      internalID: -8383970107293731003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_38
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 147
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6dc413b418b1ebe0800000000000000
+      internalID: -1449675205993247379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_39
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 147
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f18663bbcdb95020800000000000000
+      internalID: 2331102964726792697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_40
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 98
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b4831cf473289eb0800000000000000
+      internalID: -4712978024690907984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_41
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 98
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 676a3f02fcfd029d0800000000000000
+      internalID: -2800992887520385418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_42
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 98
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4a4e2d909bbcbe40800000000000000
+      internalID: 5673615860366723658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_43
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 98
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbaa6bcd12da66650800000000000000
+      internalID: 6225853895834774203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_44
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 98
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 021ccc8863217aca0800000000000000
+      internalID: -6005811552642612960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_45
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 98
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f50f8428281ce7a00800000000000000
+      internalID: 756254553720549471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_46
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 98
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dad817b2e738b200800000000000000
+      internalID: 195968030664612562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_47
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 98
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 770c60304c3161440800000000000000
+      internalID: 4906130576652025975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_48
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 49
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 367b5bb81ae382cc0800000000000000
+      internalID: -3735667027349227677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gas_loop_49
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 49
+        width: 48
+        height: 49
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f18a03f1d14f71f0800000000000000
+      internalID: -1045044218545143307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

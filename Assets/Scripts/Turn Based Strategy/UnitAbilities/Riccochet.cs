@@ -6,7 +6,7 @@ using UnityEngine;
 
 public class Riccochet : Abilty
 {
-    public float damage = 2;
+    public int damage = 2;
     public int numOfTargets = 2;
     public float waitForNextTarget;
     private List<Character> damagedCharacters = new List<Character>();

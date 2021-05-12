@@ -286,6 +286,7 @@ MonoBehaviour:
   Whiskas: 1
   executed: 0
   Priority: 2
+  FX: {fileID: 1078572165638217086, guid: d1d96c1cee3b0244a9565b1109127f6f, type: 3}
 --- !u!114 &605790150503887886
 MonoBehaviour:
   m_ObjectHideFlags: 0

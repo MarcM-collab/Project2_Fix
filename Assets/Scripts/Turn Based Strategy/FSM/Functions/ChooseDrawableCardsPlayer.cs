@@ -11,7 +11,7 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
 
 
     Card[] twoCardsRandom = new Card[2]; //lista para las dos cartas aleatorias.
-
+    private List<Card> randomControl = new List<Card>();
     [SerializeField]
     private Image[] buttons;
     private RectTransform[] cardInstancePos = new RectTransform[2];
