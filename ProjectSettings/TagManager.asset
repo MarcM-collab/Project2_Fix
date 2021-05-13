@@ -54,6 +54,9 @@ TagManager:
   - name: Collision Tiles
     uniqueID: 620239045
     locked: 0
+  - name: FrontDetails
+    uniqueID: 1460069839
+    locked: 0
   - name: Grid
     uniqueID: 3895912367
     locked: 0
