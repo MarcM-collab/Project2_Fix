@@ -124,6 +124,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\EntityManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\Attacking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\ExhaustingBehaviour.cs" />
+    <Compile Include="Assets\DestroyAfterTime.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeShowAttackTilePlayer.cs" />
     <Compile Include="Assets\InfoManager.cs" />
     <Compile Include="Assets\GasSpell.cs" />
@@ -148,7 +149,6 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
-    <Compile Include="Assets\DestroyAfterTime.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

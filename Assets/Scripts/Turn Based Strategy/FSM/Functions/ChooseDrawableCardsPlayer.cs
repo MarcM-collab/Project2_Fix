@@ -87,6 +87,7 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
 
             cardsGO[i] = Instantiate(twoCardsRandom[i].gameObject, buttons[i].transform);
 
+            cardsGO[i].GetComponent<ScriptButton>().enabled = false;
             cardsGO[i].GetComponent<Button>().enabled = false;
 
             CursorUIShower ui = cardsGO[i].GetComponent<CursorUIShower>();

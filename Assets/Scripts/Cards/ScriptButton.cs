@@ -17,7 +17,6 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     public delegate void DragEnded();
     public static DragEnded endDrag;
 
-    private int clicked = 0;
     public float offsetY = 300;
     public Vector3 scale;
     private RectTransform rect;
@@ -35,6 +34,9 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     private GameObject currentDisplayer;
     private bool holding = false;
     private bool dragStart = false;
+    private bool zooming = false;
+    private float clickTimer = 0;
+    private bool clicked = false;
     private void Start()
     {
         im = GetComponent<Image>();
@@ -50,17 +52,6 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         startScale = rect.localScale;
         selfCard = GetComponent<Card>();
     }
-    public void ClicButton()
-    {
-        if (clicked == 0)    //here it will make a zoom
-        {
-            Zoom();
-        }
-        else if (clicked > 0)       //here it will make the spawn
-        {
-
-        }
-    }
     private void SpawnClick()
     {
         if (selfCard is Unit)
@@ -70,55 +61,134 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     }
     private void Zoom()
     {
+        silbingIndex = transform.GetSiblingIndex();
+
         if (explanation)
             explanation.gameObject.SetActive(true);
-
-        clicked++;
+        
         transform.SetParent(newParent);
         rect.position += new Vector3(0, offsetY, 0);
         rect.localScale = scale;
+        zooming = true;
     }
     private void Update()
     {
-        if (clicked >= 1 && Input.GetMouseButtonDown(0) &&!isIn)
+        if (Input.GetMouseButtonDown(0) && isIn)
         {
-            Cancel();
+            clicked = true;
         }
-        else if (clicked > 0 && Input.GetMouseButtonDown(0))
+
+        if (clicked)
         {
-            if (!dragStart)
-            {
-                dragStart = true;
-                if (!EnoughWhiskas(selfCard))
-                {
-                    StartCoroutine(NotEnough(im));
-                }
-                else
-                {
-                    holding = true;
-                    StartDrag();
-                }
-            }
+            clickTimer += Time.deltaTime;
+        }
+
+        HandleZooming();
+
+        if (clickTimer > 0.125 && !dragStart)
+        {
+            HandleDrag();
         }
 
         if (holding)
             Dragging();
 
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && holding)
         {
-            if (holding)
-                EndDrag();
-
             holding = false;
+            clicked = false;
+            dragStart = false;
+            clickTimer = 0;
+            EndDrag();
         }
+        //if (Input.GetMouseButtonDown(0) && isIn)
+        //{
+        //    if (!dragStart)
+        //    {
+        //        dragStart = true;
+        //        if (!EnoughWhiskas(selfCard))
+        //        {
+        //            StartCoroutine(NotEnough(im));
+        //        }
+        //        else
+        //        {
+        //            holding = true;
+        //            StartDrag();
+        //        }
+        //    }
+        //}
+        //if (Input.GetMouseButtonDown(0) && !isIn)
+        //{
+        //    Cancel();
+        //}
 
+        //if (holding)
+        //    Dragging();
+        //else
+        //    EndDrag();
 
-        if (currentDisplayer)
-        {
-            currentDisplayer.transform.position = Input.mousePosition;
-        }
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    if (isIn && !zooming)
+        //    {
+        //        Zoom();
+        //    }
+        //    else if (isIn && !zooming)
+        //    {
+        //        Cancel();
+        //    }
+        //    else if (holding)
+        //    {
+        //        holding = false;
+        //        EndDrag();
+        //    }
+        //}
+
+        //if (currentDisplayer)
+        //{
+        //    currentDisplayer.transform.position = Input.mousePosition;
+        //}
+
+        //clickTimer += Time.deltaTime;
     }
 
+    private void HandleZooming()
+    {
+        if (Input.GetMouseButtonUp(0) && clickTimer <= 0.2 && clicked && !zooming)
+        {
+            Zoom();
+            clicked = false;
+            clickTimer = 0;
+        }
+        if (Input.GetMouseButtonDown(0) && zooming)
+        {
+            if (isIn && !dragStart)
+            {
+                HandleDrag();
+            } 
+            else if (!isIn)
+            {
+                Cancel();
+            }
+        }
+    }
+    private void HandleDrag()
+    {
+        if (!EnoughWhiskas(selfCard))
+        {
+            StartCoroutine(NotEnough(im));
+            clicked = false;
+            holding = false;
+            dragStart = false;
+            clickTimer = 0;
+        }
+        else
+        {
+            dragStart = true;
+            holding = true;
+            StartDrag();
+        }
+    }
     private void Cancel()
     {
         transform.SetParent(startParent);
@@ -129,7 +199,7 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         if (explanation)
             explanation.gameObject.SetActive(false);
 
-        clicked = 0;
+        zooming = false;
     }
     private IEnumerator NotEnough(Image i)
     {
@@ -155,7 +225,6 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     private void StartDrag()
     {
         im.color = new Color(im.color.r, im.color.g, im.color.b, transparencyOnDrag);
-        clicked++;
         SpawnClick();
         currentDisplayer = Instantiate(displayer, Input.mousePosition, Quaternion.identity);
         currentDisplayer.GetComponent<Image>().sprite = im.sprite;
