@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-sceneSetups: []
-=======
 sceneSetups:
-- path: Assets/Scenes/Marc.unity
+- path: Assets/Scenes/Marc 1.unity
   isLoaded: 1
   isActive: 1
   isSubScene: 0
->>>>>>> origin/Marc
