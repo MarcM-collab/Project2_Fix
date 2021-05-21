@@ -8,10 +8,4 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Marc.unity
     guid: 216bb97ca5ac68446bc0e6e8e652c663
-  - enabled: 1
-    path: Assets/Scenes/EndPlayer.unity
-    guid: 8444a3fb4eccb12448d285af4e2f3ec7
-  - enabled: 1
-    path: Assets/Scenes/EndLoss.unity
-    guid: 88dade31763d86b4b979291329be2339
   m_configObjects: {}
