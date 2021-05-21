@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class ChooseDrawableCardsPlayer : MonoBehaviour
 {
+    private List<Card> _cards; //Baraja elegida por el player (8 cartas)
     [SerializeField]
-    private List<Card> Cards; //Baraja elegida por el player (8 cartas)
-
+    private DeckPlayer _deckPlayer;
 
     Card[] twoCardsRandom = new Card[2]; //lista para las dos cartas aleatorias.
     private List<Card> randomControl = new List<Card>();
@@ -43,6 +43,10 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
         {
             cardInstancePos[i] = buttons[i].GetComponentInChildren<RectTransform>();
         }
+    }
+    private void Start()
+    {
+        _cards = _deckPlayer.Cards;
     }
     private void ChooseDrawableCardsEnter(Animator animator)
     {
@@ -102,15 +106,15 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
     }
     private void ChooseRandom() //salen dos cartas random y las guarda en una lista.
     {
-        int random1 = UnityEngine.Random.Range(0, Cards.Count);
-        int random2 = UnityEngine.Random.Range(0, Cards.Count);
+        int random1 = UnityEngine.Random.Range(0, _cards.Count);
+        int random2 = UnityEngine.Random.Range(0, _cards.Count);
 
         while (random1 == random2)
         {
-            random2 = UnityEngine.Random.Range(0, Cards.Count);
+            random2 = UnityEngine.Random.Range(0, _cards.Count);
         }
-        twoCardsRandom[0] = Cards[random1];
-        twoCardsRandom[1] = Cards[random2];
+        twoCardsRandom[0] = _cards[random1];
+        twoCardsRandom[1] = _cards[random2];
     }
     public void ConfirmAddCard(int number) //se pasa información de la carta escogida y se desactivan después.
     {

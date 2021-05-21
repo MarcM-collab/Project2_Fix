@@ -219,24 +219,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c502528c2ecff914f89d38ea5d7e80cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _deckAI: {fileID: 2570498069593033044}
   IAHandCanvas: {fileID: 1276120772}
-  IADeck:
-  - card: {fileID: 8933277958290082131, guid: 23679815dc404b440abaa330a94c2b0f, type: 3}
-    priority: 4
-  - card: {fileID: 4526846348483723782, guid: 64af944539373e34683703445702201a, type: 3}
-    priority: 1
-  - card: {fileID: -1943764638452470376, guid: e9f55579a5b2f9e47b25c256f8500d87, type: 3}
-    priority: 2
-  - card: {fileID: -1943764638452470376, guid: cc1655c125678f44da84069b1393ec87, type: 3}
-    priority: 4
-  - card: {fileID: -1943764638452470376, guid: 52e3f61779ccac142a1f2349dc0ddd4e, type: 3}
-    priority: 3
-  - card: {fileID: 1912205611453271048, guid: e3ab8a363afbb57499e4ba91e8202daa, type: 3}
-    priority: 6
-  - card: {fileID: -1943764638452470376, guid: 4dc94a6f8fdf1b64e886a4b3ccd18bbb, type: 3}
-    priority: 5
-  - card: {fileID: -1943764638452470376, guid: 988c8a267801acc438fa88b201a0a7a8, type: 3}
-    priority: 6
   cardSprites: {fileID: 21300000, guid: 1d6f5b16e18ee8640bf415da65263d79, type: 3}
   selectableStartCards:
   - {fileID: 1276120774}
@@ -1287,15 +1271,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11651c325ec30574c91446a0f91f64c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Cards:
-  - {fileID: 4526846348483723782, guid: 64af944539373e34683703445702201a, type: 3}
-  - {fileID: -1943764638452470376, guid: e9f55579a5b2f9e47b25c256f8500d87, type: 3}
-  - {fileID: -1943764638452470376, guid: cc1655c125678f44da84069b1393ec87, type: 3}
-  - {fileID: 8933277958290082131, guid: 23679815dc404b440abaa330a94c2b0f, type: 3}
-  - {fileID: -1943764638452470376, guid: 52e3f61779ccac142a1f2349dc0ddd4e, type: 3}
-  - {fileID: -1943764638452470376, guid: 988c8a267801acc438fa88b201a0a7a8, type: 3}
-  - {fileID: -1943764638452470376, guid: 4dc94a6f8fdf1b64e886a4b3ccd18bbb, type: 3}
-  - {fileID: 1912205611453271048, guid: e3ab8a363afbb57499e4ba91e8202daa, type: 3}
+  _deckPlayer: {fileID: 5162430282280017225}
   buttons:
   - {fileID: 1276120770}
   - {fileID: 1980618070}
@@ -10642,6 +10618,40 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2570498070707466391, guid: 36b5aca45c673754faef3e2b763bda4e, type: 3}
   m_PrefabInstance: {fileID: 2570498069593033041}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2570498069593033043 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2570498070707466388, guid: 36b5aca45c673754faef3e2b763bda4e, type: 3}
+  m_PrefabInstance: {fileID: 2570498069593033041}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2570498069593033044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2570498069593033043}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 392519a13283a7d4585f82fbc6c53f6c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  IADeck:
+  - card: {fileID: 4526846348483723782, guid: 64af944539373e34683703445702201a, type: 3}
+    priority: 0
+  - card: {fileID: -1943764638452470376, guid: cc1655c125678f44da84069b1393ec87, type: 3}
+    priority: 0
+  - card: {fileID: 8933277958290082131, guid: 23679815dc404b440abaa330a94c2b0f, type: 3}
+    priority: 0
+  - card: {fileID: -1943764638452470376, guid: e9f55579a5b2f9e47b25c256f8500d87, type: 3}
+    priority: 0
+  - card: {fileID: -8550791944411300663, guid: 2d13e5b3d53cdd64bbdfc3c9755ff9ab, type: 3}
+    priority: 0
+  - card: {fileID: -1943764638452470376, guid: 52e3f61779ccac142a1f2349dc0ddd4e, type: 3}
+    priority: 0
+  - card: {fileID: -1943764638452470376, guid: 4dc94a6f8fdf1b64e886a4b3ccd18bbb, type: 3}
+    priority: 0
+  - card: {fileID: 1912205611453271048, guid: e3ab8a363afbb57499e4ba91e8202daa, type: 3}
+    priority: 0
 --- !u!1001 &5162430282280017222
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10796,6 +10806,32 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5162430281586322655, guid: af4e35cdc29e6e94d9c4786d0b9a627d, type: 3}
   m_PrefabInstance: {fileID: 5162430282280017222}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &5162430282280017224 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5162430281586322654, guid: af4e35cdc29e6e94d9c4786d0b9a627d, type: 3}
+  m_PrefabInstance: {fileID: 5162430282280017222}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5162430282280017225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5162430282280017224}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 406711810742ee34ebf70884859bbcbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Cards:
+  - {fileID: 4526846348483723782, guid: 64af944539373e34683703445702201a, type: 3}
+  - {fileID: -1943764638452470376, guid: e9f55579a5b2f9e47b25c256f8500d87, type: 3}
+  - {fileID: -1943764638452470376, guid: cc1655c125678f44da84069b1393ec87, type: 3}
+  - {fileID: 8933277958290082131, guid: 23679815dc404b440abaa330a94c2b0f, type: 3}
+  - {fileID: -1943764638452470376, guid: 52e3f61779ccac142a1f2349dc0ddd4e, type: 3}
+  - {fileID: -1943764638452470376, guid: 988c8a267801acc438fa88b201a0a7a8, type: 3}
+  - {fileID: -1943764638452470376, guid: 4dc94a6f8fdf1b64e886a4b3ccd18bbb, type: 3}
+  - {fileID: 1912205611453271048, guid: e3ab8a363afbb57499e4ba91e8202daa, type: 3}
 --- !u!1001 &6487012031477000117
 PrefabInstance:
   m_ObjectHideFlags: 0

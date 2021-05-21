@@ -7,15 +7,12 @@ using Random = UnityEngine.Random;
 
 public class ChooseDrawableCardsAI : CardAIBehaviour
 {
-    [Serializable]
-    public struct CardType
-    {
-        public Card card;
-        public int priority;
-    }
+    [SerializeField]
+    private DeckAI _deckAI;
+
     private float maxCardsInHand = 6;
     public Transform IAHandCanvas;
-    public List<CardType> IADeck;//deck hecho por nosotros
+    private List<CardType> IADeck;//deck hecho por nosotros
 
     [Header("Display settings")]
     public Sprite cardSprites;
@@ -40,6 +37,11 @@ public class ChooseDrawableCardsAI : CardAIBehaviour
     {
         ChooseDrawableCardsBehaviour.OnChooseDrawableCardsEnter -= ChooseDrawableCardsEnter;
         ChooseDrawableCardsBehaviour.OnChooseDrawableCardsUpdate -= ChooseDrawableCardsUpdate;
+    }
+
+    private void Start()
+    {
+        IADeck = _deckAI.IADeck;
     }
 
     private void ChooseDrawableCardsEnter(Animator animator)
