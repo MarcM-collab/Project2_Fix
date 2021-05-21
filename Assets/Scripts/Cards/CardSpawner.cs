@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+using TMPro;
 
 public class CardSpawner : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class CardSpawner : MonoBehaviour
 
     public Color IAColor;
     public Color PlayerColor;
+
+    public Sprite healthEnemySprite;
 
     public void SpawnCard(Card toSpawn, Vector2 pos, Team team)
     {
@@ -42,6 +45,9 @@ public class CardSpawner : MonoBehaviour
                 break;
             case Team.TeamAI:
                 colorSetter.color = IAColor;
+                theTile.gameObject.GetComponentInChildren<SetHealthText>().GetComponent<Image>().sprite = healthEnemySprite;
+                RectTransform rt = theTile.gameObject.GetComponentInChildren<TMP_Text>().rectTransform;
+                rt.localScale = new Vector3(-rt.localScale.x, rt.localScale.y, rt.localScale.z);
                 break;
         }
         colorSetter.SetValue(1);

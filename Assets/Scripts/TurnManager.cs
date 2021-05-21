@@ -6,12 +6,13 @@ using UnityEngine.UI;
 
 public static class TurnManager
 {
+    public static int manaLimit = 9;
     private static int maxMana = 1;
     private static int currentTurn = 0;
 
     public static int currentMana { get; private set; } = 0;
 
-    public delegate void SetDisplayValue(float value, int currentAmount);
+    public delegate void SetDisplayValue(int currentAmount, int maxMana);
     public static SetDisplayValue setDisplay;
 
     public delegate void SwitchBehaviour();
@@ -38,11 +39,11 @@ public static class TurnManager
     {
         currentTurn++;
 
-        if (TeamTurn == Team.TeamPlayer)
+        if (TeamTurn == Team.TeamPlayer && currentTurn < manaLimit*2-2)
             maxMana++;
 
         currentMana = maxMana;
-        setDisplay?.Invoke((float)currentMana / maxMana, currentMana);
+        setDisplay?.Invoke(currentMana, maxMana);
 
         OnSwitchBehaviour?.Invoke();
         CardDrawn = false;
@@ -53,6 +54,6 @@ public static class TurnManager
     public static void SubstractMana(int amount)
     {
         currentMana -= amount;
-        setDisplay?.Invoke((float)currentMana / maxMana, currentMana);
+        setDisplay?.Invoke(currentMana, maxMana);
     }
 }

@@ -149,6 +149,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
+    <Compile Include="Assets\SetHealthText.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

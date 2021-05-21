@@ -9,26 +9,45 @@ public class SpellSpawner : MonoBehaviour
     private void OnEnable()
     {
         ScriptButton.spellButton += SetSpellActive;
-        ScriptButton.endDrag += Execute;
+        ScriptButton.endDrag += ExecutePlayer;
     }
     private void OnDisable()
     {
         ScriptButton.spellButton -= SetSpellActive;
-        ScriptButton.endDrag -= Execute;
+        ScriptButton.endDrag -= ExecutePlayer;
+    }
+    public void IASpawn(Spell spell)
+    {
+        currentSpell = spell;
+        Execute(Team.TeamAI);
     }
     private void SetSpellActive(Spell spell)
     {
         currentSpell = spell;
     }
-    private void Execute()
+    private void ExecutePlayer()
+    {
+        Execute(Team.TeamPlayer);
+    }
+    private void Execute(Team team)
     {
         if (currentSpell)
         {
-            currentSpell.ExecuteSpell();
-            if (currentSpell.executed)
+            print("Executing");
+            switch (team)
             {
-                DestroyCard(currentSpell);
+                case Team.TeamPlayer:
+                    currentSpell.ExecuteSpell();
+                    if (currentSpell.executed)
+                    {
+                        DestroyCard(currentSpell);
+                    }
+                    break;
+                case Team.TeamAI:
+                    currentSpell.IAUse();
+                    break;
             }
+
             currentSpell = null;
         }
 

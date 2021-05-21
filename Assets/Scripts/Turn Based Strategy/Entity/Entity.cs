@@ -12,7 +12,7 @@ public class Entity : MonoBehaviour
     public delegate void ChangeHealthDelegate(float fractionHealth);
     public ChangeHealthDelegate OnChangeHealth;
 
-    [HideInInspector] public int HP;
+    public int HP;
     public Team Team;
 
 
@@ -30,7 +30,6 @@ public class Entity : MonoBehaviour
     public int MaxHP;
     public void ChangeHealth()
     {
-        print("change health");
         OnChangeHealth?.Invoke((float)HP / MaxHP);
     }
 }

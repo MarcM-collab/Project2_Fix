@@ -73,7 +73,7 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     }
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) && isIn)
+        if (Input.GetMouseButtonDown(0) && isIn && TurnManager.TeamTurn == Team.TeamPlayer)
         {
             clicked = true;
         }

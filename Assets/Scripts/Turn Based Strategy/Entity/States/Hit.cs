@@ -6,18 +6,30 @@ public class Hit : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        HealthSystem.TakeDamage(EntityManager.ExecutorCharacter.AttackPoints);
+        Debug.Log(EntityManager.ExecutorCharacter.currentAttack);
+        Debug.Log("Executor: " + EntityManager.ExecutorCharacter.name + " // Target: " + EntityManager.TargetCharacter);
+
+        HealthSystem.TakeDamage(EntityManager.ExecutorCharacter.currentAttack);
         animator.GetComponent<Entity>().ChangeHealth();
-        animator.GetComponent<SpriteRenderer>().color = Color.red;
+
+        SpriteRenderer[] r = animator.GetComponentsInChildren<SpriteRenderer>();
+        if (r.Length > 1)
+            r[1].color = Color.red;
+
         animator.GetComponent<Entity>().Hit = false;
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        animator.GetComponent<Entity>().Hit = false;
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponent<SpriteRenderer>().color = Color.white;
+        SpriteRenderer[] r = animator.GetComponentsInChildren<SpriteRenderer>();
+        if (r.Length > 1)
+            r[1].color = Color.white;
+
         animator.GetComponent<Entity>().Hit = false;
+        EntityManager.ExecutorCharacter.currentAttack = EntityManager.ExecutorCharacter.AttackPoints;
     }
 }

@@ -6,7 +6,7 @@ public class Exhausted : StateMachineBehaviour
 {
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponent<SpriteRenderer>().color = Color.gray;
+        animator.GetComponentsInChildren<SpriteRenderer>()[1].color = Color.gray;
         animator.GetComponent<Character>().IsExhaustedAnim = true;
     }
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -15,7 +15,7 @@ public class Exhausted : StateMachineBehaviour
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        animator.GetComponent<SpriteRenderer>().color = Color.white;
+        animator.GetComponentsInChildren<SpriteRenderer>()[1].color = Color.white;
         animator.GetComponent<Character>().IsExhaustedAnim = false;
     }
 }

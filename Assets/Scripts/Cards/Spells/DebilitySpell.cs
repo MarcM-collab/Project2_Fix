@@ -49,8 +49,17 @@ public class DebilitySpell : Spell
         if (!priorChar)
             SetPriorChar();
 
+        print(priorChar);
         if (priorChar)
+        {
             ReduceAttack(priorChar);
+
+            if (FX)
+                Instantiate(FX, priorChar.transform.position, Quaternion.identity);
+
+            executed = true;
+        }
+            
     }
     public override bool CanBeUsed()
     {

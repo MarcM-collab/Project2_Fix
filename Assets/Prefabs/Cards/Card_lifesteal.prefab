@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Steal 2 HP from a random enemy.
+  m_text: Steals 1 HP from a random enemy.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e99ddd5ad326bd9449fe092a1a168b52, type: 2}
   m_sharedMaterial: {fileID: 2977093212589573011, guid: e99ddd5ad326bd9449fe092a1a168b52, type: 2}
@@ -533,7 +533,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   use: 0
-  toActive: {fileID: 0}
+  toActive: {fileID: 7957716123456422318}
 --- !u!1 &1825913198121891440
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,10 +6,15 @@ using UnityEngine;
 
 public class Riccochet : Abilty
 {
-    public int damage = 2;
+    //public int damage = 2;
     public int numOfTargets = 2;
     public float waitForNextTarget;
     private List<Character> damagedCharacters = new List<Character>();
+    private Character selfChar;
+    private void Start()
+    {
+        selfChar = GetComponent<Character>();
+    }
     public override void Excecute()
     {
         Use(Team.TeamAI);
@@ -20,20 +25,26 @@ public class Riccochet : Abilty
     }
     private void Use(Team targetTeam)
     {
-        RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
+        Character[] targets = EntityManager.GetCharacters(targetTeam);
+        Character target = targets[UnityEngine.Random.Range(0, targets.Length)];
 
-        if (hit2D)
-        {
-            if (hit2D.transform.CompareTag("Character"))
-            {
-                Character target = hit2D.collider.gameObject.GetComponent<Character>();
-                if (target.Team == targetTeam)
-                {
-                    HealthSystem.TakeDamage(damage, target);
-                    FindNewTargets(targetTeam, target);
-                }
-            }
-        }
+        Damage(target, selfChar);
+
+        StartCoroutine(FindNewTargets(targetTeam, target));
+        //RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
+
+        //if (hit2D)
+        //{
+        //    if (hit2D.transform.CompareTag("Character"))
+        //    {
+        //        Character target = hit2D.collider.gameObject.GetComponent<Character>();
+        //        if (target.Team == targetTeam)
+        //        {
+        //            HealthSystem.TakeDamage(damage, target);
+        //            FindNewTargets(targetTeam, target);
+        //        }
+        //    }
+        //}
     }
     private IEnumerator FindNewTargets(Team team, Character currentTarget)
     {
@@ -46,7 +57,7 @@ public class Riccochet : Abilty
             if (!currentTarget)
                 break;
 
-            HealthSystem.TakeDamage(damage, currentTarget);
+            Damage(currentTarget, selfChar);
         }
         executed = true;
     }
@@ -79,5 +90,12 @@ public class Riccochet : Abilty
     private bool CheckDistance(Vector3 nearest, Vector3 toTest, Vector3 current)
     {
         return Vector2.Distance(nearest, current) > Vector2.Distance(toTest, current);
+    }
+    private void Damage(Character target, Character executor)
+    {
+        EntityManager.SetExecutor(executor);
+        EntityManager.SetTarget(target);
+
+        target.Hit = true;
     }
 }

@@ -27,8 +27,8 @@ public class MeleeShowAttackTilePlayer : CombatPlayerBehaviour
                     var currentGridPosition = _targetGridPosition + position;
                     var currentGridCenterPosition = currentGridPosition + cellSize;
 
-                    var IsNothingOrIsEnemyCharacter = InTile(currentGridCenterPosition) == (int)EntityType.Nothing ||
-                        InTile(currentGridCenterPosition) == (int)EntityType.EnemyCharacter;
+                    var IsNothingOrIsEnemyCharacter = (InTile(currentGridCenterPosition) == (int)EntityType.Nothing ||
+                        InTile(currentGridCenterPosition) == (int)EntityType.EnemyCharacter) && !_collisionTilemap.HasTile(currentGridPosition);
                     if (_uITilemap.HasTile(currentGridPosition))
                     {
                         if (IsNothingOrIsEnemyCharacter)
