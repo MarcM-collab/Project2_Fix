@@ -57,3 +57,7 @@ Library/CurrentLayout-default.dwlt
 Library/SourceAssetDB
 *.dwlt
 *.dwlt
+obj/Debug/Assembly-CSharp.csprojAssemblyReference.cache
+obj/Debug/Assembly-CSharp.Player.csprojAssemblyReference.cache
+*.cache
+*.cache
