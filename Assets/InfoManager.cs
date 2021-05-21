@@ -28,6 +28,7 @@ public class InfoManager : MonoBehaviour
 
     private void Start()
     {
+        spriteShower.color = new Color(spriteShower.color.r, spriteShower.color.g, spriteShower.color.b, 0);
         buttonUseColor = buttonUse.color;
         whiskasColor = whiskasIm.color;
         mainCamera = Camera.main; //This will avoid extra iterations searching for a Game Object with tag in the whole scene.
@@ -43,6 +44,10 @@ public class InfoManager : MonoBehaviour
             {
                 if (rayCast.transform.CompareTag("Character"))
                 {
+                    if (spriteShower.color.a <= 0)
+                    {
+                        spriteShower.color = new Color(spriteShower.color.r, spriteShower.color.g, spriteShower.color.b, 1);
+                    }
                     targetChar = rayCast.transform.gameObject.GetComponent<Character>();
                     currentAttack = targetChar.AttackPoints;
                     ShowBasicInfo();

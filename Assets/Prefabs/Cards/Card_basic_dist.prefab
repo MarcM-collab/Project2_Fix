@@ -303,8 +303,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -40.56201, y: -51.100006}
-  m_SizeDelta: {x: 22.08, y: 19.9265}
+  m_AnchoredPosition: {x: -40.562, y: -51.999}
+  m_SizeDelta: {x: 22.08, y: 21.725}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1139339953554801263
 CanvasRenderer:
@@ -334,7 +334,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: cbd383dc12431a34981233dbc562d13d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -455,7 +455,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 53.1928, y: -0.00000089433}
+  m_AnchoredPosition: {x: 57, y: -0.00000089433}
   m_SizeDelta: {x: 154.3559, y: 39.853}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8239131675280329373
@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -1219,19 +1219,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 669863665788767931}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 775271989789863278}
-        m_TargetAssemblyTypeName: ScriptButton, Assembly-CSharp
-        m_MethodName: ClicButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &775271989789863278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1244,8 +1232,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cde27b4390ad7f4d9496cab5f7da083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetY: 100
-  scale: {x: 3, y: 3, z: 3}
+  offsetY: 125
+  scale: {x: 2.5, y: 2.5, z: 2.5}
   displayer: {fileID: 2249963350747922903, guid: 80ba08dda44985149bd71e1993271b8d, type: 3}
 --- !u!114 &4526846348483723782
 MonoBehaviour:

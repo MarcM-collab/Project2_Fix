@@ -9,12 +9,7 @@ public class Abilty : MonoBehaviour
 
     protected Vector2 GetMousePosition
     {
-        get { return mainCamera.ScreenToWorldPoint(Input.mousePosition); }
-    }
-
-    private void Start()
-    {
-        mainCamera = Camera.main; //This will avoid extra iterations searching for a Game Object with tag in the whole scene.
+        get { return Camera.main.ScreenToWorldPoint(Input.mousePosition); }
     }
 
     public int whiskasCost;

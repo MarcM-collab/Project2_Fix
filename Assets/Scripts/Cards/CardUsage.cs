@@ -86,7 +86,7 @@ public class CardUsage : MonoBehaviour
         if (_card is Unit)
         {
             Vector2 pos = GetMouseTilePos;
-            spawner.SpawnCard(_card, GetMouseTilePos, Team.TeamPlayer);
+            spawner.SpawnCard(_card, new Vector2(GetMouseTilePos.x, GetMouseTilePos.y), Team.TeamPlayer);
             isDragging = false;
             DestroyCard(_card);
         }

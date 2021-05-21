@@ -24,8 +24,10 @@ public class Character : Entity
 
     public Vector3 TeleportPoint;
 
+    [HideInInspector] public int currentAttack;
     private void Start()
     {
+        currentAttack = AttackPoints;
         _animator = GetComponent<Animator>();
         HP = MaxHP;
         OnChangeHealth?.Invoke(HP / MaxHP);

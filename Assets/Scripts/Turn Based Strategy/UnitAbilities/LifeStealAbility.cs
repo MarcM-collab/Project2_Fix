@@ -6,7 +6,7 @@ public class LifeStealAbility : Abilty
 {
     public int damage;
     private Character selfChar;
-    private void Start()
+    private void Awake()
     {
         selfChar = gameObject.GetComponent<Character>();
     }
@@ -21,11 +21,23 @@ public class LifeStealAbility : Abilty
     private void DoAction(Team targetTeam)
     {
         Character[] characters = EntityManager.GetCharacters(targetTeam);
-        print(characters.Length);
         if (characters.Length > 0)
         {
-            HealthSystem.TakeDamage(damage, characters[Random.Range(0, characters.Length)]); //damage
-            HealthSystem.TakeDamage(-damage, selfChar); //heal
+            EntityManager.SetTarget(characters[Random.Range(0, characters.Length)]);
+            EntityManager.SetExecutor(selfChar);
+
+            EntityManager.ExecutorCharacter.GetComponent<Character>().currentAttack = damage;
+
+            EntityManager.TargetCharacter.Hit = true;
+
+            //EntityManager.SetTarget(selfChar);
+            if (EntityManager.ExecutorCharacter.HP + damage <= EntityManager.ExecutorCharacter.MaxHP) //calcular diferencia (ej si tienes 4 hp i el max es 5 deberias curarte 1)
+            {
+                //    EntityManager.SetTarget(selfChar);
+                //    EntityManager.TargetCharacter.Hit = true;
+                HealthSystem.Heal(EntityManager.ExecutorCharacter, damage);
+            }
+
             executed = true;
         }
     }

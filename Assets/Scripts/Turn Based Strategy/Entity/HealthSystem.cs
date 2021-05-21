@@ -10,29 +10,33 @@ public static class HealthSystem
             target = EntityManager.TargetCharacter;
 
         var currentHealth = target.HP;
-
-        if (currentHealth - amount <= 0)
-        {
-            OnDeath();
-            if (currentHealth - amount < 0)
-                amount = OnOverkill(currentHealth);
-        }
         currentHealth -= amount;
 
-        OnHit(amount);
-
-        target.ChangeHealth();
+        if (currentHealth <= 0)
+        {
+            OnDeath(target);
+            if (currentHealth < 0)
+                currentHealth = OnOverkill();
+        }
 
         target.HP = currentHealth;
+        target.ChangeHealth();
     }
-    private static void OnDeath()
+    public static void Heal(Entity target, int amount)
     {
-        var target = EntityManager.TargetCharacter;
-        target.Dead = true;
+        var currentHealth = target.HP;
+        currentHealth += amount;
+
+        target.HP = currentHealth;
+        target.ChangeHealth();
     }
-    private static int OnOverkill(int currentHealth)
+    private static void OnDeath(Entity toKill)
     {
-        return currentHealth;
+        toKill.Dead = true;
+    }
+    private static int OnOverkill()
+    {
+        return 0;
     }
     private static void OnHit(int damage)
     {

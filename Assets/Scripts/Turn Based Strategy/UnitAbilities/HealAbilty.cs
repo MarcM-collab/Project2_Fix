@@ -8,9 +8,9 @@ public class HealAbilty : Abilty
     public override void Excecute()
     {
         Character c = EntityManager.ExecutorCharacter;
-        if (c.HP - healthAmount <= c.MaxHP)
+        if (c.HP + healthAmount <= c.MaxHP)
         {
-            HealthSystem.TakeDamage(-healthAmount, c);
+            HealthSystem.Heal(c, healthAmount);
             executed = true;
         }
     }

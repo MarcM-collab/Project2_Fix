@@ -45,5 +45,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   executed: 0
   whiskasCost: 1
-  textExplain: Damage a random enemy and heals
-  damage: 2
+  textExplain: Damage a random enemy
+  damage: 1

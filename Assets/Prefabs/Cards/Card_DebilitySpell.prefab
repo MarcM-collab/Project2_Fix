@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -72.409325}
-  m_SizeDelta: {x: 96.7293, y: 43.3184}
+  m_AnchoredPosition: {x: 0, y: -71.43718}
+  m_SizeDelta: {x: 96.7293, y: 44.6714}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8580513757330994631
 CanvasRenderer:
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Reduces 1 attack point to a unit.
+  m_text: Reduces the attack points of a unit to the half.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: e99ddd5ad326bd9449fe092a1a168b52, type: 2}
   m_sharedMaterial: {fileID: 2977093212589573011, guid: e99ddd5ad326bd9449fe092a1a168b52, type: 2}
@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 13.5
-  m_fontSizeBase: 13.5
+  m_fontSize: 11.21
+  m_fontSizeBase: 11.21
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_PressedColor: {r: 1, g: 1, b: 1, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
@@ -258,19 +258,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2352267231514790245}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 605790150503887886}
-        m_TargetAssemblyTypeName: ScriptButton, Assembly-CSharp
-        m_MethodName: ClicButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &8933277958290082131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,8 +287,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cde27b4390ad7f4d9496cab5f7da083, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  offsetY: 100
-  scale: {x: 3, y: 3, z: 3}
+  offsetY: 125
+  scale: {x: 2.5, y: 2.5, z: 2.5}
   displayer: {fileID: 2249963350747922903, guid: 80ba08dda44985149bd71e1993271b8d, type: 3}
 --- !u!114 &8355561248933841670
 MonoBehaviour:

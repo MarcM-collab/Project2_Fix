@@ -7,8 +7,26 @@ public class DebilitySpell : Spell
 {
     private Character priorChar;
     public GameObject FX;
+    private void Update()
+    {
+        if (activated)
+        {
+            Vector3Int mouseIntPos = GetIntPos(GetMousePosition);
+
+            if (tileManager.FloorTilemap.HasTile(mouseIntPos))
+            {
+                if (prevPos != mouseIntPos)
+                {
+                    tileManager.UITilemap.SetTile(prevPos, null);
+                    prevPos = mouseIntPos;
+                    tileManager.UITilemap.SetTile(mouseIntPos, tileManager.PointingTile);
+                }
+            }
+        }
+    }
     public override void ExecuteSpell()
     {
+        base.ExecuteSpell();
         RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
 
         if (hit2D)
@@ -23,6 +41,7 @@ public class DebilitySpell : Spell
                 executed = true;
             }
         }
+        tileManager.UITilemap.SetTile(prevPos, null);
     }
     public override void IAUse()
     {
@@ -30,8 +49,17 @@ public class DebilitySpell : Spell
         if (!priorChar)
             SetPriorChar();
 
+        print(priorChar);
         if (priorChar)
+        {
             ReduceAttack(priorChar);
+
+            if (FX)
+                Instantiate(FX, priorChar.transform.position, Quaternion.identity);
+
+            executed = true;
+        }
+            
     }
     public override bool CanBeUsed()
     {

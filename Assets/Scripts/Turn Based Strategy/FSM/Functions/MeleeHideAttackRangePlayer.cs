@@ -20,6 +20,6 @@ public class MeleeHideAttackRangePlayer : CombatPlayerBehaviour
     {
         var cellSize = TileManager.CellSize;
         var currentGridCenterPosition = vector + cellSize;
-        return InTile(currentGridCenterPosition) == (int)EntityType.Nothing && _uITilemap.HasTile(vector);
+        return (InTile(currentGridCenterPosition) == (int)EntityType.Nothing && _uITilemap.HasTile(vector)) && !_collisionTilemap.HasTile(vector);
     }
 }

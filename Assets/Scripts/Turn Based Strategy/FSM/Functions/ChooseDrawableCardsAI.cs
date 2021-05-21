@@ -158,4 +158,8 @@ public class ChooseDrawableCardsAI : CardAIBehaviour
                 return IADeck[random2].card;
         }
     }
+    private void SetPriorities()
+    {
+        //List<CardType> tempList = new List<CardType>();
+    }
 }

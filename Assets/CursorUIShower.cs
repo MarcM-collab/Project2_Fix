@@ -7,6 +7,11 @@ public class CursorUIShower : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 {
     public bool use = false;
     public GameObject toActive;
+    private void Start()
+    {
+        if (toActive && use)
+            toActive.SetActive(false);
+    }
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (toActive && use)

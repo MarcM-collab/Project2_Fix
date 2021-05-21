@@ -2,24 +2,42 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class GasSpell : Spell
 {
     public GameObject GasSpellPrefab;
     public int damage;
     private Team currentTurn;
+    private void Update()
+    {
+        if (activated)
+        {
+            Vector3Int mouseIntPos = GetIntPos(GetMousePosition);
+
+            if (tileManager.FloorTilemap.HasTile(mouseIntPos))
+            {
+                if (prevPos != mouseIntPos)
+                {
+                    tileManager.UITilemap.SetTile(prevPos, null);
+                    prevPos = mouseIntPos;
+                    tileManager.UITilemap.SetTile(mouseIntPos, tileManager.PointingTile);
+                }
+            }
+        }
+    }
+
     public override void ExecuteSpell()
     {
-        Instantiate(GasSpellPrefab, GetMousePosition, Quaternion.identity);
-        executed = true;
-        RaycastHit2D hit2D = Physics2D.Raycast(GetMousePosition, Vector2.zero);
+        base.ExecuteSpell();
+        Vector3Int pos = GetIntPos(GetMousePosition);
 
-        if (hit2D)
+        if (tileManager.FloorTilemap.HasTile(pos))
         {
-
-            //if (TileManager.)
-            //currentTurn = TurnManager.TeamTurn;
+            Instantiate(GasSpellPrefab, pos, Quaternion.identity);
+            executed = true;
         }
+        tileManager.UITilemap.SetTile(prevPos, null);
     }
     public override void IAUse()
     {

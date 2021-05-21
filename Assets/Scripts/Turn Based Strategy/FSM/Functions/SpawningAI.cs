@@ -29,6 +29,7 @@ public class SpawningAI : CardAIBehaviour
 
     private bool inTurn = false;
     public CardSpawner spawner;
+    public SpellSpawner spellSpawn;
     private void OnEnable()
     {
         SpawningBehaviour.OnSpawningEnter += SpawningEnter;
@@ -55,6 +56,7 @@ public class SpawningAI : CardAIBehaviour
         {
             SetSelectedHandCard(Random.Range(0, IAHand.Count));
             yield return new WaitForSeconds(cardUsageWait);
+            spellSpawn.IASpawn(priorSpell);
             RemoveCardHand(priorSpell);
         }
 

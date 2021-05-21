@@ -93,7 +93,7 @@ SpriteRenderer:
   m_SortingLayer: 8
   m_SortingOrder: 0
   m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.5019608}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.6666667}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -117,4 +117,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turns: 4
   damage: 1
-  tileSize: {x: 2, y: 2}
+  tileSize: {x: 1.8, y: 1.8}

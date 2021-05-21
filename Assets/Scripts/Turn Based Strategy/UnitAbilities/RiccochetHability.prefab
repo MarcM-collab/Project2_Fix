@@ -46,6 +46,5 @@ MonoBehaviour:
   executed: 0
   whiskasCost: 2
   textExplain: Substracts 2 damage to 3 targets
-  damage: 2
   numOfTargets: 2
   waitForNextTarget: 0.25
