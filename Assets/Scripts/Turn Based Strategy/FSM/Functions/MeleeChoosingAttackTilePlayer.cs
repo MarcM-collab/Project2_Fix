@@ -39,22 +39,52 @@ public class MeleeChoosingAttackTilePlayer : CombatPlayerBehaviour
             _lastGridPos = _currentGridPos;
         }
 
-        var TileSelected = InputManager.LeftMouseClick;
-        if (TileSelected)
+        var SelectInput = InputManager.LeftMouseClick;
+        if (SelectInput)
         {
-            var AttackTileNotSelcted = _attackingTile != _uITilemap.GetTile(_currentGridPos) || IsEnemy();
-            if (AttackTileNotSelcted)
+            var EnemySelected = IsEnemy();
+            if (EnemySelected)
             {
-                animator.SetBool("PreparingAttack", false);
+                if (IsExecutorMelee())
+                {
+                    _tileChosenGridPosition = _executorGridPosition;
+                    _uITilemap.SetTile(_executorGridPosition, _allyTile);
+                    animator.SetTrigger("TileChosen");
+                    animator.SetBool("Attacking", true);
+                }
             }
-
             else
             {
-                _tileChosenGridPosition = _currentGridPos;
-                _uITilemap.SetTile(_currentGridPos, _allyTile);
-                animator.SetTrigger("TileChosen");
-                animator.SetBool("Attacking", true);
+                var AttackTileNotSelcted = _attackingTile != _uITilemap.GetTile(_currentGridPos);
+                if (AttackTileNotSelcted)
+                {
+                    animator.SetBool("PreparingAttack", false);
+                }
+                else
+                {
+                    _tileChosenGridPosition = _currentGridPos;
+                    _uITilemap.SetTile(_currentGridPos, _allyTile);
+                    animator.SetTrigger("TileChosen");
+                    animator.SetBool("Attacking", true);
+                }
             }
         }
+    }
+    private bool IsExecutorMelee()
+    {
+        for (int j = -1; j <= 1; j++)
+        {
+            for (int i = -1; i <= 1; i++)
+            {
+                var position = new Vector3Int(i, j, 0);
+                var currentGridPosition = _targetGridPosition + position;
+
+                if (currentGridPosition == _executorGridPosition)
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

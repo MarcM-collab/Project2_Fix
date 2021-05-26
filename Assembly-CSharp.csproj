@@ -105,6 +105,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatPlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\ChooseDrawableCardsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\Exhausting.cs" />
+    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\DeckPlayer.cs" />
     <Compile Include="Assets\Scripts\Global scripts\ExitGame.cs" />
     <Compile Include="Assets\Scripts\UI\MenuPanel.cs" />
     <Compile Include="Assets\Scripts\Cards\IA\IACards\IACard.cs" />
@@ -147,10 +148,9 @@
     <Compile Include="Assets\Scripts\Cards\Explanation.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\SpawningPlayer.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
+    <Compile Include="Assets\DeckAI.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
-    <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\DeckPlayer.cs" />
-    <Compile Include="Assets\DeckAI.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

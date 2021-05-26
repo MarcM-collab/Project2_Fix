@@ -35,24 +35,25 @@ public class MeleeChoosingAttackTileAI : CombatAIBehaviour
             {
                 _notPossibleTarget.Add(_targetGridPosition);
                 animator.SetBool("PreparingAttack", false);
-
-                if (!(_targetEntity.GetComponent("Entity") as Entity is null))
-                {
-                    _uITilemap.SetTile(_targetGridPosition, null);
-                }
-                if (!(_targetEntity.GetComponent("Hero") as Hero is null))
-                {
-                    HideHeroTiles();
-                }
             }
             else
             {
+                if (!(_targetEntity.GetComponent("Entity") as Entity is null))
+                {
+                    _uITilemap.SetTile(_targetGridPosition, _targetTile);
+                }
+                if (!(_targetEntity.GetComponent("Hero") as Hero is null))
+                {
+                    ShowHeroTiles();
+                }
+
                 _tileChosenGridPosition = possiblePosition[UnityEngine.Random.Range(0, possiblePosition.Count)];
-                possiblePosition.Clear();
                 _uITilemap.SetTile(_tileChosenGridPosition, _allyTile);
                 animator.SetTrigger("TileChosen");
                 animator.SetBool("Attacking", true);
+                _notPossibleTarget.Clear();
             }
+            possiblePosition.Clear();
         }
     }
     private void GetPossiblePosition()

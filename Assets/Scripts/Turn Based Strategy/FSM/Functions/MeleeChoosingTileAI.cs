@@ -5,6 +5,8 @@ using UnityEngine;
 public class MeleeChoosingTileAI : CombatAIBehaviour
 {
     List<Vector3Int> attackableCharactersTiles = new List<Vector3Int>();
+    private bool _targetOnRange;
+    private bool _isHero;
     private void OnEnable()
     {
         MeleeChoosingTileBehaviour.OnMeleeChoosingTileEnter += MeleeChoosingTileEnter;
@@ -15,11 +17,11 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
     }
     private void MeleeChoosingTileEnter(Animator animator)
     {
-        var targetOnRange = false;
+        _targetOnRange = false;
+        _isHero = false;
+        FindTarget();
 
-        FindTarget(ref targetOnRange);
-
-        if (targetOnRange)
+        if (_targetOnRange)
         {
             SetTarget(animator);
             attackableCharactersTiles.Clear();
@@ -29,7 +31,7 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
             MoveToTile(animator);
         }
     }
-    private void FindTarget(ref bool targetOnRange)
+    private void FindTarget()
     {
         var cellSize = TileManager.CellSize;
         var attackRange = _executorCharacter.Range + 2;
@@ -59,16 +61,16 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
                             {
                                 //Target Hero
                                 _targetGridPosition = currentGridPosition;
-                                targetOnRange = true;
+                                _targetOnRange = true;
+                                _isHero = true;
                                 break;
                             }
                             var EnemyOnRange = InTile(currentGridCenterPosition) == (int)EntityType.EnemyCharacter;
                             if (EnemyOnRange)
                             {
                                 //Take the nearest enemy
-                                    attackableCharactersTiles.Add(currentGridPosition);
-                                    targetOnRange = true;
-                                
+                                attackableCharactersTiles.Add(currentGridPosition);
+                                _targetOnRange = true;
                             }
                         }
                     }
@@ -80,11 +82,7 @@ public class MeleeChoosingTileAI : CombatAIBehaviour
     {
         var cellSize = TileManager.CellSize;
         Entity target;
-        if (InTile(_targetGridPosition + cellSize) == (int)EntityType.EnemyHero)
-        {
-            ShowHeroTiles();
-        }
-        else
+        if(!_isHero)
         {
             var enemiesWhoDieOnHit = TakeEnemiesWhoDieOnHit(attackableCharactersTiles);
             if (enemiesWhoDieOnHit.Count > 0)

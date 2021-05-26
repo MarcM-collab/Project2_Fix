@@ -236,13 +236,14 @@ MonoBehaviour:
   MaxHP: 3
   Class: 0
   AttackPoints: 3
-  Range: 5
+  Range: 6
   Velocity: 5
   Teleporting: 0
   Turn: 0
   Attack: 0
   IsExhaustedAnim: 0
   TeleportPoint: {x: 0, y: 0, z: 0}
+  currentAttack: 0
 --- !u!1 &2294010376777024407
 GameObject:
   m_ObjectHideFlags: 0
