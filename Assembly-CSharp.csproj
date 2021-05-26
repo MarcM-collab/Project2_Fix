@@ -75,6 +75,7 @@
     <Compile Include="Assets\Scripts\UI\SetExplanationSprite.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\HideRangeBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\Turn.cs" />
+    <Compile Include="Assets\Scripts\Cards\PrepareDeck.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingAttackTilePlayer.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\MovingToTileBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Exhausted.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="Assets\Scripts\Cards\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\UI\PosHand.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Dead.cs" />
+    <Compile Include="Assets\Scripts\Cards\SelectableCardButton.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTilePlayer.cs" />
     <Compile Include="Assets\Scripts\UI\CursorUIShower.cs" />
     <Compile Include="Assets\Scripts\Cards\CardUsage.cs" />
@@ -150,8 +152,6 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
-    <Compile Include="Assets\Scripts\Cards\PrepareDeck.cs" />
-    <Compile Include="Assets\Scripts\Cards\SelectableCardButton.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
