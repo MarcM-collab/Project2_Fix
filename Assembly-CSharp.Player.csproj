@@ -65,6 +65,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingAttackTileAI.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Hero.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\RangedChoosingTileAI.cs" />
+    <Compile Include="Assets\Scripts\UI\Menu\MenuManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Hit.cs" />
     <Compile Include="Assets\Scripts\Cards\Unit.cs" />
     <Compile Include="Assets\Scripts\Cards\CardSpawner.cs" />
@@ -90,7 +91,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\UI.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\HideRangePlayer.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatAIBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Global scripts\AudioManager.cs" />
+    <Compile Include="Assets\Scripts\Global scripts\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Switcher.cs" />
     <Compile Include="Assets\Scripts\Cards\Spells\Spell.cs" />
     <Compile Include="Assets\Scripts\UI\PosHand.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\AttackingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Cards\Spells\SpellSpawner.cs" />
     <Compile Include="Assets\Scripts\UI\SetManaValue.cs" />
+    <Compile Include="Assets\Scripts\UI\Menu\Panel.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\UnitAbilities\Riccochet.cs" />
     <Compile Include="Assets\Scripts\Cards\Card.cs" />
     <Compile Include="Assets\Scripts\UI\Reminder.cs" />
@@ -124,6 +126,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\EntityManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\Attacking.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\ExhaustingBehaviour.cs" />
+    <Compile Include="Assets\Scripts\Global scripts\LoadScene.cs" />
     <Compile Include="Assets\Scripts\Global scripts\DestroyAfterTime.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeShowAttackTilePlayer.cs" />
     <Compile Include="Assets\Scripts\UI\InfoManager.cs" />
@@ -132,6 +135,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\RangedChoosingTileBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\Entity.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\ChooseDrawableCardsAI.cs" />
+    <Compile Include="Assets\Scripts\Global scripts\CustomSceneManager.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\HealthSystem.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\MeleeShowRangeBehaviour.cs" />
     <Compile Include="Assets\Scripts\Cards\Player\ScriptButton.cs" />
@@ -150,6 +154,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
+    <Compile Include="Assets\Scripts\Global scripts\Audio\MeowAudio.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

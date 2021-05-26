@@ -12,9 +12,7 @@ public static class EntityManager
 
     public static Entity TargetCharacter => Entities[_currentTargetIndex];
     public static Character ExecutorCharacter => Entities[_currentExecutorIndex] as Character;
-
-    [RuntimeInitializeOnLoadMethod]
-    private static void InitEntities()
+    public static void InitEntities()
     {
         Entities = Object.FindObjectsOfType<Entity>().ToList();
     }

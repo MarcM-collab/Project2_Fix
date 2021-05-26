@@ -33,8 +33,6 @@ public static class TurnManager
         }
     }
     public static bool IsAttackRound;
-
-    [RuntimeInitializeOnLoadMethod]
     public static void NextTurn()
     {
         currentTurn++;

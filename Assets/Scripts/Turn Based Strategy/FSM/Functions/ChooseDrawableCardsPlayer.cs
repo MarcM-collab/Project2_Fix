@@ -83,12 +83,12 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
     {
         for (int i = 0; i < twoCardsRandom.Length; i++) 
         {
-            buttons[i].gameObject.SetActive(true);
-
             cardsGO[i] = Instantiate(twoCardsRandom[i].gameObject, buttons[i].transform);
 
             cardsGO[i].GetComponent<ScriptButton>().enabled = false;
             cardsGO[i].GetComponent<Button>().enabled = false;
+
+            buttons[i].GetComponent<Panel>().Show();
 
             CursorUIShower ui = cardsGO[i].GetComponent<CursorUIShower>();
             if (ui)
@@ -118,7 +118,7 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
 
         for (int i = 0; i < buttons.Length; i++)
         {
-            buttons[i].gameObject.SetActive(false);
+            buttons[i].GetComponent<Panel>().Hide();
         }
         cardSelected = true;
     }
