@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 public class ChooseDrawableCardsPlayer : MonoBehaviour
 {
-    [SerializeField]
-    private List<Card> Cards; //Baraja elegida por el player (8 cartas)
+   // [SerializeField]
+    public List<Card> Cards; //Baraja elegida por el player (8 cartas)
 
-
+ 
     Card[] twoCardsRandom = new Card[2]; //lista para las dos cartas aleatorias.
     private List<Card> randomControl = new List<Card>();
     [SerializeField]
@@ -44,21 +44,26 @@ public class ChooseDrawableCardsPlayer : MonoBehaviour
             cardInstancePos[i] = buttons[i].GetComponentInChildren<RectTransform>();
         }
     }
-    private void ChooseDrawableCardsEnter(Animator animator)
+    public void ChooseDrawableCardsEnter(Animator animator)
     {
-        if (Hand.hand.Count < maxCardInHand)
-        {
-            RemovePreviousCards();
-            ChooseRandom();
-            ShowRandomCards();
-        }
+        
+            if (Hand.hand.Count < maxCardInHand)
+            {
 
+                RemovePreviousCards();
+                ChooseRandom();
+                ShowRandomCards();
+            }
+        
         else
         {
             animator.SetBool("ChooseCard", false);
             cardSelected = false;
             TurnManager.CardDrawn = true;
         }
+
+
+
     }
 
     private void RemovePreviousCards()

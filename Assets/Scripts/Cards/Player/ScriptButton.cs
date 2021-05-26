@@ -17,6 +17,7 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
     public delegate void DragEnded();
     public static DragEnded endDrag;
 
+
     public float offsetY = 300;
     public Vector3 scale;
     private RectTransform rect;
@@ -59,6 +60,8 @@ public class ScriptButton : MonoBehaviour, IPointerExitHandler, IPointerEnterHan
         else
             spellButton?.Invoke(selfCard as Spell);
     }
+
+
     private void Zoom()
     {
         silbingIndex = transform.GetSiblingIndex();
