@@ -114,6 +114,7 @@ public class ChooseDrawableCardsAI : CardAIBehaviour
         var cardInstance = Instantiate(toSpawn, IAHandCanvas.position, Quaternion.identity).transform;
         IAHand.Add(cardInstance.GetComponent<Card>()); //Avoids modifing the prefab
         cardInstance.GetComponent<Button>().enabled = false; //Avoids interaction with player
+        cardInstance.GetComponent<ScriptButton>().enabled = false;
         cardInstance.GetComponent<Image>().sprite = cardSprites;
 
         Transform[] stats = cardInstance.GetComponentsInChildren<Transform>();
