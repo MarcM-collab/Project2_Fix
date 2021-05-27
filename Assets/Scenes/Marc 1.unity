@@ -9409,6 +9409,8 @@ MonoBehaviour:
   - playerTurnClip: {fileID: 8300000, guid: 815bfa8bc7cf62542beeb0091421ba74, type: 3}
     IATurnClip: {fileID: 8300000, guid: dd28f9b267c9c7c4796adc42270ca1c5, type: 3}
   transition: {fileID: 2060527966}
+  meowWomen: []
+  meowMen: []
 --- !u!4 &1371810655
 Transform:
   m_ObjectHideFlags: 0

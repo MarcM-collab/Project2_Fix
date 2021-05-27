@@ -103,6 +103,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\HideUIBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\Entity\States\Character\FinalTeleport.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\HideUI.cs" />
+    <Compile Include="Assets\Scripts\Global scripts\Audio\MeowAudio.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\CombatPlayerBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\ChooseDrawableCardsBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\Exhausting.cs" />
@@ -154,7 +155,7 @@
     <Compile Include="Assets\Scripts\Turn Based Strategy\UI\HealthBar.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\StateMachineBehaviours\SelectingBehaviour.cs" />
     <Compile Include="Assets\Scripts\Turn Based Strategy\FSM\Functions\MeleeChoosingTileAI.cs" />
-    <Compile Include="Assets\Scripts\Global scripts\Audio\MeowAudio.cs" />
+    <Compile Include="Assets\Init_test.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

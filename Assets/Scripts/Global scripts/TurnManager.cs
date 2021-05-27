@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public static class TurnManager
 {
     public static int manaLimit = 9;
-    private static int maxMana = 1;
-    private static int currentTurn = 0;
+    private static int maxMana = 2;
+    private static int currentTurn = 1;
 
-    public static int currentMana { get; private set; } = 0;
+    public static int currentMana { get; private set; } = 2;
 
     public delegate void SetDisplayValue(int currentAmount, int maxMana);
     public static SetDisplayValue setDisplay;
@@ -20,7 +20,6 @@ public static class TurnManager
 
     public static bool CardDrawn = false;
     public static bool Spawned;
-
     public static Team TeamTurn
     {
         get 
@@ -33,8 +32,13 @@ public static class TurnManager
         }
     }
     public static bool IsAttackRound;
+    public static void Starting()
+    {
+        Debug.Log(currentTurn + "....." + TeamTurn);
+    }
     public static void NextTurn()
     {
+        Debug.Log("NEXT TURN // prev: " + currentTurn + " // new turn: " + (currentTurn + 1));
         currentTurn++;
 
         if (TeamTurn == Team.TeamPlayer && currentTurn < manaLimit*2-2)

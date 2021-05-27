@@ -21,8 +21,9 @@ public class CustomSceneManager : MonoBehaviour
     {
         if (level != 0) //is not the menu
         {
-            TurnManager.NextTurn();
-            EntityManager.InitEntities();
+            //TurnManager.NextTurn();
+            //TurnManager.Starting();
+            //EntityManager.InitEntities();
         }
     }
 
